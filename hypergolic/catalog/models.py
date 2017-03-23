@@ -32,6 +32,8 @@ DEGREES = [("very low", "very low"), ("low", "low"), ("medium", "medium"),
 class Basic(models.Model):
     name = models.CharField(max_length=50, primary_key=True, unique=True)
     description = models.TextField(blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -106,12 +108,14 @@ class FuelOxidizerMix(models.Model):
     combustion_temp = models.DecimalField(max_digits=6, decimal_places=1,
                                           blank=True)
     description = models.TextField(blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
 
 
-class Complex(models.Model):
+class Complex(Basic):
     name = models.CharField(max_length=50)
     variant_of = models.ForeignKey('self', on_delete=models.SET_NULL,
                                    blank=True, null=True)
@@ -123,10 +127,9 @@ class Complex(models.Model):
     height = models.PositiveIntegerField(blank=True)  # stored in milimeters
     diameter = models.PositiveIntegerField(blank=True)  # stored in milimeters
     dry_weight = models.PositiveIntegerField(blank=True)  # stored in grams
-    description = models.TextField(blank=True)
 
-    def __str__(self):
-        return self.name
+    class Meta:
+        abstract = True
 
 
 class Engine(Complex):
@@ -179,7 +182,10 @@ class TankMaterial(Basic):
 
 class Stage(Complex):
     fueled_weight = models.PositiveIntegerField()  # stored in grams
-    oxidizer_volume = models.PositiveIntegerField(blank=True) # in litres
+    oxidizer_volume = models.PositiveIntegerField(blank=True)  # in litres
+    fuel_volume = models.PositiveIntegerField(blank=True)  # in litres
+    oxidizer_weight = models.PositiveIntegerField(blank=True)  # in kilograms
+    fuel_weight = models.PositiveIntegerField(blank=True)  # in kilograms
     main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT)
     num_main_engines = models.PositiveSmallIntegerField(default=1)
     aux_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
@@ -194,7 +200,15 @@ class Stage(Complex):
 
 
 class RocketSeries(Basic):
-    image = models.ImageField(blank=True, upload_to='rocketseries/')
+    illustration = models.ImageField(blank=True, upload_to='rocketseries/')
+
+
+class Instrument(Basic):
+    illustration = models.ImageField(blank=True, upload_to='instruments/')
+
+
+class GuidanceSystem(Basic):
+    illustration = models.ImageField(blank=True, upload_to='guidancesystems/')
 
 
 class Rocket(Complex):
@@ -202,9 +216,16 @@ class Rocket(Complex):
                                blank=True)
     stages = models.ManyToManyField(Stage)
     fueled_weight = models.PositiveIntegerField()  # stored in grams
+    guidance_system = models.ForeignKey(GuidanceSystem, blank=True, null=True,
+                                        on_delete=models.SET_NULL)
     num_flights = models.PositiveSmallIntegerField(default=0)
     failures = models.PositiveSmallIntegerField(default=0)
     illustration = models.ImageField(blank=True, upload_to='rockets/')
 
 
 class Spacecraft(Stage):
+    instruments = models.ManyToManyField(Instrument, blank=True, null=True,
+                                         on_delete=models.SET_NULL)
+    num_flights = models.PositiveSmallIntegerField(default=0)
+    failures = models.PositiveSmallIntegerField(default=0)
+    illustration = models.ImageField(blank=True, upload_to='spacecrafts/')
