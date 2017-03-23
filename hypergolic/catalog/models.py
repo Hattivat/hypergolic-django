@@ -34,11 +34,17 @@ class Role(models.Model):
     description = models.TextField(blank=True)
     illustration = models.ImageField(blank=True, upload_to='engineroles/')
 
+    def __str__(self):
+        return self.name
+
 
 class StageRole(models.Model):
     name = models.CharField(max_length=30, primary_key=True, unique=True)
     description = models.TextField(blank=True)
     illustration = models.ImageField(blank=True, upload_to='stageroles/')
+
+    def __str__(self):
+        return self.name
 
 
 class PowerCycle(models.Model):
@@ -46,17 +52,26 @@ class PowerCycle(models.Model):
     description = models.TextField(blank=True)
     illustration = models.ImageField(blank=True, upload_to='powercycles/')
 
+    def __str__(self):
+        return self.name
+
 
 class Cooling(models.Model):
     name = models.CharField(max_length=50, primary_key=True, unique=True)
     description = models.TextField(blank=True)
     illustration = models.ImageField(blank=True, upload_to='coolingmethods/')
 
+    def __str__(self):
+        return self.name
+
 
 class NozzleType(models.Model):
     name = models.CharField(max_length=50, primary_key=True, unique=True)
     description = models.TextField(blank=True)
     illustration = models.ImageField(blank=True, upload_to='nozzletypes/')
+
+    def __str__(self):
+        return self.name
 
 
 class NozzleMaterial(models.Model):
@@ -65,11 +80,17 @@ class NozzleMaterial(models.Model):
     chemical_formula = models.CharField(max_leght=30, blank=True)
     illustration = models.ImageField(blank=True, upload_to='nozzlematerials/')
 
+    def __str__(self):
+        return self.name
+
 
 class Injector(models.Model):
     name = models.CharField(max_length=50, primary_key=True, unique=True)
     description = models.TextField(blank=True)
     illustration = models.ImageField(blank=True, upload_to='injectors/')
+
+    def __str__(self):
+        return self.name
 
 
 class Manufacturer(models.Model):
@@ -82,6 +103,9 @@ class Manufacturer(models.Model):
     headquarters = models.CharField(max_length=100, blank=True)
     website = models.URLField(max_length=100, blank=True)
     image = models.ImageField(blank=True, upload_to='manufacturers/')
+
+    def __str__(self):
+        return self.name
 
 
 class Compound(models.Model):
@@ -98,6 +122,9 @@ class Compound(models.Model):
     description = models.TextField(blank=True)
     illustration = models.ImageField(blank=True, upload_to='chemcompounds/')
 
+    def __str__(self):
+        return self.name
+
 
 class FuelOxidizerMix(models.Model):
     fuel = models.ForeignKey(Compound, on_delete=models.CASCADE,
@@ -112,6 +139,9 @@ class FuelOxidizerMix(models.Model):
     combustion_temp = models.DecimalField(max_digits=6, decimal_places=1,
                                           blank=True)
     description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Engine(models.Model):
@@ -164,17 +194,26 @@ class Engine(models.Model):
     description = models.TextField(blank=True)
     image = models.ImageField(blank=True, upload_to='engines/')
 
+    def __str__(self):
+        return self.name
+
 
 class TankConstruction(models.Model):
     name = models.CharField(max_length=30, primary_key=True, unique=True)
     description = models.TextField(blank=True)
     illustration = models.ImageField(blank=True, upload_to='tanktypes/')
 
+    def __str__(self):
+        return self.name
+
 
 class TankMaterial(models.Model):
     name = models.CharField(max_length=30, primary_key=True, unique=True)
     description = models.TextField(blank=True)
     illustration = models.ImageField(blank=True, upload_to='tankmaterials/')
+
+    def __str__(self):
+        return self.name
 
 
 class Stage(models.Model):
@@ -197,11 +236,17 @@ class Stage(models.Model):
     burn_time = models.PositiveIntegerField(blank=True)  # in seconds
     image = models.ImageField(blank=True, upload_to='stages/')
 
+    def __str__(self):
+        return self.name
+
 
 class RocketSeries(models.Model):
     name = models.CharField(max_length=30)
     description = models.TextField(blank=True)
     image = models.ImageField(blank=True, upload_to='rocketseries/')
+
+    def __str__(self):
+        return self.name
 
 
 class Rocket(models.Model):
@@ -220,6 +265,9 @@ class Rocket(models.Model):
     failures = models.PositiveSmallIntegerField(default=0)
     image = models.ImageField(blank=True, upload_to='rockets/')
 
+    def __str__(self):
+        return self.name
+
 
 class Spacecraft(models.Model):
     name = models.CharField(max_length=50)
@@ -236,3 +284,7 @@ class Spacecraft(models.Model):
     fueled_mass = models.PositiveIntegerField(blank=True)  # stored in grams
     main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
                                     blank=True, null=True)
+    main_engine_num = models.PositiveSmallIntegerField(default=1)
+
+    def __str__(self):
+        return self.name
