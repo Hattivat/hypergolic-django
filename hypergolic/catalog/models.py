@@ -29,72 +29,47 @@ DEGREES = [("very low", "very low"), ("low", "low"), ("medium", "medium"),
            ("high", "high"), ("very high", "very high")]
 
 
-class Role(models.Model):
-    name = models.CharField(max_length=30, primary_key=True, unique=True)
+class Basic(models.Model):
+    name = models.CharField(max_length=50, primary_key=True, unique=True)
     description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        abstract = True
+
+
+class Role(Basic):
     illustration = models.ImageField(blank=True, upload_to='engineroles/')
 
-    def __str__(self):
-        return self.name
 
-
-class StageRole(models.Model):
-    name = models.CharField(max_length=30, primary_key=True, unique=True)
-    description = models.TextField(blank=True)
+class StageRole(Basic):
     illustration = models.ImageField(blank=True, upload_to='stageroles/')
 
-    def __str__(self):
-        return self.name
 
-
-class PowerCycle(models.Model):
-    name = models.CharField(max_length=50, primary_key=True, unique=True)
-    description = models.TextField(blank=True)
+class PowerCycle(Basic):
     illustration = models.ImageField(blank=True, upload_to='powercycles/')
 
-    def __str__(self):
-        return self.name
 
-
-class Cooling(models.Model):
-    name = models.CharField(max_length=50, primary_key=True, unique=True)
-    description = models.TextField(blank=True)
+class Cooling(Basic):
     illustration = models.ImageField(blank=True, upload_to='coolingmethods/')
 
-    def __str__(self):
-        return self.name
 
-
-class NozzleType(models.Model):
-    name = models.CharField(max_length=50, primary_key=True, unique=True)
-    description = models.TextField(blank=True)
+class NozzleType(Basic):
     illustration = models.ImageField(blank=True, upload_to='nozzletypes/')
 
-    def __str__(self):
-        return self.name
 
-
-class NozzleMaterial(models.Model):
-    name = models.CharField(max_length=50, primary_key=True, unique=True)
-    description = models.TextField(blank=True)
+class NozzleMaterial(Basic):
     chemical_formula = models.CharField(max_leght=30, blank=True)
     illustration = models.ImageField(blank=True, upload_to='nozzlematerials/')
 
-    def __str__(self):
-        return self.name
 
-
-class Injector(models.Model):
-    name = models.CharField(max_length=50, primary_key=True, unique=True)
-    description = models.TextField(blank=True)
+class Injector(Basic):
     illustration = models.ImageField(blank=True, upload_to='injectors/')
 
-    def __str__(self):
-        return self.name
 
-
-class Manufacturer(models.Model):
-    name = models.CharField(max_length=100, primary_key=True, unique=True)
+class Manufacturer(Basic):
     native_name = models.CharField(max_length=100, blank=True)
     country = models.CharField(max_length=50)
     established = models.PositiveSmallIntegerField(choices=YEARS, blank=True)
@@ -102,14 +77,10 @@ class Manufacturer(models.Model):
     defunct = models.PositiveSmallIntegerField(choices=YEARS, blank=True)
     headquarters = models.CharField(max_length=100, blank=True)
     website = models.URLField(max_length=100, blank=True)
-    image = models.ImageField(blank=True, upload_to='manufacturers/')
-
-    def __str__(self):
-        return self.name
+    illustration = models.ImageField(blank=True, upload_to='manufacturers/')
 
 
-class Compound(models.Model):
-    name = models.CharField(max_lenght=100, primary_key=True, unique=True)
+class Compound(Basic):
     role = models.BooleanField()  # true = fuel, false = oxidizer
     chem_formula = models.CharField(max_length=30)
     density = models.FloatField()
@@ -119,11 +90,7 @@ class Compound(models.Model):
     appearance = models.CharField(max_length=250, blank=True)
     toxicity = models.CharField(max_length=20, choices=DEGREES, blank=True)
     storability = models.CharField(max_length=20, choices=DEGREES, blank=True)
-    description = models.TextField(blank=True)
     illustration = models.ImageField(blank=True, upload_to='chemcompounds/')
-
-    def __str__(self):
-        return self.name
 
 
 class FuelOxidizerMix(models.Model):
@@ -198,22 +165,12 @@ class Engine(models.Model):
         return self.name
 
 
-class TankConstruction(models.Model):
-    name = models.CharField(max_length=30, primary_key=True, unique=True)
-    description = models.TextField(blank=True)
+class TankConstruction(Basic):
     illustration = models.ImageField(blank=True, upload_to='tanktypes/')
 
-    def __str__(self):
-        return self.name
 
-
-class TankMaterial(models.Model):
-    name = models.CharField(max_length=30, primary_key=True, unique=True)
-    description = models.TextField(blank=True)
+class TankMaterial(Basic):
     illustration = models.ImageField(blank=True, upload_to='tankmaterials/')
-
-    def __str__(self):
-        return self.name
 
 
 class Stage(models.Model):
@@ -240,13 +197,8 @@ class Stage(models.Model):
         return self.name
 
 
-class RocketSeries(models.Model):
-    name = models.CharField(max_length=30)
-    description = models.TextField(blank=True)
+class RocketSeries(Basic):
     image = models.ImageField(blank=True, upload_to='rocketseries/')
-
-    def __str__(self):
-        return self.name
 
 
 class Rocket(models.Model):
