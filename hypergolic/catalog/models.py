@@ -291,3 +291,11 @@ class Astronaut(models.Model):
     birth_date = models.DateTimeField(blank=True)
     birth_place = models.CharField(max_length=100)
     death_date = models.DateTimeField(blank=True)
+
+    def __str__(self):
+        return self.first_name + self.middle_names + self.last_name
+
+
+class CrewedMission(Mission):
+    crew = models.ManyToManyField(Astronaut, on_delete=models.PROTECT)
+    landing_site = models.CharField(max_length=100, blank=True)
