@@ -46,7 +46,7 @@ class Injector(Basic):
 
 class Manufacturer(Basic):
     native_name = models.CharField(max_length=100, blank=True)
-    country = models.CharField(max_length=50)
+    country = models.CharField(max_length=50, choices=COUNTRIES)
     established = models.PositiveSmallIntegerField(choices=YEARS, blank=True)
     active = models.BooleanField(blank=True)
     defunct = models.PositiveSmallIntegerField(choices=YEARS, blank=True)
@@ -90,6 +90,7 @@ class FuelOxidizerMix(models.Model):
 
 class Complex(Basic):
     name = models.CharField(max_length=50)
+    country = models.CharField(max_length=50, choices=COUNTRIES)
     variant_of = models.ForeignKey('self', on_delete=models.SET_NULL,
                                    blank=True, null=True)
     native_name = models.CharField(max_length=50, blank=True)
@@ -262,7 +263,7 @@ class CrewedSpacecraft(Spacecraft):
 
 class LaunchFacility(Basic):
     location = models.CharField(max_length=50)
-    owning_country = models.CharField(max_length=50)
+    owning_country = models.CharField(max_length=50, choices=COUNTRIES)
     latitude = models.PositiveSmallIntegerField()
     longitude = models.PositiveSmallIntegerField()
     elevation = models.PositiveSmallIntegerField(blank=True)
@@ -270,7 +271,7 @@ class LaunchFacility(Basic):
 
 
 class Mission(Basic):
-    country = models.CharField(max_length=50)
+    country = models.CharField(max_length=50, choices=COUNTRIES)
     launch_date = models.DateTimeField()
     end_date = models.DateTimeField()
     launch_facility = models.ForeignKey(LaunchFacility,
@@ -286,7 +287,7 @@ class Astronaut(models.Model):
     first_name = models.CharField(max_length=50)
     middle_names = models.CharField(max_length=50, null=True)
     last_name = models.CharField(max_length=50)
-    nationality = models.CharField(max_length=50)
+    nationality = models.CharField(max_length=50, choices=COUNTRIES)
     birth_date = models.DateTimeField(blank=True)
     birth_place = models.CharField(max_length=100)
     death_date = models.DateTimeField(blank=True)
