@@ -70,9 +70,11 @@ class Compound(Basic):
 
 class FuelOxidizerMix(models.Model):
     fuel = models.ForeignKey(Compound, on_delete=models.CASCADE,
-                             limit_choices_to={'role': True})
+                             limit_choices_to={'role': True},
+                             related_name='as_fuel')
     oxidizer = models.ForeignKey(Compound, on_delete=models.CASCADE, null=True,
-                                 limit_choices_to={'role': False}, blank=True)
+                                 limit_choices_to={'role': False}, blank=True,
+                                 related_name='as_oxidizer')
     hypergolic = models.BooleanField()
     specific_impulse = models.PositiveIntegerField()  # stored in m/s
     specific_impulse_sl = models.PositiveIntegerField(blank=True)  # in m/s
@@ -136,7 +138,7 @@ class Engine(Complex):
                                        blank=True)
     coefficient_of_thrust_vac = models.FloatField(blank=True)
     coefficient_of_thrust_sl = models.FloatField(blank=True)
-    ignition_method = models.CharField(blank=True)
+    ignition_method = models.CharField(max_length=50, blank=True)
     restart_capability = models.BooleanField(default=False)
     num_restarts = models.PositiveSmallIntegerField(default=0, blank=True)
     throttle_range_min = models.PositiveSmallIntegerField(default=100,
@@ -160,10 +162,11 @@ class Stage(Complex):
     fuel_volume = models.PositiveIntegerField(blank=True)  # in litres
     oxidizer_weight = models.PositiveIntegerField(blank=True)  # in kilograms
     fuel_weight = models.PositiveIntegerField(blank=True)  # in kilograms
-    main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT)
+    main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
+                                    related_name='stage_main')
     num_main_engines = models.PositiveSmallIntegerField(default=1)
     aux_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
-                                   blank=True)
+                                   blank=True, related_name='stage_aux')
     num_aux_engines = models.PositiveSmallIntegerField(blank=True, default=0)
     tank_type = models.ForeignKey(TankConstruction, on_delete=models.SET_NULL,
                                   blank=True, null=True)
@@ -258,10 +261,11 @@ class Spacecraft(Complex):
     fuel_volume = models.PositiveIntegerField(blank=True)  # in litres
     oxidizer_weight = models.PositiveIntegerField(blank=True)  # in kilograms
     fuel_weight = models.PositiveIntegerField(blank=True)  # in kilograms
-    main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT)
+    main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
+                                    related_name='spacecraft_main')
     num_main_engines = models.PositiveSmallIntegerField(default=1)
     aux_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
-                                   blank=True)
+                                   blank=True, related_name='spacecraft_aux')
     num_aux_engines = models.PositiveSmallIntegerField(blank=True, default=0)
     tank_type = models.ForeignKey(TankConstruction, on_delete=models.SET_NULL,
                                   blank=True, null=True)
@@ -290,7 +294,7 @@ class LaunchFacility(Basic):
 class Mission(Basic):
     country = models.CharField(max_length=50, choices=COUNTRIES)
     organization = models.ForeignKey(Organization, on_delete=models.PROTECT,
-                                       blank=True)
+                                     blank=True)
     launch_date = models.DateTimeField()
     end_date = models.DateTimeField()
     launch_facility = models.ForeignKey(LaunchFacility,
@@ -320,5 +324,5 @@ class Astronaut(models.Model):
 
 
 class CrewedMission(Mission):
-    crew = models.ManyToManyField(Astronaut, null=True)
+    crew = models.ManyToManyField(Astronaut)
     landing_site = models.CharField(max_length=100, blank=True)
