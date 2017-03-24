@@ -215,6 +215,10 @@ class HeatshieldMaterial(Basic):
     chem_formula = models.CharField(max_length=30, blank=True)
 
 
+class Organization(Basic):
+    illustration = models.ImageField(blank=True, upload_to='organizations/')
+
+
 class Rocket(Complex):
     series = models.ForeignKey(RocketSeries, on_delete=models.PROTECT,
                                blank=True)
@@ -272,6 +276,8 @@ class LaunchFacility(Basic):
 
 class Mission(Basic):
     country = models.CharField(max_length=50, choices=COUNTRIES)
+    organization = models.ForeignField(Organization, on_delete=models.PROTECT,
+                                       blank=True)
     launch_date = models.DateTimeField()
     end_date = models.DateTimeField()
     launch_facility = models.ForeignKey(LaunchFacility,
@@ -288,6 +294,8 @@ class Astronaut(models.Model):
     middle_names = models.CharField(max_length=50, null=True)
     last_name = models.CharField(max_length=50)
     nationality = models.CharField(max_length=50, choices=COUNTRIES)
+    organization = models.ForeignField(Organization, on_delete=models.PROTECT,
+                                       blank=True)
     birth_date = models.DateTimeField(blank=True)
     birth_place = models.CharField(max_length=100)
     death_date = models.DateTimeField(blank=True)
