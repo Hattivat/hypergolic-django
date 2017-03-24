@@ -291,6 +291,8 @@ class Astronaut(models.Model):
     birth_date = models.DateTimeField(blank=True)
     birth_place = models.CharField(max_length=100)
     death_date = models.DateTimeField(blank=True)
+    biography = models.TextField(blank=True)
+    picture = models.ImageField(blank=True, upload_to='astronauts/')
 
     def __str__(self):
         return self.first_name + self.middle_names + self.last_name
