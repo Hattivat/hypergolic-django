@@ -36,7 +36,7 @@ class NozzleType(Basic):
 
 
 class NozzleMaterial(Basic):
-    chemical_formula = models.CharField(max_leght=30, blank=True)
+    chemical_formula = models.CharField(max_length=30, blank=True)
     illustration = models.ImageField(blank=True, upload_to='nozzlematerials/')
 
 
@@ -231,9 +231,8 @@ class Rocket(Complex):
     illustration = models.ImageField(blank=True, upload_to='rockets/')
 
 
-class Spacecraft(Stage):
-    instruments = models.ManyToManyField(Instrument, blank=True, null=True,
-                                         on_delete=models.SET_NULL)
+class Spacecraft(Complex):
+    instruments = models.ManyToManyField(Instrument, blank=True)
     guidance_system = models.ForeignKey(GuidanceSystem, blank=True, null=True,
                                         on_delete=models.SET_NULL)
     attitude_control_system = models.ForeignKey(AttitudeControlSystem,
@@ -254,6 +253,20 @@ class Spacecraft(Stage):
                                          null=True, on_delete=models.PROTECT)
     num_flights = models.PositiveSmallIntegerField(default=0)
     failures = models.PositiveSmallIntegerField(default=0)
+    fueled_weight = models.PositiveIntegerField()  # stored in grams
+    oxidizer_volume = models.PositiveIntegerField(blank=True)  # in litres
+    fuel_volume = models.PositiveIntegerField(blank=True)  # in litres
+    oxidizer_weight = models.PositiveIntegerField(blank=True)  # in kilograms
+    fuel_weight = models.PositiveIntegerField(blank=True)  # in kilograms
+    main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT)
+    num_main_engines = models.PositiveSmallIntegerField(default=1)
+    aux_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
+                                   blank=True)
+    num_aux_engines = models.PositiveSmallIntegerField(blank=True, default=0)
+    tank_type = models.ForeignKey(TankConstruction, on_delete=models.SET_NULL,
+                                  blank=True, null=True)
+    tank_material = models.ForeignKey(TankMaterial, on_delete=models.SET_NULL,
+                                      blank=True, null=True)
     illustration = models.ImageField(blank=True, upload_to='spacecrafts/')
 
 
@@ -276,7 +289,7 @@ class LaunchFacility(Basic):
 
 class Mission(Basic):
     country = models.CharField(max_length=50, choices=COUNTRIES)
-    organization = models.ForeignField(Organization, on_delete=models.PROTECT,
+    organization = models.ForeignKey(Organization, on_delete=models.PROTECT,
                                        blank=True)
     launch_date = models.DateTimeField()
     end_date = models.DateTimeField()
@@ -294,8 +307,8 @@ class Astronaut(models.Model):
     middle_names = models.CharField(max_length=50, null=True)
     last_name = models.CharField(max_length=50)
     nationality = models.CharField(max_length=50, choices=COUNTRIES)
-    organization = models.ForeignField(Organization, on_delete=models.PROTECT,
-                                       blank=True)
+    organization = models.ForeignKey(Organization, on_delete=models.PROTECT,
+                                     blank=True)
     birth_date = models.DateTimeField(blank=True)
     birth_place = models.CharField(max_length=100)
     death_date = models.DateTimeField(blank=True)
@@ -307,5 +320,5 @@ class Astronaut(models.Model):
 
 
 class CrewedMission(Mission):
-    crew = models.ManyToManyField(Astronaut, on_delete=models.PROTECT)
+    crew = models.ManyToManyField(Astronaut, null=True)
     landing_site = models.CharField(max_length=100, blank=True)
