@@ -107,6 +107,10 @@ class PropellantMix(models.Model):
     created = models.DateTimeField(auto_now_add=True, null=True)
     modified = models.DateTimeField(auto_now=True, null=True)
 
+    def __str__(self):
+        mix = (propellant.name for propellant in self.propellants.all())
+        return "/".join(mix)
+
 
 class Complex(Basic):
     name = models.CharField(max_length=50)
