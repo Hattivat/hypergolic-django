@@ -39,6 +39,10 @@ class Cooling(Basic):
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='coolingmethods/')
 
+    class Meta:
+        verbose_name = "Cooling system"
+        verbose_name_plural = "Cooling systems"
+
 
 class NozzleType(Basic):
     illustration = models.ImageField(blank=True, null=True,
@@ -120,6 +124,9 @@ class PropellantMix(models.Model):
 
     def get_absolute_url(self):
         return reverse('propellantmix-detail', kwargs={'pk': self.pk})
+
+    class Meta:
+        verbose_name_plural = "Propellant mixes"
 
 
 class Complex(Basic):
@@ -230,6 +237,9 @@ class Stage(Complex):
 class RocketSeries(Basic):
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='rocketseries/')
+
+    class Meta:
+        verbose_name_plural = "Rocket series"
 
 
 class Instrument(Basic):
@@ -364,6 +374,9 @@ class LaunchFacility(Basic):
     elevation = models.PositiveSmallIntegerField(blank=True, null=True)
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='launchfacilities/')
+
+    class Meta:
+        verbose_name_plural = "Launch facilities"
 
 
 class Mission(Basic):
