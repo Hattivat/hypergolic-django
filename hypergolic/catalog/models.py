@@ -72,7 +72,11 @@ class Manufacturer(Basic):
 
 class Compound(Basic):
     role = models.BooleanField()  # true = fuel, false = oxidizer
-    chem_formula = models.CharField(max_length=30)
+    chem_formula = models.CharField(max_length=30, null=True)
+    abbreviation = models.CharField(max_length=10, null=True)
+    variety_of = models.ForeignKey('self', on_delete=models.SET_NULL,
+                                   blank=True, null=True,
+                                   related_name="version")
     density = models.FloatField(blank=True, null=True)
     # melting_point and boiling_point in degrees Celsius
     melting_point = models.DecimalField(max_digits=6, decimal_places=2,
