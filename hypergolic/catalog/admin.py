@@ -8,6 +8,10 @@ from .models import Role, StageRole, PowerCycle, Cooling, NozzleType,\
     CrewedMission, Igniter
 # Register your models here.
 
+
+class PropellantMixAdmin(admin.ModelAdmin):
+    filter_horizontal = ('propellants',)
+
 admin.site.register(Role)
 admin.site.register(StageRole)
 admin.site.register(PowerCycle)
@@ -17,7 +21,7 @@ admin.site.register(NozzleMaterial)
 admin.site.register(Injector)
 admin.site.register(Manufacturer)
 admin.site.register(Compound)
-admin.site.register(PropellantMix)
+admin.site.register(PropellantMix, PropellantMixAdmin)
 admin.site.register(Engine)
 admin.site.register(TankConstruction)
 admin.site.register(TankMaterial)

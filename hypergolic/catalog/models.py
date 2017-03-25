@@ -107,9 +107,6 @@ class PropellantMix(models.Model):
     created = models.DateTimeField(auto_now_add=True, null=True)
     modified = models.DateTimeField(auto_now=True, null=True)
 
-    def __str__(self):
-        return self.name
-
 
 class Complex(Basic):
     name = models.CharField(max_length=50)
