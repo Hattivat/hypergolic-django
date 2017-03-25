@@ -77,7 +77,7 @@ class Compound(Basic):
     variety_of = models.ForeignKey('self', on_delete=models.SET_NULL,
                                    blank=True, null=True,
                                    related_name="version")
-    density = models.FloatField(blank=True, null=True)
+    density = models.FloatField(blank=True, null=True)  # in g/ml
     # melting_point and boiling_point in degrees Celsius
     melting_point = models.DecimalField(max_digits=6, decimal_places=2,
                                         blank=True, null=True)
@@ -90,13 +90,9 @@ class Compound(Basic):
                                      upload_to='chemcompounds/')
 
 
-class FuelOxidizerMix(models.Model):
-    fuel = models.ForeignKey(Compound, on_delete=models.CASCADE,
-                             limit_choices_to={'role': True},
-                             related_name='as_fuel')
-    oxidizer = models.ForeignKey(Compound, on_delete=models.CASCADE, null=True,
-                                 limit_choices_to={'role': False}, blank=True,
-                                 related_name='as_oxidizer')
+class PropellantMix(models.Model):
+    propellants = models.ManyToManyField(Compound)
+    abbreviation = models.CharField(max_length=30, blank=True)
     hypergolic = models.BooleanField(default=False)
     specific_impulse = models.PositiveIntegerField()  # stored in m/s
     specific_impulse_sl = models.PositiveIntegerField(blank=True, null=True)
@@ -135,7 +131,7 @@ class Complex(Basic):
 class Engine(Complex):
     application = models.ForeignKey(Role, on_delete=models.SET_NULL,
                                     blank=True, null=True)
-    propellants = models.ForeignKey(FuelOxidizerMix, on_delete=models.PROTECT)
+    propellants = models.ForeignKey(PropellantMix, on_delete=models.PROTECT)
     mixture_ratio = models.DecimalField(max_digits=8, decimal_places=4,
                                         blank=True, null=True)
     cycle = models.ForeignKey(PowerCycle, on_delete=models.SET_NULL,

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Role, StageRole, PowerCycle, Cooling, NozzleType,\
-    NozzleMaterial, Injector, Manufacturer, Compound, FuelOxidizerMix, Engine,\
+    NozzleMaterial, Injector, Manufacturer, Compound, PropellantMix, Engine,\
     TankConstruction, TankMaterial, Stage, RocketSeries, Instrument,\
     GuidanceSystem, AntennaType, ElectricitySource, LifeSupportType,\
     AttitudeControlSystem, LandingSolution, HeatshieldMaterial, Organization,\
@@ -17,7 +17,7 @@ admin.site.register(NozzleMaterial)
 admin.site.register(Injector)
 admin.site.register(Manufacturer)
 admin.site.register(Compound)
-admin.site.register(FuelOxidizerMix)
+admin.site.register(PropellantMix)
 admin.site.register(Engine)
 admin.site.register(TankConstruction)
 admin.site.register(TankMaterial)
