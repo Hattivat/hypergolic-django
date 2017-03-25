@@ -96,8 +96,11 @@ class PropellantMix(models.Model):
     hypergolic = models.BooleanField(default=False)
     specific_impulse = models.PositiveIntegerField()  # stored in m/s
     specific_impulse_sl = models.PositiveIntegerField(blank=True, null=True)
+    characteristic_velocity = models.PositiveIntegerField(blank=True,
+                                                          null=True)
     optimum_ratio = models.DecimalField(max_digits=5, decimal_places=2,
                                         blank=True, null=True)
+    # combustion temperature is degree Kelvin!
     combustion_temp = models.DecimalField(max_digits=6, decimal_places=1,
                                           blank=True, null=True)
     description = models.TextField(blank=True)
