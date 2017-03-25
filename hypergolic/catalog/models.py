@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from .constants import YEARS, DEGREES, COUNTRIES
 
 
@@ -10,6 +11,10 @@ class Basic(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('{}-detail'.format(self.__class__.__name__),
+                       kwargs={'pk': self.pk})
 
     class Meta:
         abstract = True
@@ -72,7 +77,8 @@ class Manufacturer(Basic):
 
 class Compound(Basic):
     role = models.BooleanField(choices=((True, 'Fuel'), (False, 'Oxidizer')))
-    chem_formula = models.CharField(max_length=30, blank=True)
+    chem_formula = models.CharField(max_length=30, blank=True,
+                                    verbose_name="chemical formula")
     also_known_as = models.CharField(max_length=50, blank=True)
     variety_of = models.ForeignKey('self', on_delete=models.SET_NULL,
                                    blank=True, null=True,
@@ -102,14 +108,18 @@ class PropellantMix(models.Model):
                                         blank=True, null=True)
     # combustion temperature is degree Kelvin!
     combustion_temp = models.DecimalField(max_digits=6, decimal_places=1,
-                                          blank=True, null=True)
+                                          blank=True, null=True,
+                                          verbose_name="combustion temperature")
     description = models.TextField(blank=True)
-    created = models.DateTimeField(auto_now_add=True, null=True)
-    modified = models.DateTimeField(auto_now=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         mix = (propellant.name for propellant in self.propellants.all())
         return "/".join(mix)
+
+    def get_absolute_url(self):
+        return reverse('propellantmix-detail', kwargs={'pk': self.pk})
 
 
 class Complex(Basic):
@@ -199,11 +209,14 @@ class Stage(Complex):
     fuel_weight = models.PositiveIntegerField(blank=True, null=True)
     main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
                                     related_name='stage_main')
-    num_main_engines = models.PositiveSmallIntegerField(default=1)
+    num_main_engines = models.PositiveSmallIntegerField(default=1,
+                                verbose_name="number of main engines")
     aux_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
                                    blank=True, null=True,
-                                   related_name='stage_aux')
-    num_aux_engines = models.PositiveSmallIntegerField(default=0)
+                                   related_name='stage_aux',
+                                   verbose_name="auxilliary engine")
+    num_aux_engines = models.PositiveSmallIntegerField(default=0,
+                                verbose_name="number of auxilliary engines")
     tank_type = models.ForeignKey(TankConstruction, on_delete=models.SET_NULL,
                                   blank=True, null=True)
     tank_material = models.ForeignKey(TankMaterial, on_delete=models.SET_NULL,
@@ -278,7 +291,8 @@ class Rocket(Complex):
     fueled_weight = models.PositiveIntegerField()  # stored in grams
     guidance_system = models.ForeignKey(GuidanceSystem, blank=True, null=True,
                                         on_delete=models.SET_NULL)
-    num_flights = models.PositiveSmallIntegerField(default=0)
+    num_flights = models.PositiveSmallIntegerField(default=0,
+                                            verbose_name="number of flights")
     failures = models.PositiveSmallIntegerField(default=0)
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='rockets/')
@@ -306,7 +320,8 @@ class Spacecraft(Complex):
                                    on_delete=models.PROTECT)
     landing_solution = models.ForeignKey(LandingSolution, blank=True,
                                          null=True, on_delete=models.PROTECT)
-    num_flights = models.PositiveSmallIntegerField(default=0)
+    num_flights = models.PositiveSmallIntegerField(default=0,
+                                            verbose_name='number of flights')
     failures = models.PositiveSmallIntegerField(default=0)
     fueled_weight = models.PositiveIntegerField()  # stored in grams
     # volumes in litres, weights in grams
@@ -316,11 +331,14 @@ class Spacecraft(Complex):
     fuel_weight = models.PositiveIntegerField(blank=True, null=True)
     main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
                                     related_name='spacecraft_main')
-    num_main_engines = models.PositiveSmallIntegerField(default=1)
+    num_main_engines = models.PositiveSmallIntegerField(default=1,
+                                        verbose_name='number of main engines')
     aux_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
                                    blank=True, null=True,
-                                   related_name='spacecraft_aux')
-    num_aux_engines = models.PositiveSmallIntegerField(blank=True, default=0)
+                                   related_name='spacecraft_aux',
+                                   verbose_name='auxilliary engine')
+    num_aux_engines = models.PositiveSmallIntegerField(blank=True, default=0,
+                                verbose_name='number of auxilliary engines')
     tank_type = models.ForeignKey(TankConstruction, on_delete=models.SET_NULL,
                                   blank=True, null=True)
     tank_material = models.ForeignKey(TankMaterial, on_delete=models.SET_NULL,
@@ -380,6 +398,9 @@ class Astronaut(models.Model):
 
     def __str__(self):
         return self.first_name + self.middle_names + self.last_name
+
+    def get_absolute_url(self):
+        return reverse('astronaut-detail', kwargs={'pk': self.pk})
 
 
 class CrewedMission(Mission):
