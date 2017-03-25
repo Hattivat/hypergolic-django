@@ -5,7 +5,7 @@ from .models import Role, StageRole, PowerCycle, Cooling, NozzleType,\
     GuidanceSystem, AntennaType, ElectricitySource, LifeSupportType,\
     AttitudeControlSystem, LandingSolution, HeatshieldMaterial, Organization,\
     Rocket, Spacecraft, CrewedSpacecraft, LaunchFacility, Mission, Astronaut,\
-    CrewedMission
+    CrewedMission, Igniter
 # Register your models here.
 
 admin.site.register(Role)
@@ -39,3 +39,4 @@ admin.site.register(LaunchFacility)
 admin.site.register(Mission)
 admin.site.register(Astronaut)
 admin.site.register(CrewedMission)
+admin.site.register(Igniter)
