@@ -73,7 +73,7 @@ class Manufacturer(Basic):
 class Compound(Basic):
     role = models.BooleanField(choices=((True, 'Fuel'), (False, 'Oxidizer')))
     chem_formula = models.CharField(max_length=30, blank=True)
-    abbreviation = models.CharField(max_length=10, blank=True)
+    also_known_as = models.CharField(max_length=50, blank=True)
     variety_of = models.ForeignKey('self', on_delete=models.SET_NULL,
                                    blank=True, null=True,
                                    related_name="version")
