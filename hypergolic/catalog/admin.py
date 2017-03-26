@@ -68,6 +68,35 @@ class StageAdmin(admin.ModelAdmin):
     list_display = ('name', 'country', 'developed', 'fueled_weight')
     list_filter = ('stage_role', 'main_engine', 'aux_engine', 'country', 
                    'manufacturer', 'tank_type')
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'native_name', 'stage_role', 'country',
+                       'manufacturer', 'illustration')
+        }),
+        ('History', {
+            'fields': (('developed', 'first_flight'), 'variant_of',
+                       'description')
+        }),
+        ('Metrics', {
+            'fields': ('height', 'diameter', ('dry_weight', 'fueled_weight'))
+        }),
+        ('Propellant tanks', {
+            'fields': ('tank_type', 'tank_material',
+                       ('fuel_volume', 'oxidizer_volume'),
+                       ('fuel_weight', 'oxidizer_weight'))
+        }),
+        ('Propulsion', {
+            'fields': (('main_engine', 'num_main_engines'),
+                       ('aux_engine', 'num_aux_engines'), 'burn_time')
+        }),
+        ('Steering', {
+            'fields': (('main_gimbal_yaw_min', 'main_gimbal_yaw_max'),
+                       ('main_gimbal_pitch_min', 'main_gimbal_pitch_max'),
+                       ('aux_gimbal_yaw_min', 'aux_gimbal_yaw_max'),
+                       ('aux_gimbal_pitch_min', 'aux_gimbal_pitch_max'),
+                       'fins')
+        })
+    )
 
 admin.site.register(StageRole)
 admin.site.register(PowerCycle)

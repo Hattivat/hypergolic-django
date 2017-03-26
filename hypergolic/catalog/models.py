@@ -242,6 +242,14 @@ class Stage(Complex):
                                    verbose_name="auxilliary engine")
     num_aux_engines = models.PositiveSmallIntegerField(default=0,
                                 verbose_name="number of auxilliary engines")
+    aux_gimbal_yaw_min = models.DecimalField(max_digits=4, decimal_places=1,
+                                             blank=True, null=True)
+    aux_gimbal_yaw_max = models.DecimalField(max_digits=4, decimal_places=1,
+                                             blank=True, null=True)
+    aux_gimbal_pitch_min = models.DecimalField(max_digits=4, decimal_places=1,
+                                               blank=True, null=True)
+    aux_gimbal_pitch_max = models.DecimalField(max_digits=4, decimal_places=1,
+                                               blank=True, null=True)
     tank_type = models.ForeignKey(TankConstruction, on_delete=models.SET_NULL,
                                   blank=True, null=True)
     tank_material = models.ForeignKey(TankMaterial, on_delete=models.SET_NULL,
