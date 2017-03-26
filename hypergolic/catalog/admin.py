@@ -35,9 +35,6 @@ class EngineAdmin(admin.ModelAdmin):
             'fields': (('developed', 'first_flight'), 'variant_of',
                        'description')
         }),
-        ('Propellants', {
-            'fields': ('propellants', 'mixture_ratio', 'chamber_pressure')
-        }),
         ('Performance', {
             'fields': (('specific_impulse_vac', 'specific_impulse_sl'),
                        ('thrust_vac', 'thrust_sl'),
@@ -51,12 +48,16 @@ class EngineAdmin(admin.ModelAdmin):
         ('Ignition!', {
             'fields': ('cycle', 'injector_type', 'ignition_method')
         }),
+        ('Combustion', {
+            'fields': ('propellants', 'mixture_ratio', 'chamber_pressure',
+                       'combustion_chambers')
+        }),
         ('Nozzle', {
             'fields': ('nozzle_shape', 'nozzle_ratio', 'nozzle_material',
                        'cooling_method')
         }),
         ('Flexibility', {
-            'fields': ('gimbal_range', 'restart_capability', 'num_restarts',
+            'fields': ('restart_capability', 'num_restarts',
                        ('throttle_range_min', 'throttle_range_max'))
         })
     )

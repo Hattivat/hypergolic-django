@@ -172,6 +172,7 @@ class Engine(Complex):
     twr = models.DecimalField(max_digits=6, decimal_places=2, blank=True)
     # chamber pressure is stored in Pascals
     chamber_pressure = models.PositiveIntegerField(blank=True, null=True)
+    combustion_chambers = models.PositiveSmallIntegerField(default=1)
     # rated burn time is stored in seconds
     rated_burn_time = models.PositiveSmallIntegerField(blank=True, null=True)
     nozzle_ratio = models.DecimalField(max_digits=6, decimal_places=2,
@@ -185,8 +186,6 @@ class Engine(Complex):
                                        blank=True, null=True)
     injector_type = models.ForeignKey(Injector, on_delete=models.PROTECT,
                                       blank=True, null=True)
-    gimbal_range = models.DecimalField(max_digits=4, decimal_places=1,
-                                       blank=True, null=True)
     coefficient_of_thrust_vac = models.FloatField(blank=True, null=True)
     coefficient_of_thrust_sl = models.FloatField(blank=True, null=True)
     ignition_method = models.ForeignKey(Igniter, on_delete=models.SET_NULL,
@@ -226,6 +225,14 @@ class Stage(Complex):
                                     related_name='stage_main')
     num_main_engines = models.PositiveSmallIntegerField(default=1,
                                 verbose_name="number of main engines")
+    main_gimbal_yaw_min = models.DecimalField(max_digits=4, decimal_places=1,
+                                              blank=True, null=True)
+    main_gimbal_yaw_max = models.DecimalField(max_digits=4, decimal_places=1,
+                                              blank=True, null=True)
+    main_gimbal_pitch_min = models.DecimalField(max_digits=4, decimal_places=1,
+                                                blank=True, null=True)
+    main_gimbal_pitch_max = models.DecimalField(max_digits=4, decimal_places=1,
+                                                blank=True, null=True)
     aux_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
                                    blank=True, null=True,
                                    related_name='stage_aux',
