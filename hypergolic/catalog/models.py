@@ -24,6 +24,10 @@ class Role(Basic):
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='engineroles/')
 
+    class Meta:
+        verbose_name = "Engine role"
+        verbose_name_plural = "Engine roles"
+
 
 class StageRole(Basic):
     illustration = models.ImageField(blank=True, null=True,
