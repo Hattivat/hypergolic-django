@@ -5,37 +5,23 @@ from .models import Role, StageRole, PowerCycle, Cooling, NozzleType,\
     GuidanceSystem, AntennaType, ElectricitySource, LifeSupportType,\
     AttitudeControlSystem, LandingSolution, HeatshieldMaterial, Organization,\
     Rocket, Spacecraft, CrewedSpacecraft, LaunchFacility, Mission, Astronaut,\
-    CrewedMission, Igniter
+    CrewedMission, Igniter, MissionTarget
 
 
-@admin.register(Role)
-@admin.register(StageRole)
-@admin.register(PowerCycle)
-@admin.register(Cooling)
-@admin.register(NozzleType)
-@admin.register(Injector)
-@admin.register(Igniter)
-@admin.register(TankConstruction)
-@admin.register(TankMaterial)
-@admin.register(RocketSeries)
-@admin.register(AntennaType)
-@admin.register(ElectricitySource)
-@admin.register(AttitudeControlSystem)
-@admin.register(LandingSolution)
-@admin.register(Organization)
+@admin.register(Role, StageRole, PowerCycle, Cooling, NozzleType, Injector,
+                Igniter, TankConstruction, TankMaterial, RocketSeries,
+                AntennaType, ElectricitySource, AttitudeControlSystem,
+                LandingSolution, Organization, MissionTarget)
 class BasicAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'illustration')
 
 
-@admin.register(NozzleMaterial)
-@admin.register(HeatshieldMaterial)
+@admin.register(NozzleMaterial, HeatshieldMaterial)
 class ChemAdmin(admin.ModelAdmin):
     list_display = ('name', 'chemical_formula', 'description', 'illustration')
 
 
-@admin.register(Instrument)
-@admin.register(GuidanceSystem)
-@admin.register(LifeSupportType)
+@admin.register(Instrument, GuidanceSystem, LifeSupportType)
 class ElectricAdmin(admin.ModelAdmin):
     list_display = ('name', 'energy_consumption', 'description',
                     'illustration')
@@ -121,7 +107,7 @@ class EngineAdmin(admin.ModelAdmin):
 @admin.register(Stage)
 class StageAdmin(admin.ModelAdmin):
     list_display = ('name', 'country', 'developed', 'fueled_weight')
-    list_filter = ('stage_role', 'main_engine', 'aux_engine', 'country', 
+    list_filter = ('stage_role', 'main_engine', 'aux_engine', 'country',
                    'manufacturer', 'tank_type')
     fieldsets = (
         (None, {
