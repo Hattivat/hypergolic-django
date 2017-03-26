@@ -77,6 +77,8 @@ class Manufacturer(Basic):
     active = models.NullBooleanField(blank=True, null=True)
     defunct = models.PositiveSmallIntegerField(choices=YEARS, blank=True,
                                                null=True)
+    successor = models.ForeignKey('self', blank=True, null=True,
+                                  verbose_name="predecessor")
     headquarters = models.CharField(max_length=100, blank=True)
     website = models.URLField(max_length=100, blank=True, null=True)
     illustration = models.ImageField(blank=True, null=True,
