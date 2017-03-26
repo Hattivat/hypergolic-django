@@ -319,6 +319,11 @@ class Organization(Basic):
                                      upload_to='organizations/')
 
 
+class MissionTarget(Basic):
+    illustration = models.ImageField(blank=True, null=True,
+                                     upload_to='missiontargets/')
+
+
 class Rocket(Complex):
     series = models.ForeignKey(RocketSeries, on_delete=models.PROTECT,
                                blank=True, null=True)
@@ -420,10 +425,13 @@ class Mission(Basic):
                                         on_delete=models.PROTECT)
     launch_vehicle = models.ForeignKey(Rocket, on_delete=models.PROTECT)
     spacecraft = models.ForeignKey(Spacecraft, on_delete=models.PROTECT)
-    target = models.CharField(max_length=200)
+    targets = models.ManyToManyField(MissionTarget)
     failure = models.BooleanField(default=False)
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='missions/')
+
+    def print_targets(self):
+        return ', '.join([target.name for target in self.targets.all()])
 
 
 class Astronaut(models.Model):
@@ -453,3 +461,6 @@ class Astronaut(models.Model):
 class CrewedMission(Mission):
     crew = models.ManyToManyField(Astronaut)
     landing_site = models.CharField(max_length=100, blank=True)
+
+    def print_crew(self):
+        return ', '.join([target.__str__() for target in self.crew.all()])
