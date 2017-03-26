@@ -119,7 +119,8 @@ class PropellantMix(models.Model):
     # combustion temperature is degree Kelvin!
     combustion_temp = models.DecimalField(max_digits=6, decimal_places=1,
                                           blank=True, null=True,
-                                          verbose_name="combustion temperature")
+                                          verbose_name="combustion \
+                                          temperature")
     description = models.TextField(blank=True)
     sources = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
@@ -226,7 +227,8 @@ class Stage(Complex):
     main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
                                     related_name='stage_main')
     num_main_engines = models.PositiveSmallIntegerField(default=1,
-                                verbose_name="number of main engines")
+                                                        verbose_name="number\
+                                                        of main engines")
     main_gimbal_yaw_min = models.DecimalField(max_digits=4, decimal_places=1,
                                               blank=True, null=True)
     main_gimbal_yaw_max = models.DecimalField(max_digits=4, decimal_places=1,
@@ -240,7 +242,8 @@ class Stage(Complex):
                                    related_name='stage_aux',
                                    verbose_name="auxilliary engine")
     num_aux_engines = models.PositiveSmallIntegerField(default=0,
-                                verbose_name="number of auxilliary engines")
+                                                       verbose_name="number \
+                                                       of auxilliary engines")
     aux_gimbal_yaw_min = models.DecimalField(max_digits=4, decimal_places=1,
                                              blank=True, null=True)
     aux_gimbal_yaw_max = models.DecimalField(max_digits=4, decimal_places=1,
@@ -335,7 +338,8 @@ class Rocket(Complex):
     fairing_height = models.PositiveIntegerField(blank=True, null=True)  # mm
     fairing_width = models.PositiveIntegerField(blank=True, null=True)  # mm
     num_flights = models.PositiveSmallIntegerField(default=0,
-                                            verbose_name="number of flights")
+                                                   verbose_name="number of \
+                                                   flights")
     failures = models.PositiveSmallIntegerField(default=0)
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='rockets/')
@@ -367,7 +371,8 @@ class Spacecraft(Complex):
     landing_solution = models.ForeignKey(LandingSolution, blank=True,
                                          null=True, on_delete=models.PROTECT)
     num_flights = models.PositiveSmallIntegerField(default=0,
-                                            verbose_name='number of flights')
+                                                   verbose_name='number of \
+                                                   flights')
     failures = models.PositiveSmallIntegerField(default=0)
     fueled_weight = models.PositiveIntegerField()  # stored in grams
     # volumes in litres, weights in grams
@@ -378,13 +383,15 @@ class Spacecraft(Complex):
     main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
                                     related_name='spacecraft_main')
     num_main_engines = models.PositiveSmallIntegerField(default=1,
-                                        verbose_name='number of main engines')
+                                                        verbose_name='number \
+                                                        of main engines')
     aux_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
                                    blank=True, null=True,
                                    related_name='spacecraft_aux',
                                    verbose_name='auxilliary engine')
     num_aux_engines = models.PositiveSmallIntegerField(blank=True, default=0,
-                                verbose_name='number of auxilliary engines')
+                                                       verbose_name='number \
+                                                       of auxilliary engines')
     tank_type = models.ForeignKey(TankConstruction, on_delete=models.SET_NULL,
                                   blank=True, null=True)
     tank_material = models.ForeignKey(TankMaterial, on_delete=models.SET_NULL,
