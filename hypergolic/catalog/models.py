@@ -214,13 +214,14 @@ class TankMaterial(Basic):
 
 
 class Stage(Complex):
-    fueled_weight = models.PositiveIntegerField()  # stored in grams
+    dry_weight = models.BigIntegerField(blank=True, null=True)
+    fueled_weight = models.BigIntegerField()  # stored in grams
     # volumes are stored in litres
     oxidizer_volume = models.PositiveIntegerField(blank=True, null=True)
     fuel_volume = models.PositiveIntegerField(blank=True, null=True)
     # weights are stored in kilograms
-    oxidizer_weight = models.PositiveIntegerField(blank=True, null=True)
-    fuel_weight = models.PositiveIntegerField(blank=True, null=True)
+    oxidizer_weight = models.BigIntegerField(blank=True, null=True)
+    fuel_weight = models.BigIntegerField(blank=True, null=True)
     main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
                                     related_name='stage_main')
     num_main_engines = models.PositiveSmallIntegerField(default=1,
@@ -313,7 +314,8 @@ class Rocket(Complex):
     series = models.ForeignKey(RocketSeries, on_delete=models.PROTECT,
                                blank=True, null=True)
     stages = models.ManyToManyField(Stage)
-    fueled_weight = models.PositiveIntegerField()  # stored in grams
+    dry_weight = models.BigIntegerField(blank=True, null=True)
+    fueled_weight = models.BigIntegerField()  # stored in grams
     guidance_system = models.ForeignKey(GuidanceSystem, blank=True, null=True,
                                         on_delete=models.SET_NULL)
     num_flights = models.PositiveSmallIntegerField(default=0,
