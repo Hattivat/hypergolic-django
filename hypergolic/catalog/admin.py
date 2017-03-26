@@ -24,8 +24,8 @@ class EngineAdmin(admin.ModelAdmin):
     list_display = ('name', 'country', 'developed', 'application',
                     'propellants', 'cycle', 'specific_impulse_vac',
                     'thrust_vac', 'twr')
-    list_filter = ('application', 'propellants', 'cycle', 'injector_type',
-                   'restart_capability')
+    list_filter = ('country', 'manufacturer', 'application', 'propellants',
+                   'cycle', 'injector_type', 'restart_capability')
     fieldsets = (
         (None, {
             'fields': ('name', 'native_name', 'application', 'country',
@@ -62,6 +62,11 @@ class EngineAdmin(admin.ModelAdmin):
         })
     )
 
+
+@admin.register(Stage)
+class StageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'country')
+
 admin.site.register(StageRole)
 admin.site.register(PowerCycle)
 admin.site.register(Cooling)
@@ -72,7 +77,6 @@ admin.site.register(Manufacturer)
 admin.site.register(Compound)
 admin.site.register(TankConstruction)
 admin.site.register(TankMaterial)
-admin.site.register(Stage)
 admin.site.register(RocketSeries)
 admin.site.register(Instrument)
 admin.site.register(GuidanceSystem)

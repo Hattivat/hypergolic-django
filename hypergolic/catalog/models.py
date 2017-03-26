@@ -214,6 +214,8 @@ class TankMaterial(Basic):
 
 
 class Stage(Complex):
+    stage_role = models.ForeignKey(StageRole, on_delete=models.PROTECT,
+                                   null=True)
     dry_weight = models.BigIntegerField(blank=True, null=True)
     fueled_weight = models.BigIntegerField()  # stored in grams
     # volumes are stored in litres
