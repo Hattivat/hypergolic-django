@@ -335,6 +335,9 @@ class Rocket(Complex):
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='rockets/')
 
+    def num_stages(self):
+        return len(self.stages.objects.all())
+
 
 class Spacecraft(Complex):
     instruments = models.ManyToManyField(Instrument, blank=True)

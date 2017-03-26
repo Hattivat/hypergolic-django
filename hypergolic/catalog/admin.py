@@ -162,6 +162,9 @@ class StageAdmin(admin.ModelAdmin):
 
 @admin.register(Rocket)
 class RocketAdmin(admin.ModelAdmin):
+    list_display = ('name', 'country', 'num_stages', 'first_flight',
+                    'num_flights', 'failures')
+    list_filter = ('country', 'series')
     fieldsets = (
         (None, {
             'fields': ('name', 'native_name', 'stage_role', 'country',
