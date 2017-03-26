@@ -6,6 +6,7 @@ from .constants import YEARS, DEGREES, COUNTRIES
 class Basic(models.Model):
     name = models.CharField(max_length=50, primary_key=True, unique=True)
     description = models.TextField(blank=True)
+    sources = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
@@ -121,6 +122,7 @@ class PropellantMix(models.Model):
                                           blank=True, null=True,
                                           verbose_name="combustion temperature")
     description = models.TextField(blank=True)
+    sources = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
@@ -412,6 +414,9 @@ class Astronaut(models.Model):
     birth_place = models.CharField(max_length=100)
     death_date = models.DateTimeField(blank=True, null=True)
     biography = models.TextField(blank=True)
+    sources = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
     picture = models.ImageField(blank=True, null=True,
                                 upload_to='astronauts/')
 
