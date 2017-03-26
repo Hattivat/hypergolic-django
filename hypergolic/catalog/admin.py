@@ -65,7 +65,9 @@ class EngineAdmin(admin.ModelAdmin):
 
 @admin.register(Stage)
 class StageAdmin(admin.ModelAdmin):
-    list_display = ('name', 'country')
+    list_display = ('name', 'country', 'developed', 'fueled_weight')
+    list_filter = ('stage_role', 'main_engine', 'aux_engine', 'country', 
+                   'manufacturer', 'tank_type')
 
 admin.site.register(StageRole)
 admin.site.register(PowerCycle)
