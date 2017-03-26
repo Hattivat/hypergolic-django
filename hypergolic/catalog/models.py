@@ -88,8 +88,7 @@ class Manufacturer(Basic):
 
 class Compound(Basic):
     role = models.BooleanField(choices=((True, 'Fuel'), (False, 'Oxidizer')))
-    chem_formula = models.CharField(max_length=30, blank=True,
-                                    verbose_name="chemical formula")
+    chemical_formula = models.CharField(max_length=30, blank=True)
     also_known_as = models.CharField(max_length=50, blank=True)
     variety_of = models.ForeignKey('self', on_delete=models.SET_NULL,
                                    blank=True, null=True,
@@ -312,7 +311,7 @@ class LandingSolution(Basic):
 class HeatshieldMaterial(Basic):
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='heatshieldmaterials/')
-    chem_formula = models.CharField(max_length=30, blank=True, null=True)
+    chemical_formula = models.CharField(max_length=30, blank=True, null=True)
 
 
 class Organization(Basic):
@@ -328,6 +327,8 @@ class Rocket(Complex):
     fueled_weight = models.BigIntegerField()  # stored in grams
     guidance_system = models.ForeignKey(GuidanceSystem, blank=True, null=True,
                                         on_delete=models.SET_NULL)
+    fairing_height = models.PositiveIntegerField(blank=True, null=True)  # mm
+    fairing_width = models.PositiveIntegerField(blank=True, null=True)  # mm
     num_flights = models.PositiveSmallIntegerField(default=0,
                                             verbose_name="number of flights")
     failures = models.PositiveSmallIntegerField(default=0)

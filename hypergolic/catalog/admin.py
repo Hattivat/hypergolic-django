@@ -7,16 +7,79 @@ from .models import Role, StageRole, PowerCycle, Cooling, NozzleType,\
     Rocket, Spacecraft, CrewedSpacecraft, LaunchFacility, Mission, Astronaut,\
     CrewedMission, Igniter
 # Register your models here.
+admin.site.register(Spacecraft)
+admin.site.register(CrewedSpacecraft)
+admin.site.register(LaunchFacility)
+admin.site.register(Mission)
+admin.site.register(Astronaut)
+admin.site.register(CrewedMission)
 
 
 @admin.register(Role)
+@admin.register(StageRole)
+@admin.register(PowerCycle)
+@admin.register(Cooling)
+@admin.register(NozzleType)
+@admin.register(Injector)
+@admin.register(Igniter)
+@admin.register(TankConstruction)
+@admin.register(TankMaterial)
+@admin.register(RocketSeries)
+@admin.register(AntennaType)
+@admin.register(ElectricitySource)
+@admin.register(AttitudeControlSystem)
+@admin.register(LandingSolution)
+@admin.register(Organization)
 class BasicAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'illustration')
+
+
+@admin.register(NozzleMaterial)
+@admin.register(HeatshieldMaterial)
+class ChemAdmin(admin.ModelAdmin):
+    list_display = ('name', 'chemical_formula', 'description', 'illustration')
+
+
+@admin.register(Instrument)
+@admin.register(GuidanceSystem)
+@admin.register(LifeSupportType)
+class ElectricAdmin(admin.ModelAdmin):
+    list_display = ('name', 'energy_consumption', 'description',
+                    'illustration')
+
+
+@admin.register(Manufacturer)
+class ManufacturerAdmin(admin.ModelAdmin):
+    list_display = ('name', 'country', 'established', 'active', 'defunct')
+    list_filter = ('country', 'active')
+
+
+@admin.register(Compound)
+class CompoundAdmin(admin.ModelAdmin):
+    list_display = ('name', 'role', 'chemical_formula', 'also_known_as',
+                    'density')
+    list_filter = ('role', 'variety_of', 'toxicity', 'storability')
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'chemical_formula', 'also_known_as',
+                       'variety_of')
+        }),
+        ('Physical properties', {
+            'fields': ('density', ('melting_point', 'boiling_point'))
+        }),
+        ('Other characteristics', {
+            'fields': ('appearance', 'toxicity', 'storability', 'description',
+                       'illustration', 'sources')
+        })
+    )
 
 
 @admin.register(PropellantMix)
 class PropellantMixAdmin(admin.ModelAdmin):
     filter_horizontal = ('propellants',)
+    list_display = ('__str__', 'abbreviation', 'specific_impulse',
+                    'optimum_ratio', 'combustion_temp')
+    list_filter = ('hypergolic', 'propellants')
 
 
 @admin.register(Engine)
@@ -29,11 +92,7 @@ class EngineAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': ('name', 'native_name', 'application', 'country',
-                       'manufacturer', 'illustration')
-        }),
-        ('History', {
-            'fields': (('developed', 'first_flight'), 'variant_of',
-                       'description')
+                       'manufacturer', 'variant_of', 'illustration')
         }),
         ('Performance', {
             'fields': (('specific_impulse_vac', 'specific_impulse_sl'),
@@ -59,6 +118,9 @@ class EngineAdmin(admin.ModelAdmin):
         ('Flexibility', {
             'fields': ('restart_capability', 'num_restarts',
                        ('throttle_range_min', 'throttle_range_max'))
+        }),
+        ('History', {
+            'fields': (('developed', 'first_flight'), 'description', 'sources')
         })
     )
 
@@ -71,11 +133,7 @@ class StageAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': ('name', 'native_name', 'stage_role', 'country',
-                       'manufacturer', 'illustration')
-        }),
-        ('History', {
-            'fields': (('developed', 'first_flight'), 'variant_of',
-                       'description')
+                       'manufacturer', 'variant_of', 'illustration')
         }),
         ('Metrics', {
             'fields': ('height', 'diameter', ('dry_weight', 'fueled_weight'))
@@ -95,34 +153,29 @@ class StageAdmin(admin.ModelAdmin):
                        ('aux_gimbal_yaw_min', 'aux_gimbal_yaw_max'),
                        ('aux_gimbal_pitch_min', 'aux_gimbal_pitch_max'),
                        'fins')
+        }),
+        ('History', {
+            'fields': (('developed', 'first_flight'), 'description', 'sources')
         })
     )
 
-admin.site.register(StageRole)
-admin.site.register(PowerCycle)
-admin.site.register(Cooling)
-admin.site.register(NozzleType)
-admin.site.register(NozzleMaterial)
-admin.site.register(Injector)
-admin.site.register(Manufacturer)
-admin.site.register(Compound)
-admin.site.register(TankConstruction)
-admin.site.register(TankMaterial)
-admin.site.register(RocketSeries)
-admin.site.register(Instrument)
-admin.site.register(GuidanceSystem)
-admin.site.register(AntennaType)
-admin.site.register(ElectricitySource)
-admin.site.register(LifeSupportType)
-admin.site.register(AttitudeControlSystem)
-admin.site.register(LandingSolution)
-admin.site.register(HeatshieldMaterial)
-admin.site.register(Organization)
-admin.site.register(Rocket)
-admin.site.register(Spacecraft)
-admin.site.register(CrewedSpacecraft)
-admin.site.register(LaunchFacility)
-admin.site.register(Mission)
-admin.site.register(Astronaut)
-admin.site.register(CrewedMission)
-admin.site.register(Igniter)
+
+@admin.register(Rocket)
+class RocketAdmin(admin.ModelAdmin):
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'native_name', 'stage_role', 'country',
+                       'manufacturer', 'series', 'variant_of', 'illustration')
+        }),
+        ('Metrics', {
+            'fields': ('height', 'diameter', ('dry_weight', 'fueled_weight'))
+        }),
+        ('composition', {
+            'fields': ('stages', ('fairing_height', 'fairing_width'),
+                       'guidance_system')
+        }),
+        ('History', {
+            'fields': (('developed', 'first_flight'), ('num_flights',
+                       'failures'), 'description', 'sources')
+        })
+    )
