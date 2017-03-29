@@ -55,7 +55,6 @@ class CompoundAdmin(admin.ModelAdmin):
 
 @admin.register(PropellantMix)
 class PropellantMixAdmin(admin.ModelAdmin):
-    ordering = ('__str__')
     filter_horizontal = ('propellants',)
     list_display = ('__str__', 'abbreviation', 'specific_impulse',
                     'optimum_ratio', 'combustion_temp')
