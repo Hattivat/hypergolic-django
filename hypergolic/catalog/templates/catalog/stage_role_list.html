@@ -1,0 +1,20 @@
+{% extends "catalog/stage_role_base.html" %}
+
+{% block title %}
+    StageRoles
+{% endblock %}
+
+{% block content %}
+    <h1>StageRoles</h1>
+    <h2><a href={% url "stage_role_create" %}>Create new StageRole</a></h2>
+    <ul>
+    {% for stage_role in stage_role_list %}
+        <li><a href={% url "stage_role_detail" stage_role.pk %}>{{ stage_role }}</a> | <a href={% url "stage_role_update" stage_role.pk %}>Update</a> | <form style="display:inline;" action={% url "stage_role_delete" stage_role.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ stage_role }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form></li>
+    {% empty %}
+        <li>No StageRoles yet.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+

@@ -1,0 +1,20 @@
+{% extends "catalog/attitude_control_system_base.html" %}
+
+{% block title %}
+    AttitudeControlSystems
+{% endblock %}
+
+{% block content %}
+    <h1>AttitudeControlSystems</h1>
+    <h2><a href={% url "attitude_control_system_create" %}>Create new AttitudeControlSystem</a></h2>
+    <ul>
+    {% for attitude_control_system in attitude_control_system_list %}
+        <li><a href={% url "attitude_control_system_detail" attitude_control_system.pk %}>{{ attitude_control_system }}</a> | <a href={% url "attitude_control_system_update" attitude_control_system.pk %}>Update</a> | <form style="display:inline;" action={% url "attitude_control_system_delete" attitude_control_system.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ attitude_control_system }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form></li>
+    {% empty %}
+        <li>No AttitudeControlSystems yet.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+

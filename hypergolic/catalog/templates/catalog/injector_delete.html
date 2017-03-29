@@ -1,0 +1,17 @@
+{% extends "catalog/injector_base.html" %}
+
+{% block title %}
+    Delete {{ injector }}
+{% endblock %}
+
+{% block content %}
+<h1>Delete {{ injector }}</h1>
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete {{ injector }}?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+<a href={% url "injector_detail" injector.pk %}>Cancel</a>
+
+{% endblock %}

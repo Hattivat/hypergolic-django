@@ -1,0 +1,14 @@
+{% extends "catalog/rocket_series_base.html" %}
+
+{% block title %}
+    {{ rocket_series }}
+{% endblock %}
+
+{% block content %}
+    <h1><a href={% url "rocket_series_list" %}>RocketSeries</a></h1>
+    <h2>{{ rocket_series }} | <a href={% url "rocket_series_update" rocket_series.pk %}>Update</a> | 
+    <form style="display:inline;" action={% url "rocket_series_delete" rocket_series.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ rocket_series }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form>
+    </h2>
+{% endblock %}

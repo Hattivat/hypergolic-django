@@ -1,0 +1,14 @@
+{% extends "catalog/launch_facility_base.html" %}
+
+{% block title %}
+    {{ launch_facility }}
+{% endblock %}
+
+{% block content %}
+    <h1><a href={% url "launch_facility_list" %}>LaunchFacility</a></h1>
+    <h2>{{ launch_facility }} | <a href={% url "launch_facility_update" launch_facility.pk %}>Update</a> | 
+    <form style="display:inline;" action={% url "launch_facility_delete" launch_facility.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ launch_facility }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form>
+    </h2>
+{% endblock %}

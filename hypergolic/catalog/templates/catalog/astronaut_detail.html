@@ -1,0 +1,14 @@
+{% extends "catalog/astronaut_base.html" %}
+
+{% block title %}
+    {{ astronaut }}
+{% endblock %}
+
+{% block content %}
+    <h1><a href={% url "astronaut_list" %}>Astronaut</a></h1>
+    <h2>{{ astronaut }} | <a href={% url "astronaut_update" astronaut.pk %}>Update</a> | 
+    <form style="display:inline;" action={% url "astronaut_delete" astronaut.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ astronaut }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form>
+    </h2>
+{% endblock %}

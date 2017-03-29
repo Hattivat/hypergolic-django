@@ -1,0 +1,17 @@
+{% extends "catalog/role_base.html" %}
+
+{% block title %}
+    Delete {{ role }}
+{% endblock %}
+
+{% block content %}
+<h1>Delete {{ role }}</h1>
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete {{ role }}?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+<a href={% url "role_detail" role.pk %}>Cancel</a>
+
+{% endblock %}

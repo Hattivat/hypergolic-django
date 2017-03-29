@@ -1,0 +1,16 @@
+{% extends "catalog/life_support_type_base.html" %}
+
+{% block title %}
+    Create LifeSupportType
+{% endblock %}
+
+{% block content %}
+<h1><a href={% url "life_support_type_list" %}>LifeSupportType</a></h1>
+<h2>Create LifeSupportType</h2>
+
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create" />
+</form>
+<a href={% url "life_support_type_list" %}>Cancel</a>
+{% endblock %}

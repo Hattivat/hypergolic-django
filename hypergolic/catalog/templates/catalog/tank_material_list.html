@@ -1,0 +1,20 @@
+{% extends "catalog/tank_material_base.html" %}
+
+{% block title %}
+    TankMaterials
+{% endblock %}
+
+{% block content %}
+    <h1>TankMaterials</h1>
+    <h2><a href={% url "tank_material_create" %}>Create new TankMaterial</a></h2>
+    <ul>
+    {% for tank_material in tank_material_list %}
+        <li><a href={% url "tank_material_detail" tank_material.pk %}>{{ tank_material }}</a> | <a href={% url "tank_material_update" tank_material.pk %}>Update</a> | <form style="display:inline;" action={% url "tank_material_delete" tank_material.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ tank_material }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form></li>
+    {% empty %}
+        <li>No TankMaterials yet.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+

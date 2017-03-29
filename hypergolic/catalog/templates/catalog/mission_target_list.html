@@ -1,0 +1,20 @@
+{% extends "catalog/mission_target_base.html" %}
+
+{% block title %}
+    MissionTargets
+{% endblock %}
+
+{% block content %}
+    <h1>MissionTargets</h1>
+    <h2><a href={% url "mission_target_create" %}>Create new MissionTarget</a></h2>
+    <ul>
+    {% for mission_target in mission_target_list %}
+        <li><a href={% url "mission_target_detail" mission_target.pk %}>{{ mission_target }}</a> | <a href={% url "mission_target_update" mission_target.pk %}>Update</a> | <form style="display:inline;" action={% url "mission_target_delete" mission_target.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ mission_target }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form></li>
+    {% empty %}
+        <li>No MissionTargets yet.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+

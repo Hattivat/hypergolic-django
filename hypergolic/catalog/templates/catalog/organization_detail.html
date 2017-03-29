@@ -1,0 +1,14 @@
+{% extends "catalog/organization_base.html" %}
+
+{% block title %}
+    {{ organization }}
+{% endblock %}
+
+{% block content %}
+    <h1><a href={% url "organization_list" %}>Organization</a></h1>
+    <h2>{{ organization }} | <a href={% url "organization_update" organization.pk %}>Update</a> | 
+    <form style="display:inline;" action={% url "organization_delete" organization.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ organization }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form>
+    </h2>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "catalog/power_cycle_base.html" %}
+
+{% block title %}
+    {{ power_cycle }}
+{% endblock %}
+
+{% block content %}
+    <h1><a href={% url "power_cycle_list" %}>PowerCycle</a></h1>
+    <h2>{{ power_cycle }} | <a href={% url "power_cycle_update" power_cycle.pk %}>Update</a> | 
+    <form style="display:inline;" action={% url "power_cycle_delete" power_cycle.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ power_cycle }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form>
+    </h2>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "catalog/launch_facility_base.html" %}
+
+{% block title %}
+    Launch facilities
+{% endblock %}
+
+{% block content %}
+    <h1>Launch facilities</h1>
+    <h2><a href={% url "launch_facility_create" %}>Create new LaunchFacility</a></h2>
+    <ul>
+    {% for launch_facility in launch_facility_list %}
+        <li><a href={% url "launch_facility_detail" launch_facility.pk %}>{{ launch_facility }}</a> | <a href={% url "launch_facility_update" launch_facility.pk %}>Update</a> | <form style="display:inline;" action={% url "launch_facility_delete" launch_facility.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ launch_facility }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form></li>
+    {% empty %}
+        <li>No Launch facilities yet.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+

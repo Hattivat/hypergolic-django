@@ -1,0 +1,14 @@
+{% extends "catalog/engine_base.html" %}
+
+{% block title %}
+    {{ engine }}
+{% endblock %}
+
+{% block content %}
+    <h1><a href={% url "engine_list" %}>Engine</a></h1>
+    <h2>{{ engine }} | <a href={% url "engine_update" engine.pk %}>Update</a> | 
+    <form style="display:inline;" action={% url "engine_delete" engine.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ engine }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form>
+    </h2>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "catalog/antenna_type_base.html" %}
+
+{% block title %}
+    Delete {{ antenna_type }}
+{% endblock %}
+
+{% block content %}
+<h1>Delete {{ antenna_type }}</h1>
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete {{ antenna_type }}?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+<a href={% url "antenna_type_detail" antenna_type.pk %}>Cancel</a>
+
+{% endblock %}

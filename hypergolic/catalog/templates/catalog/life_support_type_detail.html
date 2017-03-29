@@ -1,0 +1,14 @@
+{% extends "catalog/life_support_type_base.html" %}
+
+{% block title %}
+    {{ life_support_type }}
+{% endblock %}
+
+{% block content %}
+    <h1><a href={% url "life_support_type_list" %}>LifeSupportType</a></h1>
+    <h2>{{ life_support_type }} | <a href={% url "life_support_type_update" life_support_type.pk %}>Update</a> | 
+    <form style="display:inline;" action={% url "life_support_type_delete" life_support_type.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ life_support_type }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form>
+    </h2>
+{% endblock %}

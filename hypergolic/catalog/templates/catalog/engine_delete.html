@@ -1,0 +1,17 @@
+{% extends "catalog/engine_base.html" %}
+
+{% block title %}
+    Delete {{ engine }}
+{% endblock %}
+
+{% block content %}
+<h1>Delete {{ engine }}</h1>
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete {{ engine }}?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+<a href={% url "engine_detail" engine.pk %}>Cancel</a>
+
+{% endblock %}

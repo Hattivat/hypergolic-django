@@ -1,0 +1,16 @@
+{% extends "catalog/rocket_base.html" %}
+
+{% block title %}
+    Create Rocket
+{% endblock %}
+
+{% block content %}
+<h1><a href={% url "rocket_list" %}>Rocket</a></h1>
+<h2>Create Rocket</h2>
+
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create" />
+</form>
+<a href={% url "rocket_list" %}>Cancel</a>
+{% endblock %}

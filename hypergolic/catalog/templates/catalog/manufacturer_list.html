@@ -1,0 +1,20 @@
+{% extends "catalog/manufacturer_base.html" %}
+
+{% block title %}
+    Manufacturers
+{% endblock %}
+
+{% block content %}
+    <h1>Manufacturers</h1>
+    <h2><a href={% url "manufacturer_create" %}>Create new Manufacturer</a></h2>
+    <ul>
+    {% for manufacturer in manufacturer_list %}
+        <li><a href={% url "manufacturer_detail" manufacturer.pk %}>{{ manufacturer }}</a> | <a href={% url "manufacturer_update" manufacturer.pk %}>Update</a> | <form style="display:inline;" action={% url "manufacturer_delete" manufacturer.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ manufacturer }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form></li>
+    {% empty %}
+        <li>No Manufacturers yet.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+

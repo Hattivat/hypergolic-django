@@ -1,0 +1,16 @@
+{% extends "catalog/propellant_mix_base.html" %}
+
+{% block title %}
+    Create PropellantMix
+{% endblock %}
+
+{% block content %}
+<h1><a href={% url "propellant_mix_list" %}>PropellantMix</a></h1>
+<h2>Create PropellantMix</h2>
+
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create" />
+</form>
+<a href={% url "propellant_mix_list" %}>Cancel</a>
+{% endblock %}

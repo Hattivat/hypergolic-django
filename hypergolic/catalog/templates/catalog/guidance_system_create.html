@@ -1,0 +1,16 @@
+{% extends "catalog/guidance_system_base.html" %}
+
+{% block title %}
+    Create GuidanceSystem
+{% endblock %}
+
+{% block content %}
+<h1><a href={% url "guidance_system_list" %}>GuidanceSystem</a></h1>
+<h2>Create GuidanceSystem</h2>
+
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create" />
+</form>
+<a href={% url "guidance_system_list" %}>Cancel</a>
+{% endblock %}

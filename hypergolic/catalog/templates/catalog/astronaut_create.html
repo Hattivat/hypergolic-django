@@ -1,0 +1,16 @@
+{% extends "catalog/astronaut_base.html" %}
+
+{% block title %}
+    Create Astronaut
+{% endblock %}
+
+{% block content %}
+<h1><a href={% url "astronaut_list" %}>Astronaut</a></h1>
+<h2>Create Astronaut</h2>
+
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create" />
+</form>
+<a href={% url "astronaut_list" %}>Cancel</a>
+{% endblock %}

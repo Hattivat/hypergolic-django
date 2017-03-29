@@ -1,0 +1,17 @@
+{% extends "catalog/crewed_spacecraft_base.html" %}
+
+{% block title %}
+    Delete {{ crewed_spacecraft }}
+{% endblock %}
+
+{% block content %}
+<h1>Delete {{ crewed_spacecraft }}</h1>
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete {{ crewed_spacecraft }}?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+<a href={% url "crewed_spacecraft_detail" crewed_spacecraft.pk %}>Cancel</a>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "catalog/attitude_control_system_base.html" %}
+
+{% block title %}
+    Delete {{ attitude_control_system }}
+{% endblock %}
+
+{% block content %}
+<h1>Delete {{ attitude_control_system }}</h1>
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete {{ attitude_control_system }}?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+<a href={% url "attitude_control_system_detail" attitude_control_system.pk %}>Cancel</a>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "catalog/electricity_source_base.html" %}
+
+{% block title %}
+    Create ElectricitySource
+{% endblock %}
+
+{% block content %}
+<h1><a href={% url "electricity_source_list" %}>ElectricitySource</a></h1>
+<h2>Create ElectricitySource</h2>
+
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create" />
+</form>
+<a href={% url "electricity_source_list" %}>Cancel</a>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "catalog/role_base.html" %}
+
+{% block title %}
+    Update {{ role }}
+{% endblock %}
+
+{% block content %}
+<h1><a href={% url "role_list" %}>Role</a></h1>
+<h2>Update {{ role }}</h2>
+
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update" />
+</form>
+<a href={% url "role_detail" role.pk %}>Cancel</a>
+<form style="display:inline;" action={% url "role_delete" role.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ role }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+</form>
+{% endblock %}

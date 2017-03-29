@@ -1,0 +1,17 @@
+{% extends "catalog/compound_base.html" %}
+
+{% block title %}
+    Delete {{ compound }}
+{% endblock %}
+
+{% block content %}
+<h1>Delete {{ compound }}</h1>
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete {{ compound }}?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+<a href={% url "compound_detail" compound.pk %}>Cancel</a>
+
+{% endblock %}

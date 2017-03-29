@@ -1,0 +1,14 @@
+{% extends "catalog/igniter_base.html" %}
+
+{% block title %}
+    {{ igniter }}
+{% endblock %}
+
+{% block content %}
+    <h1><a href={% url "igniter_list" %}>Igniter</a></h1>
+    <h2>{{ igniter }} | <a href={% url "igniter_update" igniter.pk %}>Update</a> | 
+    <form style="display:inline;" action={% url "igniter_delete" igniter.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ igniter }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form>
+    </h2>
+{% endblock %}

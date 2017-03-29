@@ -1,0 +1,14 @@
+{% extends "catalog/stage_role_base.html" %}
+
+{% block title %}
+    {{ stage_role }}
+{% endblock %}
+
+{% block content %}
+    <h1><a href={% url "stage_role_list" %}>StageRole</a></h1>
+    <h2>{{ stage_role }} | <a href={% url "stage_role_update" stage_role.pk %}>Update</a> | 
+    <form style="display:inline;" action={% url "stage_role_delete" stage_role.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ stage_role }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form>
+    </h2>
+{% endblock %}

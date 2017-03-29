@@ -1,0 +1,14 @@
+{% extends "catalog/instrument_base.html" %}
+
+{% block title %}
+    {{ instrument }}
+{% endblock %}
+
+{% block content %}
+    <h1><a href={% url "instrument_list" %}>Instrument</a></h1>
+    <h2>{{ instrument }} | <a href={% url "instrument_update" instrument.pk %}>Update</a> | 
+    <form style="display:inline;" action={% url "instrument_delete" instrument.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ instrument }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form>
+    </h2>
+{% endblock %}

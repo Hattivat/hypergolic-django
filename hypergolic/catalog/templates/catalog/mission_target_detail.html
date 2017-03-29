@@ -1,0 +1,14 @@
+{% extends "catalog/mission_target_base.html" %}
+
+{% block title %}
+    {{ mission_target }}
+{% endblock %}
+
+{% block content %}
+    <h1><a href={% url "mission_target_list" %}>MissionTarget</a></h1>
+    <h2>{{ mission_target }} | <a href={% url "mission_target_update" mission_target.pk %}>Update</a> | 
+    <form style="display:inline;" action={% url "mission_target_delete" mission_target.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ mission_target }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form>
+    </h2>
+{% endblock %}

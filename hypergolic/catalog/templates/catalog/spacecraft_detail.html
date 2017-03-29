@@ -1,0 +1,14 @@
+{% extends "catalog/spacecraft_base.html" %}
+
+{% block title %}
+    {{ spacecraft }}
+{% endblock %}
+
+{% block content %}
+    <h1><a href={% url "spacecraft_list" %}>Spacecraft</a></h1>
+    <h2>{{ spacecraft }} | <a href={% url "spacecraft_update" spacecraft.pk %}>Update</a> | 
+    <form style="display:inline;" action={% url "spacecraft_delete" spacecraft.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ spacecraft }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form>
+    </h2>
+{% endblock %}

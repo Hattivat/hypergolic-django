@@ -1,0 +1,16 @@
+{% extends "catalog/injector_base.html" %}
+
+{% block title %}
+    Create Injector
+{% endblock %}
+
+{% block content %}
+<h1><a href={% url "injector_list" %}>Injector</a></h1>
+<h2>Create Injector</h2>
+
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create" />
+</form>
+<a href={% url "injector_list" %}>Cancel</a>
+{% endblock %}

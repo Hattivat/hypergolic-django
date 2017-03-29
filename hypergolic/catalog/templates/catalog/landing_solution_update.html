@@ -1,0 +1,19 @@
+{% extends "catalog/landing_solution_base.html" %}
+
+{% block title %}
+    Update {{ landing_solution }}
+{% endblock %}
+
+{% block content %}
+<h1><a href={% url "landing_solution_list" %}>LandingSolution</a></h1>
+<h2>Update {{ landing_solution }}</h2>
+
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update" />
+</form>
+<a href={% url "landing_solution_detail" landing_solution.pk %}>Cancel</a>
+<form style="display:inline;" action={% url "landing_solution_delete" landing_solution.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ landing_solution }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+</form>
+{% endblock %}

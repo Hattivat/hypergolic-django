@@ -1,0 +1,14 @@
+{% extends "catalog/crewed_mission_base.html" %}
+
+{% block title %}
+    {{ crewed_mission }}
+{% endblock %}
+
+{% block content %}
+    <h1><a href={% url "crewed_mission_list" %}>CrewedMission</a></h1>
+    <h2>{{ crewed_mission }} | <a href={% url "crewed_mission_update" crewed_mission.pk %}>Update</a> | 
+    <form style="display:inline;" action={% url "crewed_mission_delete" crewed_mission.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ crewed_mission }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form>
+    </h2>
+{% endblock %}

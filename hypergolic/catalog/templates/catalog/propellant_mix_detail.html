@@ -1,0 +1,14 @@
+{% extends "catalog/propellant_mix_base.html" %}
+
+{% block title %}
+    {{ propellant_mix }}
+{% endblock %}
+
+{% block content %}
+    <h1><a href={% url "propellant_mix_list" %}>PropellantMix</a></h1>
+    <h2>{{ propellant_mix }} | <a href={% url "propellant_mix_update" propellant_mix.pk %}>Update</a> | 
+    <form style="display:inline;" action={% url "propellant_mix_delete" propellant_mix.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ propellant_mix }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+    </form>
+    </h2>
+{% endblock %}

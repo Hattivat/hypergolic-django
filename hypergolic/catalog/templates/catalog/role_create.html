@@ -1,0 +1,16 @@
+{% extends "catalog/role_base.html" %}
+
+{% block title %}
+    Create Role
+{% endblock %}
+
+{% block content %}
+<h1><a href={% url "role_list" %}>Role</a></h1>
+<h2>Create Role</h2>
+
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create" />
+</form>
+<a href={% url "role_list" %}>Cancel</a>
+{% endblock %}

@@ -5,14 +5,12 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="author" content="Jan Janiczek" />
-        {% block title %}<title>Hypergolic - the rocket science almanach</title>{% endblock %}
+        <title>{{ title }}</title>
         <meta name="description" content="" />
 
         {% load static %}
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
         <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}" />
-        <script src="{% static 'js/jquery-3.2.0.min.js' %}"></script>
-        <script src="{% static 'js/bootstrap.min.js' %}"></script>
         <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}" />
         <link rel="stylesheet" href="{% static 'css/hypergol.css' %}" />
     </head>
@@ -23,5 +21,7 @@
         <div class="container-fluid">
             
         </div>
+        <script src="{% static 'js/jquery-3.2.0.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
     </body>
 </html>

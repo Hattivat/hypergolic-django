@@ -1,0 +1,16 @@
+{% extends "catalog/nozzle_material_base.html" %}
+
+{% block title %}
+    Create NozzleMaterial
+{% endblock %}
+
+{% block content %}
+<h1><a href={% url "nozzle_material_list" %}>NozzleMaterial</a></h1>
+<h2>Create NozzleMaterial</h2>
+
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create" />
+</form>
+<a href={% url "nozzle_material_list" %}>Cancel</a>
+{% endblock %}

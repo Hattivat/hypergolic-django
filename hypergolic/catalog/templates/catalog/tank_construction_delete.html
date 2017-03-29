@@ -1,0 +1,17 @@
+{% extends "catalog/tank_construction_base.html" %}
+
+{% block title %}
+    Delete {{ tank_construction }}
+{% endblock %}
+
+{% block content %}
+<h1>Delete {{ tank_construction }}</h1>
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete {{ tank_construction }}?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+<a href={% url "tank_construction_detail" tank_construction.pk %}>Cancel</a>
+
+{% endblock %}
