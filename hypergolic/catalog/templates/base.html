@@ -5,7 +5,7 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="author" content="Jan Janiczek" />
-        <title>{{ title }}</title>
+        <title>{% block title %}{% endblock %}</title>
         <meta name="description" content="" />
 
         {% load static %}
@@ -19,7 +19,8 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
         <div class="container-fluid">
-            
+            {% block content %}
+            {% endblock %}
         </div>
         <script src="{% static 'js/jquery-3.2.0.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>

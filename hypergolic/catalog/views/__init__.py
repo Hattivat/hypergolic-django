@@ -1,4 +1,4 @@
-
+from django.shortcuts import render
 from .role_views import *  # NOQA
 from .stage_role_views import *  # NOQA
 from .power_cycle_views import *  # NOQA
@@ -32,3 +32,7 @@ from .launch_facility_views import *  # NOQA
 from .mission_views import *  # NOQA
 from .astronaut_views import *  # NOQA
 from .crewed_mission_views import *  # NOQA
+
+
+def home(request):
+    return render(request, 'catalog/home.html')
