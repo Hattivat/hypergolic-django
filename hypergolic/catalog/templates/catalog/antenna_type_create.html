@@ -1,16 +1,15 @@
 {% extends "catalog/antenna_type_base.html" %}
 
 {% block title %}
-    Create AntennaType
+    Define a new type of antenna
 {% endblock %}
 
 {% block content %}
-<h1><a href={% url "antenna_type_list" %}>AntennaType</a></h1>
-<h2>Create AntennaType</h2>
-
-<form action="" method="post">{% csrf_token %}
+<h3><a href={% url "antenna_type_list" %}>Back to index</a></h3>
+<h3>Define a new type of antenna</h3>
+<form class="form-horizontal" action="" method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Create" />
+    <button type="submit" class="btn btn-default">Create</button>
 </form>
-<a href={% url "antenna_type_list" %}>Cancel</a>
+<a href={% url "antenna_type_list" %} class="btn btn-default">Cancel</a>
 {% endblock %}

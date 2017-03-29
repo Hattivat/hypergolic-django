@@ -19,8 +19,26 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
         <div class="container-fluid">
-            {% block content %}
-            {% endblock %}
+            <div class="row">
+                <nav class="col-sm-4 col-lg-2">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li role="presentation"><a href={% url 'rocket_list' %}>Rockets</a></li>
+                        <li role="presentation"><a href={% url 'stage_list' %}>Rocket stages</a></li>
+                        <li role="presentation"><a href={% url 'engine_list' %}>Rocket engines</a></li>
+                        <li role="presentation"><a href={% url 'propellant_mix_list' %}>Rocket propellants</a></li>
+                        <li role="presentation"><a href={% url 'manufacturer_list' %}>Manufacturers</a></li>
+                        <li role="presentation"><a href={% url 'spacecraft_list' %}>Unmanned spacecraft</a></li>
+                        <li role="presentation"><a href={% url 'crewed_spacecraft_list' %}>Manned spacecraft</a></li>
+                        <li role="presentation"><a href={% url 'astronaut_list' %}>Astronauts</a></li>
+                        <li role="presentation"><a href={% url 'mission_list' %}>Robotic missions</a></li>
+                        <li role="presentation"><a href={% url 'crewed_mission_list' %}>Manned missions</a></li>
+                    </ul>
+                </nav>
+                <div class="col-sm-8">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
         </div>
         <script src="{% static 'js/jquery-3.2.0.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
