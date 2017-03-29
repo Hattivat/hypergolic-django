@@ -55,10 +55,12 @@ class CompoundAdmin(admin.ModelAdmin):
 
 @admin.register(PropellantMix)
 class PropellantMixAdmin(admin.ModelAdmin):
+    ordering = ('__str__')
     filter_horizontal = ('propellants',)
     list_display = ('__str__', 'abbreviation', 'specific_impulse',
                     'optimum_ratio', 'combustion_temp')
     list_filter = ('hypergolic', 'propellants')
+    list_select_related = True
 
 
 @admin.register(Engine)
@@ -68,6 +70,7 @@ class EngineAdmin(admin.ModelAdmin):
                     'thrust_vac', 'twr')
     list_filter = ('country', 'manufacturer', 'application', 'propellants',
                    'cycle', 'injector_type', 'restart_capability')
+    list_select_related = True
     fieldsets = (
         (None, {
             'fields': ('name', 'native_name', 'application', 'country',
@@ -109,6 +112,7 @@ class StageAdmin(admin.ModelAdmin):
     list_display = ('name', 'country', 'developed', 'fueled_weight')
     list_filter = ('stage_role', 'main_engine', 'aux_engine', 'country',
                    'manufacturer', 'tank_type')
+    list_select_related = True
     fieldsets = (
         (None, {
             'fields': ('name', 'native_name', 'stage_role', 'country',
@@ -145,6 +149,7 @@ class RocketAdmin(admin.ModelAdmin):
     list_display = ('name', 'country', 'num_stages', 'first_flight',
                     'num_flights', 'failures')
     list_filter = ('country', 'series')
+    list_select_related = True
     fieldsets = (
         (None, {
             'fields': ('name', 'native_name', 'stage_role', 'country',
@@ -170,6 +175,7 @@ class SpacecraftAdmin(admin.ModelAdmin):
     list_display = ('name', 'country', 'developed', 'fueled_weight')
     list_filter = ('country', 'manufacturer', 'instruments',
                    'electricity_source')
+    list_select_related = True
     fieldsets = (
         (None, {
             'fields': ('name', 'native_name', 'country', 'manufacturer',
@@ -211,6 +217,7 @@ class CrewedSpacecraftAdmin(admin.ModelAdmin):
     list_display = ('name', 'country', 'developed', 'fueled_weight')
     list_filter = ('country', 'manufacturer', 'instruments',
                    'electricity_source')
+    list_select_related = True
     fieldsets = (
         (None, {
             'fields': ('name', 'native_name', 'country', 'manufacturer',
@@ -296,6 +303,7 @@ class CrewedMissionAdmin(admin.ModelAdmin):
                     'print_targets', 'print_crew')
     list_filter = ('country', 'organization', 'launch_vehicle', 'spacecraft',
                    'targets', 'launch_facility', 'failure')
+    list_select_related = True
     fieldsets = (
         (None, {
             'fields': ('name', 'country', 'organization')

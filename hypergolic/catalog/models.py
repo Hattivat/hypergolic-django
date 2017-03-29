@@ -19,6 +19,7 @@ class Basic(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ['name']
 
 
 class Role(Basic):
@@ -463,6 +464,9 @@ class Astronaut(models.Model):
 
     def get_absolute_url(self):
         return reverse('astronaut-detail', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['last_name']
 
 
 class CrewedMission(Mission):
