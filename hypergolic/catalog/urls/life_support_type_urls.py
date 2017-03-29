@@ -9,15 +9,15 @@ urlpatterns = [
         login_required(LifeSupportTypeCreateView.as_view()),
         name="life_support_type_create"),
 
-    url(r'^(?P<pk>\d+)/update/$',
+    url(r'^(?P<pk>.+)/update/$',
         login_required(LifeSupportTypeUpdateView.as_view()),
         name="life_support_type_update"),
 
-    url(r'^(?P<pk>\d+)/delete/$',
+    url(r'^(?P<pk>.+)/delete/$',
         login_required(LifeSupportTypeDeleteView.as_view()),
         name="life_support_type_delete"),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^(?P<pk>.+)/$',
         LifeSupportTypeDetailView.as_view(),
         name="life_support_type_detail"),
 

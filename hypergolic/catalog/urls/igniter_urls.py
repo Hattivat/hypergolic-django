@@ -9,15 +9,15 @@ urlpatterns = [
         login_required(IgniterCreateView.as_view()),
         name="igniter_create"),
 
-    url(r'^(?P<pk>\d+)/update/$',
+    url(r'^(?P<pk>.+)/update/$',
         login_required(IgniterUpdateView.as_view()),
         name="igniter_update"),
 
-    url(r'^(?P<pk>\d+)/delete/$',
+    url(r'^(?P<pk>.+)/delete/$',
         login_required(IgniterDeleteView.as_view()),
         name="igniter_delete"),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^(?P<pk>.+)/$',
         IgniterDetailView.as_view(),
         name="igniter_detail"),
 

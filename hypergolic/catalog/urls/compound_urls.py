@@ -9,15 +9,15 @@ urlpatterns = [
         login_required(CompoundCreateView.as_view()),
         name="compound_create"),
 
-    url(r'^(?P<pk>\d+)/update/$',
+    url(r'^(?P<pk>.+)/update/$',
         login_required(CompoundUpdateView.as_view()),
         name="compound_update"),
 
-    url(r'^(?P<pk>\d+)/delete/$',
+    url(r'^(?P<pk>.+)/delete/$',
         login_required(CompoundDeleteView.as_view()),
         name="compound_delete"),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^(?P<pk>.+)/$',
         CompoundDetailView.as_view(),
         name="compound_detail"),
 

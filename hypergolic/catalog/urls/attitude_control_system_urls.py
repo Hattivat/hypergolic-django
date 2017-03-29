@@ -9,15 +9,15 @@ urlpatterns = [
         login_required(AttitudeControlSystemCreateView.as_view()),
         name="attitude_control_system_create"),
 
-    url(r'^(?P<pk>\d+)/update/$',
+    url(r'^(?P<pk>.+)/update/$',
         login_required(AttitudeControlSystemUpdateView.as_view()),
         name="attitude_control_system_update"),
 
-    url(r'^(?P<pk>\d+)/delete/$',
+    url(r'^(?P<pk>.+)/delete/$',
         login_required(AttitudeControlSystemDeleteView.as_view()),
         name="attitude_control_system_delete"),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^(?P<pk>.+)/$',
         AttitudeControlSystemDetailView.as_view(),
         name="attitude_control_system_detail"),
 

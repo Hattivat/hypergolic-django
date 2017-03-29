@@ -43,10 +43,14 @@ class CompoundListView(ListView):
         return super(CompoundListView, self).get_context_object_name(object_list)
 
     def paginate_queryset(self, queryset, page_size):
-        return super(CompoundListView, self).paginate_queryset(queryset, page_size)
+        return super(CompoundListView, self).paginate_queryset(queryset,
+                                                               page_size)
 
-    def get_paginator(self, queryset, per_page, orphans=0, allow_empty_first_page=True):
-        return super(CompoundListView, self).get_paginator(queryset, per_page, orphans=0, allow_empty_first_page=True)
+    def get_paginator(self, queryset, per_page, orphans=0,
+                      allow_empty_first_page=True):
+        return super(CompoundListView, self).get_paginator(queryset, per_page,
+                                                           orphans=0,
+                                                           allow_empty_first_page=True)
 
     def render_to_response(self, context, **response_kwargs):
         return super(CompoundListView, self).render_to_response(context, **response_kwargs)

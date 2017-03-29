@@ -9,15 +9,15 @@ urlpatterns = [
         login_required(LandingSolutionCreateView.as_view()),
         name="landing_solution_create"),
 
-    url(r'^(?P<pk>\d+)/update/$',
+    url(r'^(?P<pk>.+)/update/$',
         login_required(LandingSolutionUpdateView.as_view()),
         name="landing_solution_update"),
 
-    url(r'^(?P<pk>\d+)/delete/$',
+    url(r'^(?P<pk>.+)/delete/$',
         login_required(LandingSolutionDeleteView.as_view()),
         name="landing_solution_delete"),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^(?P<pk>.+)/$',
         LandingSolutionDetailView.as_view(),
         name="landing_solution_detail"),
 

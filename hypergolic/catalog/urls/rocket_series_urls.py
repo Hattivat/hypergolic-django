@@ -9,15 +9,15 @@ urlpatterns = [
         login_required(RocketSeriesCreateView.as_view()),
         name="rocket_series_create"),
 
-    url(r'^(?P<pk>\d+)/update/$',
+    url(r'^(?P<pk>.+)/update/$',
         login_required(RocketSeriesUpdateView.as_view()),
         name="rocket_series_update"),
 
-    url(r'^(?P<pk>\d+)/delete/$',
+    url(r'^(?P<pk>.+)/delete/$',
         login_required(RocketSeriesDeleteView.as_view()),
         name="rocket_series_delete"),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^(?P<pk>.+)/$',
         RocketSeriesDetailView.as_view(),
         name="rocket_series_detail"),
 

@@ -9,15 +9,15 @@ urlpatterns = [
         login_required(PowerCycleCreateView.as_view()),
         name="power_cycle_create"),
 
-    url(r'^(?P<pk>\d+)/update/$',
+    url(r'^(?P<pk>.+)/update/$',
         login_required(PowerCycleUpdateView.as_view()),
         name="power_cycle_update"),
 
-    url(r'^(?P<pk>\d+)/delete/$',
+    url(r'^(?P<pk>.+)/delete/$',
         login_required(PowerCycleDeleteView.as_view()),
         name="power_cycle_delete"),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^(?P<pk>.+)/$',
         PowerCycleDetailView.as_view(),
         name="power_cycle_detail"),
 

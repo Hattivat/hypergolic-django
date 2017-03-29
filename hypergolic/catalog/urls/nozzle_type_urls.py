@@ -9,15 +9,15 @@ urlpatterns = [
         login_required(NozzleTypeCreateView.as_view()),
         name="nozzle_type_create"),
 
-    url(r'^(?P<pk>\d+)/update/$',
+    url(r'^(?P<pk>.+)/update/$',
         login_required(NozzleTypeUpdateView.as_view()),
         name="nozzle_type_update"),
 
-    url(r'^(?P<pk>\d+)/delete/$',
+    url(r'^(?P<pk>.+)/delete/$',
         login_required(NozzleTypeDeleteView.as_view()),
         name="nozzle_type_delete"),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^(?P<pk>.+)/$',
         NozzleTypeDetailView.as_view(),
         name="nozzle_type_detail"),
 

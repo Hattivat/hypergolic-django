@@ -9,15 +9,15 @@ urlpatterns = [
         login_required(TankConstructionCreateView.as_view()),
         name="tank_construction_create"),
 
-    url(r'^(?P<pk>\d+)/update/$',
+    url(r'^(?P<pk>.+)/update/$',
         login_required(TankConstructionUpdateView.as_view()),
         name="tank_construction_update"),
 
-    url(r'^(?P<pk>\d+)/delete/$',
+    url(r'^(?P<pk>.+)/delete/$',
         login_required(TankConstructionDeleteView.as_view()),
         name="tank_construction_delete"),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^(?P<pk>.+)/$',
         TankConstructionDetailView.as_view(),
         name="tank_construction_detail"),
 

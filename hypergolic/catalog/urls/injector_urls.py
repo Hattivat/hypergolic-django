@@ -9,15 +9,15 @@ urlpatterns = [
         login_required(InjectorCreateView.as_view()),
         name="injector_create"),
 
-    url(r'^(?P<pk>\d+)/update/$',
+    url(r'^(?P<pk>.+)/update/$',
         login_required(InjectorUpdateView.as_view()),
         name="injector_update"),
 
-    url(r'^(?P<pk>\d+)/delete/$',
+    url(r'^(?P<pk>.+)/delete/$',
         login_required(InjectorDeleteView.as_view()),
         name="injector_delete"),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^(?P<pk>.+)/$',
         InjectorDetailView.as_view(),
         name="injector_detail"),
 

@@ -9,15 +9,15 @@ urlpatterns = [
         login_required(HeatshieldMaterialCreateView.as_view()),
         name="heatshield_material_create"),
 
-    url(r'^(?P<pk>\d+)/update/$',
+    url(r'^(?P<pk>.+)/update/$',
         login_required(HeatshieldMaterialUpdateView.as_view()),
         name="heatshield_material_update"),
 
-    url(r'^(?P<pk>\d+)/delete/$',
+    url(r'^(?P<pk>.+)/delete/$',
         login_required(HeatshieldMaterialDeleteView.as_view()),
         name="heatshield_material_delete"),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^(?P<pk>.+)/$',
         HeatshieldMaterialDetailView.as_view(),
         name="heatshield_material_detail"),
 

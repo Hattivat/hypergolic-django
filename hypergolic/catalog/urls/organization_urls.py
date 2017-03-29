@@ -9,15 +9,15 @@ urlpatterns = [
         login_required(OrganizationCreateView.as_view()),
         name="organization_create"),
 
-    url(r'^(?P<pk>\d+)/update/$',
+    url(r'^(?P<pk>.+)/update/$',
         login_required(OrganizationUpdateView.as_view()),
         name="organization_update"),
 
-    url(r'^(?P<pk>\d+)/delete/$',
+    url(r'^(?P<pk>.+)/delete/$',
         login_required(OrganizationDeleteView.as_view()),
         name="organization_delete"),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^(?P<pk>.+)/$',
         OrganizationDetailView.as_view(),
         name="organization_detail"),
 

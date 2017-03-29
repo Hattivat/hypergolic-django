@@ -9,15 +9,15 @@ urlpatterns = [
         login_required(RoleCreateView.as_view()),
         name="role_create"),
 
-    url(r'^(?P<pk>\d+)/update/$',
+    url(r'^(?P<pk>.+)/update/$',
         login_required(RoleUpdateView.as_view()),
         name="role_update"),
 
-    url(r'^(?P<pk>\d+)/delete/$',
+    url(r'^(?P<pk>.+)/delete/$',
         login_required(RoleDeleteView.as_view()),
         name="role_delete"),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^(?P<pk>.+)/$',
         RoleDetailView.as_view(),
         name="role_detail"),
 

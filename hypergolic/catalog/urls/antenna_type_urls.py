@@ -9,15 +9,15 @@ urlpatterns = [
         login_required(AntennaTypeCreateView.as_view()),
         name="antenna_type_create"),
 
-    url(r'^(?P<pk>\d+)/update/$',
+    url(r'^(?P<pk>.+)/update/$',
         login_required(AntennaTypeUpdateView.as_view()),
         name="antenna_type_update"),
 
-    url(r'^(?P<pk>\d+)/delete/$',
+    url(r'^(?P<pk>.+)/delete/$',
         login_required(AntennaTypeDeleteView.as_view()),
         name="antenna_type_delete"),
 
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^(?P<pk>.+)/$',
         AntennaTypeDetailView.as_view(),
         name="antenna_type_detail"),
 
