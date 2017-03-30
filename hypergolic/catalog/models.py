@@ -1,6 +1,11 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.text import camel_case_to_spaces
 from .constants import YEARS, DEGREES, COUNTRIES
+
+
+def underscore(astring):
+    return camel_case_to_spaces(astring).replace(' ', '_')
 
 
 class Basic(models.Model):
@@ -14,7 +19,19 @@ class Basic(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('{}-detail'.format(self.__class__.__name__),
+        return reverse('{}_detail'.format(underscore(self.__class__.__name__)),
+                       kwargs={'pk': self.pk})
+
+    def get_create_url(self):
+        return reverse('{}_create'.format(underscore(self.__class__.__name__)),
+                       kwargs={'pk': self.pk})
+
+    def get_update_url(self):
+        return reverse('{}_update'.format(underscore(self.__class__.__name__)),
+                       kwargs={'pk': self.pk})
+
+    def get_delete_url(self):
+        return reverse('{}_delete'.format(underscore(self.__class__.__name__)),
                        kwargs={'pk': self.pk})
 
     class Meta:
@@ -132,7 +149,19 @@ class PropellantMix(models.Model):
         return "/".join(mix)
 
     def get_absolute_url(self):
-        return reverse('propellantmix-detail', kwargs={'pk': self.pk})
+        return reverse('propellant_mix_detail', kwargs={'pk': self.pk})
+    
+    def get_create_url(self):
+        return reverse('propellant_mix_create'.format(underscore(self.__class__.__name__)),
+                       kwargs={'pk': self.pk})
+
+    def get_update_url(self):
+        return reverse('propellant_mix_update'.format(underscore(self.__class__.__name__)),
+                       kwargs={'pk': self.pk})
+
+    def get_delete_url(self):
+        return reverse('propellant_mix_delete'.format(underscore(self.__class__.__name__)),
+                       kwargs={'pk': self.pk})
 
     class Meta:
         verbose_name_plural = "Propellant mixes"
@@ -463,7 +492,19 @@ class Astronaut(models.Model):
         return self.first_name + self.middle_names + self.last_name
 
     def get_absolute_url(self):
-        return reverse('astronaut-detail', kwargs={'pk': self.pk})
+        return reverse('astronaut_detail', kwargs={'pk': self.pk})
+
+    def get_create_url(self):
+        return reverse('astronaut_create'.format(underscore(self.__class__.__name__)),
+                       kwargs={'pk': self.pk})
+
+    def get_update_url(self):
+        return reverse('astronaut_update'.format(underscore(self.__class__.__name__)),
+                       kwargs={'pk': self.pk})
+
+    def get_delete_url(self):
+        return reverse('astronaut_delete'.format(underscore(self.__class__.__name__)),
+                       kwargs={'pk': self.pk})
 
     class Meta:
         ordering = ['last_name']
