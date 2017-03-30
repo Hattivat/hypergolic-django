@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load mine %}
 
 {% block title %}
     {{ verbose_plural }}
@@ -6,16 +7,16 @@
 
 {% block content %}
     <div class="page-header"><h1>{{ verbose_plural }}</h1></div>
-    <h4><a href={% url  %}>Define a new {{ verbose }}.</a></h4>
+    <h4><a href={{ object_list.0.get_create_url }}>Define a new {{ verbose }}.</a></h4>
     <table class="table table-hover table-responsive">
         <tr>
             {% for column in display_data %}
-            <td><strong>{{ column }}</strong></td>
+            <td><strong>{{ column|spacify|capfirst }}</strong></td>
             {% endfor %}
         </tr>
         {% for instance in object_list %}
         <tr>
-            <td><a href={% url instance.get_absolute_url %}>{{ instance }}</a></td>
+            <td><a href={{ instance.get_absolute_url }}>{{ instance }}</a></td>
             {% for key,value in instance.items %}
                 {% if key in display_data %}
                 <td>{{ value }}</td>

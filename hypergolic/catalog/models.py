@@ -1,11 +1,7 @@
 from django.db import models
 from django.urls import reverse
-from django.utils.text import camel_case_to_spaces
 from .constants import YEARS, DEGREES, COUNTRIES
-
-
-def underscore(astring):
-    return camel_case_to_spaces(astring).replace(' ', '_')
+from .helpers import underscore
 
 
 class Basic(models.Model):
