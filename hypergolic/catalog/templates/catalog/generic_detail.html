@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load mine %}
+
+{% block title %}
+    {{ object }}
+{% endblock %}
+
+{% block content %}
+    <div class="page-header"><h1>{{ object }}</h1></div>
+    <a href="{{ object.get_list_url }}">Back to index</a>
+    <a href="{{ object.get_update_url }}">Edit</a>
+    {% if object.illustration %}
+        <img src="{{ object.illustration.url }}" />
+    {% endif %}
+    <p>{{ object.description }}</p>
+    {% block otherstuff %}
+    {% endblock %}
+    <h4>Sources:</h4>
+    <p>{{ object.sources }}</p>
+{% endblock %}

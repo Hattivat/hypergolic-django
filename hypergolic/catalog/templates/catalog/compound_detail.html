@@ -1,0 +1,21 @@
+{% extends './generic_detail.html' %}
+
+{% block otherstuff %}
+    <ul class="list-unstyled">
+        <li><strong>Chemical formula:</strong> {{ object.chemical_formula }}</li>
+        <li><strong>Also known as:</strong> {{ object.also_known_as }}</li>
+        <li><strong>Variety of:</strong> <a href='{{ object.variety_of.get_absolute_url }}'>{{ object.variety_of }}</a></li>
+    </ul>
+    <h4>Physical properties:</h4>
+    <ul class="list-unstyled">
+        <li><strong>Density:</strong> {{ object.density }}</li>
+        <li><strong>Melting point:</strong> {{ object.melting_point }}</li>
+        <li><strong>Boiling point:</strong> {{ object.boiling_point }}</li>
+    </ul>
+    <h4>Other characteristics:</h4>
+    <ul class="list-unstyled">
+        <li><strong>Appearance:</strong> {{ object.appearance }}</li>
+        <li><strong>Toxicity:</strong> {{ object.toxicity }}</li>
+        <li><strong>Storability:</strong> {{ object.storability }}</li>
+    </ul>
+{% endblock %}

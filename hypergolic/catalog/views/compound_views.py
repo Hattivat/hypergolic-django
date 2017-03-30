@@ -17,7 +17,7 @@ class CompoundListView(BasicListView):
 
 class CompoundDetailView(DetailView):
     model = Compound
-    template_name = "catalog/generic_detail.html"
+    template_name = "catalog/compound_detail.html"
 
 
 class CompoundCreateView(CreateView):
