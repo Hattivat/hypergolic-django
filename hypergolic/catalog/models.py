@@ -23,8 +23,7 @@ class Basic(models.Model):
                        kwargs={'pk': self.pk})
 
     def get_create_url(self):
-        return reverse('{}_create'.format(underscore(self.__class__.__name__)),
-                       kwargs={'pk': self.pk})
+        return reverse('{}_create'.format(underscore(self.__class__.__name__)))
 
     def get_update_url(self):
         return reverse('{}_update'.format(underscore(self.__class__.__name__)),
@@ -33,6 +32,9 @@ class Basic(models.Model):
     def get_delete_url(self):
         return reverse('{}_delete'.format(underscore(self.__class__.__name__)),
                        kwargs={'pk': self.pk})
+
+    def get_list_url(self):
+        return reverse('{}_list'.format(underscore(self.__class__.__name__)))
 
     class Meta:
         abstract = True
@@ -152,8 +154,7 @@ class PropellantMix(models.Model):
         return reverse('propellant_mix_detail', kwargs={'pk': self.pk})
     
     def get_create_url(self):
-        return reverse('propellant_mix_create'.format(underscore(self.__class__.__name__)),
-                       kwargs={'pk': self.pk})
+        return reverse('propellant_mix_create'.format(underscore(self.__class__.__name__)))
 
     def get_update_url(self):
         return reverse('propellant_mix_update'.format(underscore(self.__class__.__name__)),
@@ -162,6 +163,9 @@ class PropellantMix(models.Model):
     def get_delete_url(self):
         return reverse('propellant_mix_delete'.format(underscore(self.__class__.__name__)),
                        kwargs={'pk': self.pk})
+    
+    def get_list_url(self):
+        return reverse('{}_list'.format(underscore(self.__class__.__name__)))
 
     class Meta:
         verbose_name_plural = "Propellant mixes"
@@ -495,8 +499,7 @@ class Astronaut(models.Model):
         return reverse('astronaut_detail', kwargs={'pk': self.pk})
 
     def get_create_url(self):
-        return reverse('astronaut_create'.format(underscore(self.__class__.__name__)),
-                       kwargs={'pk': self.pk})
+        return reverse('astronaut_create'.format(underscore(self.__class__.__name__)))
 
     def get_update_url(self):
         return reverse('astronaut_update'.format(underscore(self.__class__.__name__)),
@@ -505,6 +508,9 @@ class Astronaut(models.Model):
     def get_delete_url(self):
         return reverse('astronaut_delete'.format(underscore(self.__class__.__name__)),
                        kwargs={'pk': self.pk})
+    
+    def get_list_url(self):
+        return reverse('{}_list'.format(underscore(self.__class__.__name__)))
 
     class Meta:
         ordering = ['last_name']
