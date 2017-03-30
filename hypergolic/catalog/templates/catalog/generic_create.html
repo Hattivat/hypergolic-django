@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Describe a new {{ verbose }}
+{% endblock %}
+
+{% block content %}
+    <div class="page-header"><h1>Describe a new {{ verbose }}</h1></div>
+    <a href="{{ model.get_list_url }}">Cancel</a>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Confirm" />
+    </form>
+{% endblock %}

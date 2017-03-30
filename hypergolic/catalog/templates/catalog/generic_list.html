@@ -18,9 +18,9 @@
         <tr>
             <td><a href={{ instance.get_absolute_url }}>{{ instance }}</a></td>
             {% for key,value in instance.items %}
-                {% if key in display_data %}
+                
                 <td>{{ value }}</td>
-                {% endif %}
+                
             {% endfor %}
         </tr>
         {% empty %}
