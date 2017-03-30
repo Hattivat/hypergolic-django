@@ -1,6 +1,7 @@
 from django.conf.urls import url
-from ..views import (PropellantMixListView, PropellantMixCreateView, PropellantMixDetailView,
-                     PropellantMixUpdateView, PropellantMixDeleteView)
+from ..views import (PropellantMixListView, PropellantMixCreateView,
+                     PropellantMixDetailView, PropellantMixUpdateView,
+                     PropellantMixDeleteView)
 from django.contrib.auth.decorators import login_required
 
 
