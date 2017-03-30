@@ -12,7 +12,7 @@ from ..helpers import underscore
 class CompoundListView(BasicListView):
     model = Compound
     template_name = "catalog/generic_list.html"
-    display_data = ('name', 'role', 'chemical_formula', 'also_known_as',
+    display_data = ('role', 'chemical_formula', 'also_known_as',
                     'density')
 
 

@@ -7,9 +7,10 @@
 
 {% block content %}
     <div class="page-header"><h1>{{ verbose_plural|capfirst }}</h1></div>
-    <h4><a href={{ object_list.0.get_create_url }}>Define a new {{ verbose }}.</a></h4>
+    <h4><a href={{ object_list.0.get_create_url }}>Define a new {{ verbose }}</a></h4>
     <table class="table table-hover table-responsive">
         <tr>
+            <td><strong>Name</strong></td>
             {% for column in display_data %}
             <td><strong>{{ column|spacify|capfirst }}</strong></td>
             {% endfor %}
@@ -17,10 +18,8 @@
         {% for instance in object_list %}
         <tr>
             <td><a href={{ instance.get_absolute_url }}>{{ instance }}</a></td>
-            {% for key,value in instance.items %}
-                
-                <td>{{ value }}</td>
-                
+            {% for column in display_data %}
+                <td>{{ instance|hashfind:column }}</td>
             {% endfor %}
         </tr>
         {% empty %}
