@@ -16,7 +16,7 @@
             {% endfor %}
         </tr>
         {% for instance in object_list %}
-        <a href={{ instance.get_absolute_url }}><tr>
+        <tr onclick="window.document.location='{{ instance.get_absolute_url }}';">
             <td>{{ instance }}</td>
             {% for column in display_data %}
                 <td>{{ instance|hashfind:column }}</td>
@@ -24,6 +24,6 @@
         {% empty %}
             <td>No {{ verbose_plural }} yet.</td>
         {% endfor %}
-        </tr></a>
+        </tr>
     </table>
 {% endblock %}
