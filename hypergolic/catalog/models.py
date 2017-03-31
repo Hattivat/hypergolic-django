@@ -495,18 +495,16 @@ class Astronaut(models.Model):
         return reverse('astronaut_detail', kwargs={'pk': self.pk})
 
     def get_create_url(self):
-        return reverse('astronaut_create'.format(underscore(self.__class__.__name__)))
+        return reverse('astronaut_create')
 
     def get_update_url(self):
-        return reverse('astronaut_update'.format(underscore(self.__class__.__name__)),
-                       kwargs={'pk': self.pk})
+        return reverse('astronaut_update', kwargs={'pk': self.pk})
 
     def get_delete_url(self):
-        return reverse('astronaut_delete'.format(underscore(self.__class__.__name__)),
-                       kwargs={'pk': self.pk})
-    
+        return reverse('astronaut_delete', kwargs={'pk': self.pk})
+
     def get_list_url(self):
-        return reverse('{}_list'.format(underscore(self.__class__.__name__)))
+        return reverse('astronaut_list')
 
     class Meta:
         ordering = ['last_name']

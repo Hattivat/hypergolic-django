@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load mine %}
+
+{% block title %}
+    {{ object }}
+{% endblock %}
+
+{% block content %}
+    <div class="page-header"><h1>{{ object }}</h1></div>
+    <a href="{{ object.get_list_url }}">Back to index</a>
+    <a href="{{ object.get_update_url }}">Edit</a>
+    {% if object.picture %}
+        <img src="{{ object.picture.url }}" />
+    {% endif %}
+    <p>{{ object.biography }}</p>
+    <ul class="list-unstyled">
+        <li><strong>Nationality:</strong> {{ object.nationality }}</li>
+        <li><strong>Organization:</strong> <a href="{{ object.organization.get_absolute_url }}">{{ object.organization }}</a></li>
+        <li><strong>Born:</strong> {{ object.birth_date }}</li>
+        <li><strong>Birth place:</strong> {{ object.birth_place }}</li>
+        {% if object.death_date %}    
+            <li><strong>Died:</strong> {{ object.death_date }}</li>
+        {% endif %}
+    </ul>
+    <ul class="list-unstyled">
+        {% for mission in missions %}
+        <li><strong>{{ mission.name }}</strong> - {{ mission.launch_date }}</li>
+        {% endfor %}
+    </ul>
+    <h4>Sources:</h4>
+    <p>{{ object.sources }}</p>
+{% endblock %}
