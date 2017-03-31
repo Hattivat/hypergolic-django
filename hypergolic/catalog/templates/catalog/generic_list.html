@@ -16,14 +16,14 @@
             {% endfor %}
         </tr>
         {% for instance in object_list %}
-        <tr>
-            <td><a href={{ instance.get_absolute_url }}>{{ instance }}</a></td>
+        <a href={{ instance.get_absolute_url }}><tr>
+            <td>{{ instance }}</td>
             {% for column in display_data %}
                 <td>{{ instance|hashfind:column }}</td>
             {% endfor %}
-        </tr>
         {% empty %}
             <td>No {{ verbose_plural }} yet.</td>
         {% endfor %}
+        </tr></a>
     </table>
 {% endblock %}
