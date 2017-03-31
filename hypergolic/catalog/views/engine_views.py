@@ -17,41 +17,10 @@ class EngineListView(GenericListView):
 class EngineDetailView(DetailView):
     model = Engine
     template_name = "catalog/engine_detail.html"
-    context_object_name = "engine"
-    slug_field = 'slug'
-    slug_url_kwarg = 'slug'
-    pk_url_kwarg = 'pk'
-
-    def __init__(self, **kwargs):
-        return super(EngineDetailView, self).__init__(**kwargs)
-
-    def dispatch(self, *args, **kwargs):
-        return super(EngineDetailView, self).dispatch(*args, **kwargs)
-
-    def get(self, request, *args, **kwargs):
-        return super(EngineDetailView, self).get(request, *args, **kwargs)
-
-    def get_object(self, queryset=None):
-        return super(EngineDetailView, self).get_object(queryset)
-
-    def get_queryset(self):
-        return super(EngineDetailView, self).get_queryset()
-
-    def get_slug_field(self):
-        return super(EngineDetailView, self).get_slug_field()
 
     def get_context_data(self, **kwargs):
         ret = super(EngineDetailView, self).get_context_data(**kwargs)
         return ret
-
-    def get_context_object_name(self, obj):
-        return super(EngineDetailView, self).get_context_object_name(obj)
-
-    def render_to_response(self, context, **response_kwargs):
-        return super(EngineDetailView, self).render_to_response(context, **response_kwargs)
-
-    def get_template_names(self):
-        return super(EngineDetailView, self).get_template_names()
 
 
 class EngineCreateView(GenericCreateView):
