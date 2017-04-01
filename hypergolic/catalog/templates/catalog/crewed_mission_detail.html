@@ -1,0 +1,9 @@
+{% extends './mission_detail.html' %}
+
+{% block crewspace %}
+<li><strong>Crew:</strong> {% for astro in object.crew.all %}<a href='{{ astro.get_absolute_url }}'>{{ astro }}</a></li>
+{% endblock %}
+
+{% block landing %}
+<li><strong>Landing site:</strong> {{ object.landing_site }}</li>
+{% endblock %}

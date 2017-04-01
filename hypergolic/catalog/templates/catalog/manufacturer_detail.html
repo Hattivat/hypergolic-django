@@ -6,10 +6,8 @@
         <li><strong>Headquarters:</strong> {{ object.headquarters }}</li>
         <li><strong>Native name:</strong> {{ object.native_name }}</li>
         <li><strong>Date established:</strong> {{ object.established }}</li>
-        {% if object.active %}
-        <li><strong>Active</strong></li>
-        {% else %}
-        <li><strong>Defunct</strong></li>
+        <li><strong>Status:</strong> {% if object.active %}Active{% else %}Defunct{% endif %}</li>
+        {% if not object.active %}
         <li><strong>Date defunct:</strong> {{ object.defunct }}</li>
             {% if object.successor %}
             <li><strong>Successor:</strong> <a href='{{ object.successor.get_absolute_url }}'>{{ object.successor }}</a></li>

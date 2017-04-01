@@ -4,91 +4,16 @@
     <ul class="list-unstyled">
         <li><strong>Country:</strong> {{ object.country }}</li>
         <li><strong>Organization:</strong> <a href="{{ object.organization.get_absolute_url }}">{{ object.organization }}</a></li>
-        <li><strong>Launch date:</strong> {{ object.launch_date }}</li>
         {% block crewspace %}
         {% endblock %}
-        <li><strong>Spacecraft:</strong> <a href='{{ object.spacecraft.get_absolute_url }}'>{{ object.spacecraft }}</a></li>
-        <li><strong>Launch vehicle:</strong> <a href='{{ object.launch_vehicle.get_absolute_url }}'>{{ object.launch_vehicle }}</a></li>
+        <li><strong>Launch date:</strong> {{ object.launch_date }}</li>
         <li><strong>Launch facility:</strong> <a href='{{ object.launch_facility.get_absolute_url }}'>{{ object.launch_facility }}</a></li>
-        <li><strong>Developed:</strong> {{ object.developed }}</li>
-        <li><strong>First flight:</strong> {{ object.first_flight }}</li>
+        <li><strong>Launch vehicle:</strong> <a href='{{ object.launch_vehicle.get_absolute_url }}'>{{ object.launch_vehicle }}</a></li>
+        <li><strong>Spacecraft:</strong> <a href='{{ object.spacecraft.get_absolute_url }}'>{{ object.spacecraft }}</a></li>
+        <li><strong>Targets:</strong> {% for target in object.targets.all %}<a href='{{ target.get_absolute_url }}'>{{ target }}</a>{% endfor %}</li>
+        <li><strong>Conclusion:</strong> {% if object.failure %}Failure{% else %}Success{% endif %}</li>
+        <li><strong>End date:</strong> {{ object.end_date }}</li>
+        {% block landing %}
+        {% endblock %}
     </ul>
-    <h4>Performance:</h4>
-    <ul class="list-unstyled">
-        <li><strong>Specific impulse in vacuum:</strong> {{ object.specific_impulse_vac }}</li>
-        <li><strong>Specific impulse at sea level:</strong> {{ object.specific_impulse_sl }}</li>
-        <li><strong>Thrust in vacuum:</strong> {{ object.thrust_vac }}</li>
-        <li><strong>Thrust at sea level:</strong> {{ object.thrust_sl }}</li>
-        <li><strong>Coefficient of thrust in vacuum:</strong> {{ object.boiling_point }}</li>
-        <li><strong>Coefficient of thrust at sea level:</strong> {{ object.boiling_point }}</li>
-        <li><strong>Thrust-to-weight ration:</strong> {{ object.twr }}</li>
-        <li><strong>Rated burn time:</strong> {{ object.rated_burn_time }}</li>
-    </ul>
-    <h4>Metrics:</h4>
-    <ul class="list-unstyled">
-        <li><strong>Height:</strong> {{ object.height }}</li>
-        <li><strong>Diameter:</strong> {{ object.diameter }}</li>
-        <li><strong>Dry weight:</strong> {{ object.dry_weight }}</li>
-    </ul>
-    <h4>Ignition!:</h4>
-    <ul class="list-unstyled">
-        <li><strong>Cycle:</strong> <a href='{{ object.cycle.get_absolute_url }}'>{{ object.cycle }}</a></li>
-        <li><strong>Injector type:</strong> <a href='{{ object.injector_type.get_absolute_url }}'>{{ object.injector_type }}</a></li>
-        <li><strong>Ignition method:</strong> <a href='{{ object.ignition_method.get_absolute_url }}'>{{ object.ignition_method }}</a></li>
-    </ul>
-    <h4>Combustion:</h4>
-    <ul class="list-unstyled">
-        <li><strong>Propellants:</strong> <a href='{{ object.propellants.get_absolute_url }}'>{{ object.propellants }}</a></li>
-        <li><strong>Mixture ratio:</strong> {{ object.mixture_ratio }}</li>
-        <li><strong>Chamber pressure:</strong> {{ object.chamber_pressure }}</li>
-        <li><strong>Combustion chambers:</strong> {{ object.combustion_chambers }}</li>
-    </ul>
-    <h4>Nozzle:</h4>
-    <ul class="list-unstyled">
-        <li><strong>Nozzle shape:</strong> <a href='{{ object.nozzle_shape.get_absolute_url }}'>{{ object.nozzle_shape }}</a></li>
-        <li><strong>Nozzle ratio:</strong> {{ object.nozzle_ratio }}</li>
-        <li><strong>Nozzle material:</strong> <a href='{{ object.nozzle_material.get_absolute_url }}'>{{ object.nozzle_material }}</a></li>
-        <li><strong>Cooling method:</strong> <a href='{{ object.cooling_method.get_absolute_url }}'>{{ object.cooling_method }}</a></li>
-    </ul>
-    <h4>Flexibility:</h4>
-    <ul class="list-unstyled">
-        <li><strong>Restart capability:</strong> {{ object.restart_capability }}</li>
-        {% if object.restart_capability %}
-        <li><strong>Number of restarts:</strong> {{ object.num_restarts }}</li>
-        {% endif %}
-        <li><strong>Throttle range:</strong> {{ object.throttle_range_min }} - {{ object.throttle_range_max }}</li>
-    </ul>
-    <h3>Used on</h3>
-    {% if object.stage_set.all %}
-    <h5>Stages</h5>
-    <ul class="list-unstyled">
-        {% for stage in object.stage_set.all %}
-        <li><strong><a href="{{ stage.get_absolute_url }}">{{ stage }}</a></strong> {{ stage.developed }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% if object.rocket_set.all %}
-    <h5>Rockets</h5>
-    <ul class="list-unstyled">
-        {% for rocket in object.rocket_set.all %}
-        <li><strong><a href="{{ rocket.get_absolute_url }}">{{ rocket }}</a></strong> {{ rocket.developed }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% if object.spacecraft_set.all %}
-    <h5>Robotic spacecraft</h5>
-    <ul class="list-unstyled">
-        {% for scraft in object.spacecraft_set.all %}
-        <li><strong><a href="{{ scraft.get_absolute_url }}">{{ scraft }}</a></strong> {{ scraft.developed }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% if object.mannedspacecraft_set.all %}
-    <h5>Manned spacecraft</h5>
-    <ul class="list-unstyled">
-        {% for mscraft in object.mannedspacecraft_set.all %}
-        <li><strong><a href="{{ mscraft.get_absolute_url }}">{{ mscraft }}</a></strong> {{ mscraft.developed }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
 {% endblock %}
