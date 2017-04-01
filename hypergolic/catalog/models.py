@@ -452,7 +452,7 @@ class LaunchFacility(Basic):
         verbose_name_plural = "Launch facilities"
 
 
-class Mission(Basic):
+class BaseMission(Basic):
     country = models.CharField(max_length=50, choices=COUNTRIES)
     organization = models.ForeignKey(Organization, on_delete=models.PROTECT,
                                      blank=True, null=True)
@@ -461,7 +461,6 @@ class Mission(Basic):
     launch_facility = models.ForeignKey(LaunchFacility,
                                         on_delete=models.PROTECT)
     launch_vehicle = models.ForeignKey(Rocket, on_delete=models.PROTECT)
-    spacecraft = models.ForeignKey(Spacecraft, on_delete=models.PROTECT)
     targets = models.ManyToManyField(MissionTarget)
     failure = models.BooleanField(default=False)
     illustration = models.ImageField(blank=True, null=True,
@@ -469,6 +468,13 @@ class Mission(Basic):
 
     def print_targets(self):
         return ', '.join([target.name for target in self.targets.all()])
+
+    class Meta:
+        abstract = True
+
+
+class Mission(BaseMission):
+    spacecraft = models.ForeignKey(Spacecraft, on_delete=models.PROTECT)
 
 
 class Astronaut(models.Model):
@@ -510,8 +516,9 @@ class Astronaut(models.Model):
         ordering = ['last_name']
 
 
-class CrewedMission(Mission):
+class CrewedMission(BaseMission):
     crew = models.ManyToManyField(Astronaut)
+    spacecraft = models.ForeignKey(CrewedSpacecraft, on_delete=models.PROTECT)
     landing_site = models.CharField(max_length=100, blank=True)
 
     def print_crew(self):

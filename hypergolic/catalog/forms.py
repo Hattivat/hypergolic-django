@@ -2298,7 +2298,7 @@ class CrewedMissionForm(forms.ModelForm):
 
     class Meta:
         model = CrewedMission
-        fields = ['name', 'description', 'sources', 'country', 'organization', 'launch_date', 'end_date', 'launch_facility', 'launch_vehicle', 'spacecraft', 'failure', 'illustration', 'mission_ptr', 'landing_site']
+        fields = ['name', 'description', 'sources', 'country', 'organization', 'launch_date', 'end_date', 'launch_facility', 'launch_vehicle', 'spacecraft', 'failure', 'illustration', 'landing_site']
         exclude = []
         widgets = None
         localized_fields = None

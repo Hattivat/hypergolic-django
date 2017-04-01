@@ -2,16 +2,14 @@
 
 {% block otherstuff %}
     <ul class="list-unstyled">
-        <li><strong>Original name:</strong> {{ object.native_name }}</li>
-        <li><strong>Application:</strong> <a href="{{ object.application.get_absolute_url }}">{{ object.application }}</a></li>
-        {% if object.variant_of %}
-        <li><strong>Variant of:</strong> <a href='{{ object.variant_of.get_absolute_url }}'>{{ object.variant_of }}</a></li>
-        {% endif %}
-        {% if object.engine_set %}
-        <li><strong>Variants:</strong> {% for variant in object.engine_set.all %}<a href='{{ variant.get_absolute_url }}'>{{ variant }}</a>{% endfor %}</li>
-        {% endif %}
         <li><strong>Country:</strong> {{ object.country }}</li>
-        <li><strong>Manufacturer:</strong> <a href='{{ object.manufacturer.get_absolute_url }}'>{{ object.manufacturer }}</a></li>
+        <li><strong>Organization:</strong> <a href="{{ object.organization.get_absolute_url }}">{{ object.organization }}</a></li>
+        <li><strong>Launch date:</strong> {{ object.launch_date }}</li>
+        {% block crewspace %}
+        {% endblock %}
+        <li><strong>Spacecraft:</strong> <a href='{{ object.spacecraft.get_absolute_url }}'>{{ object.spacecraft }}</a></li>
+        <li><strong>Launch vehicle:</strong> <a href='{{ object.launch_vehicle.get_absolute_url }}'>{{ object.launch_vehicle }}</a></li>
+        <li><strong>Launch facility:</strong> <a href='{{ object.launch_facility.get_absolute_url }}'>{{ object.launch_facility }}</a></li>
         <li><strong>Developed:</strong> {{ object.developed }}</li>
         <li><strong>First flight:</strong> {{ object.first_flight }}</li>
     </ul>

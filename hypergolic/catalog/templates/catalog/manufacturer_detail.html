@@ -1,0 +1,61 @@
+{% extends './generic_detail.html' %}
+
+{% block otherstuff %}
+    <ul class="list-unstyled">
+        <li><strong>Country:</strong> {{ object.country }}</li>
+        <li><strong>Headquarters:</strong> {{ object.headquarters }}</li>
+        <li><strong>Native name:</strong> {{ object.native_name }}</li>
+        <li><strong>Date established:</strong> {{ object.established }}</li>
+        {% if object.active %}
+        <li><strong>Active</strong></li>
+        {% else %}
+        <li><strong>Defunct</strong></li>
+        <li><strong>Date defunct:</strong> {{ object.defunct }}</li>
+            {% if object.successor %}
+            <li><strong>Successor:</strong> <a href='{{ object.successor.get_absolute_url }}'>{{ object.successor }}</a></li>
+            {% endif %}
+        {% endif %}
+        <li><strong>Website:</strong> <a href='{{ object.website }}'>{{ object.website }}</a></li>
+    </ul>
+    <h2>Products</h2>
+    {% if object.engine_set.all %}
+    <h4>Rocket engines</h4>
+    <ul class="list-unstyled">
+        {% for engine in object.engine_set.all %}
+        <li><strong><a href='{{ engine.get_absolute_url }}'>{{ engine }}</a></strong> {{ engine.developed }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if object.stage_set.all %}
+    <h4>Rocket stages</h4>
+    <ul class="list-unstyled">
+        {% for stage in object.stage_set.all %}
+        <li><strong>{{ stage }}</strong> {{ stage.developed }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if object.rocket_set.all %}
+    <h4>Rockets</h4>
+    <ul class="list-unstyled">
+        {% for rocket in object.rocket_set.all %}
+        <li><strong>{{ rocket }}</strong> {{ rocket.developed }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if object.spacecraft_set.all %}
+    <h4>Robotic spacecraft</h4>
+    <ul class="list-unstyled">
+        {% for spacecraft in object.spacecraft_set.all %}
+        <li><strong>{{ spacecraft }}</strong> {{ spacecraft.developed }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if object.spacecraft_set.all %}
+    <h4>Manned spacecraft</h4>
+    <ul class="list-unstyled">
+        {% for cspacecraft in object.crewedspacecraft_set.all %}
+        <li><strong>{{ cspacecraft }}</strong> {{ cspacecraft.developed }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}

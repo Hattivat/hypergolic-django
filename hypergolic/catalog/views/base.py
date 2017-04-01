@@ -6,6 +6,8 @@ from ..helpers import underscore
 
 class GenericListView(ListView):
     template_name = "catalog/generic_list.html"
+    paginate_by = 20
+    paginate_orphans = 0
 
     def get_context_data(self, **kwargs):
         context = super(GenericListView, self).get_context_data(**kwargs)

@@ -23,8 +23,9 @@
         {% endif %}
     </ul>
     <ul class="list-unstyled">
-        {% for mission in missions %}
-        <li><strong>{{ mission.name }}</strong> - {{ mission.launch_date }}</li>
+        <li><strong>Missions flown:</strong> {{ object.mission_set.all.count }}</li>
+        {% for mission in object.mission_set.all %}
+        <li><strong><a href="{{ mission.get_absolute_url }}">{{ mission }}</a></strong> - {{ mission.launch_date }}</li>
         {% endfor %}
     </ul>
     <h4>Sources:</h4>

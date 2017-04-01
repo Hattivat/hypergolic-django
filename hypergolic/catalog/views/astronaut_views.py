@@ -17,13 +17,6 @@ class AstronautDetailView(DetailView):
     model = Astronaut
     template_name = "catalog/astronaut_detail.html"
 
-    def get_context_data(self, **kwargs):
-        context = super(AstronautDetailView, self).get_context_data(**kwargs)
-        missions = CrewedMission.objects.filter(crew__contains=self.object.pk)
-        context['missions'] = missions
-        context['num_missions'] = len(missions)
-        return context
-
 
 class AstronautCreateView(GenericCreateView):
     model = Astronaut

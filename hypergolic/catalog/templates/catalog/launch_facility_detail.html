@@ -1,0 +1,20 @@
+{% extends './generic_detail.html' %}
+
+{% block otherstuff %}
+    <ul class="list-unstyled">
+        <li><strong>Owning country:</strong> {{ object.owning_country }}</li>
+        <li><strong>Location:</strong> {{ object.location }}</li>
+        <li><strong>Elevation:</strong> {{ object.elevation }}</li>
+        <li><strong>Latitude:</strong> {{ object.latitude }}</li>
+        <li><strong>Longitude:</strong> {{ object.longitude }}</li>
+    </ul>
+    <h4>Launches</h4>
+    <ul class="list-unstyled">
+        {% for mission in object.mission_set.all %}
+        <li><a href='{{ mission.get_absolute_url }}'>{{ mission }}</a> - {{ mission.launch_date }}</li>
+        {% endfor %}
+        {% for cmission in object.crewedmission_set.all %}
+        <li><a href='{{ cmission.get_absolute_url }}'>{{ cmission }}</a> - {{ cmission.launch_date }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

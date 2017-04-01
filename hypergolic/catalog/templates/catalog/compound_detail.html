@@ -2,6 +2,7 @@
 
 {% block otherstuff %}
     <ul class="list-unstyled">
+        <li><strong>Role:</strong> {% if object.role %}Fuel{% else %}Oxidizer{% endif %}</li>
         <li><strong>Chemical formula:</strong> {{ object.chemical_formula }}</li>
         <li><strong>Also known as:</strong> {{ object.also_known_as }}</li>
         {% if object.variety_of %}
@@ -19,5 +20,10 @@
         <li><strong>Appearance:</strong> {{ object.appearance }}</li>
         <li><strong>Toxicity:</strong> {{ object.toxicity }}</li>
         <li><strong>Storability:</strong> {{ object.storability }}</li>
+    </ul>
+    {% if  %}
+    <h4>Employed in:</h4>
+    <ul class="list-unstyled">
+
     </ul>
 {% endblock %}
