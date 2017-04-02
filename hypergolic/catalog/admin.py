@@ -151,7 +151,7 @@ class RocketAdmin(admin.ModelAdmin):
     list_select_related = True
     fieldsets = (
         (None, {
-            'fields': ('name', 'native_name', 'stage_role', 'country',
+            'fields': ('name', 'native_name', 'country',
                        'manufacturer', 'series', 'variant_of', 'illustration')
         }),
         ('Metrics', {
