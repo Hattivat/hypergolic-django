@@ -54,4 +54,10 @@
         <li><strong>Developed:</strong> {{ object.developed }}</li>
         <li><strong>First flight:</strong> {{ object.first_flight }}</li>
     </ul>
+    <h4>Used in</h4>
+    <ul class="list-unstyled">
+        {% for rocket in object.rocket_set.all %}
+        <li><strong><a href="{{ rocket.get_absolute_url }}">{{ rocket }}</a></strong> {{ rocket.developed }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
