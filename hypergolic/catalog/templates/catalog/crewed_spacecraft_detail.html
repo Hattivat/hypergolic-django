@@ -1,0 +1,14 @@
+{% extends './spacecraft_detail.html' %}
+
+{% block crew %}
+<li><strong>Crew:</strong> {{ object.crew }}</li>
+{% endblock %}
+
+{% block volume %}
+<li><strong>Pressurized volume:</strong> {{ object.pressurized_volume }}</li>
+{% endblock %}
+
+{% block lifesupport %}
+<li><strong>Life support system:</strong> <a href='{{ object.life_support.get_absolute_url }}'>{{ object.life_support }}</a></li>
+<li><strong>Supplies:</strong> {{ object.supplies_days }} days</li>
+{% endblock %}

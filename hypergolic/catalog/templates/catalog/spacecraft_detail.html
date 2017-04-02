@@ -1,0 +1,89 @@
+{% extends './generic_detail.html' %}
+
+{% block otherstuff %}
+    <ul class="list-unstyled">
+        <li><strong>Country:</strong> {{ object.country }}</li>
+        <li><strong>Manufacturer:</strong> <a href='{{ object.manufacturer.get_absolute_url }}'>{{ object.manufacturer }}</a></li>
+        <li><strong>Native name:</strong> {{ object.native_name }}</li>
+        {% if object.variant_of %}
+        <li><strong>Variant of:</strong> <a href='{{ object.variant_of.get_absolute_url }}'>{{ object.variant_of }}</a></li>
+        {% endif %}
+        {% if object.spacecraft_set.all %}
+        <li><strong>Variants:</strong> {% for variant in object.spacecraft_set.all %}<a href='{{ variant.get_absolute_url }}'>{{ variant }}</a>{% endfor %}</li>
+        {% endif %}
+        {% block crew %}
+        {% endblock %}
+    </ul>
+    <h4>Metrics</h4>
+    <ul class="list-unstyled">
+        <li><strong>Height:</strong> {{ object.height }}</li>
+        <li><strong>Diameter:</strong> {{ object.diameter }}</li>
+        <li><strong>Dry weight:</strong> {{ object.dry_weight }}</li>
+        <li><strong>Fueled weight:</strong> {{ object.fueled_weight }}</li>
+        {% block volume %}
+        {% endblock }
+    </ul>
+    <h4>Equipment</h4>
+    <ul class="list-unstyled">
+        <li><strong>Instruments:</strong> {% for instrument in object.instruments %}<a href='{{ instrument.get_absolute_url }}'>{{ instrument }}</a>{% endfor %}</li>
+        <li><strong>Guidance system:</strong> <a href='{{ object.guidance_system.get_absolute_url }}'>{{ object.guidance_system }}</a></li>
+        <li><strong>Antenna type:</strong> <a href='{{ object.antenna_type.get_absolute_url }}'>{{ object.antenna_type }}</a></li>
+        <li><strong>Antenna gain:</strong> {{ object.antenna_gain }}</li>
+        <li><strong>Transmitter power:</strong> {{ object.transmitter_power }}</li>
+        <li><strong>Attitude control system:</strong> <a href='{{ object.attitude_control_system.get_absolute_url }}'>{{ object.attitude_control_system }}</a></li>
+        {% block lifesupport %}
+        {% endblock %}
+    </ul>
+    <h4>Electricity</h4>
+    <ul class="list-unstyled">
+        <li><strong>Electricity source:</strong> <a href='{{ object.electricity_source.get_absolute_url }}'>{{ object.electricity_source }}</a></li>
+        <li><strong>Power generation:</strong> {{ object.power_generation }}</li>
+        <li><strong>Battery capacity:</strong> {{ object.battery_capacity }}</li>
+    </ul>
+    <h4>Propellant tanks</h4>
+    <ul class="list-unstyled">
+        <li><strong>Tank type:</strong> <a href='{{ object.tank_type.get_absolute_url }}'>{{ object.tank_type }}</a></li>
+        <li><strong>Tank material:</strong> <a href='{{ object.tank_material.get_absolute_url }}'>{{ object.tank_material }}</a></li>
+        <li><strong>Fuel volume:</strong> {{ object.fuel_volume }}</li>
+        <li><strong>Oxidizer volume:</strong> {{ object.oxidizer_volume }}</li>
+        <li><strong>Fuel weight:</strong> {{ object.fuel_weight }}</li>
+        <li><strong>Oxidizer weight:</strong> {{ object.oxidizer_weight }}</li>
+    </ul>
+    <h4>Propulsion</h4>
+    <ul class="list-unstyled">
+        <li><strong>Main engine{% if object.num_main_engines > 1 %}s{% endif %}:</strong> <a href='{{ object.main_engine.get_absolute_url }}'>{{ object.main_engine }}</a></li>
+        {% if object.num_main_engines > 1 %}
+        <li><strong>Number of main engines:</strong> {{ object.num_main_engines }}</li>
+        {% endif %}
+        <li><strong>Auxiliary engine{% if object.num_aux_engines > 1 %}s{% endif %}:</strong> <a href='{{ object.aux_engine.get_absolute_url }}'>{{ object.aux_engine }}</a></li>
+        {% if object.num_aux_engines > 1 %}
+        <li><strong>Number of auxiliary engines:</strong> {{ object.num_aux_engines }}</li>
+        {% endif %}
+        <li><strong>Burn time:</strong> {{ object.burn_time }}</li>
+    </ul>
+    {% if object.heatshield or object.landing_solution %}
+    <h4>Landing</h4>
+    <ul class="list-unstyled">
+        <li><strong>Heatshield type:</strong> <a href='{{ object.heatshield.get_absolute_url }}'>{{ object.heatshield }}</a></li>
+        <li><strong>Landing solution:</strong> <a href='{{ object.landing_solution.get_absolute_url }}'>{{ object.landing_solution }}</a></li>
+    </ul>
+    {% endif %}
+    <h4>History</h4>
+    <ul class="list-unstyled">
+        <li><strong>Developed:</strong> {{ object.developed }}</li>
+        <li><strong>First flight:</strong> {{ object.first_flight }}</li>
+        <li><strong>Number of flights:</strong> {{ object.num_flights }}</li>
+        <li><strong>Number of failures:</strong> {{ object.failures }}</li>
+    </ul>
+    {% if object.mission_set.all or object.crewedmission_set.all %}
+    <h4>Launches</h4>
+    <ul class="list-unstyled">
+        {% for mission in object.mission_set.all %}
+        <li><strong>{{ mission }}</strong> {{ mission.launch_date }}</li>
+        {% endfor %}
+        {% for cmission in object.crewedmission_set.all %}
+        <li><strong>{{ cmission }}</strong> {{ cmission.launch_date }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}

@@ -171,7 +171,7 @@ class RocketAdmin(admin.ModelAdmin):
 @admin.register(Spacecraft)
 class SpacecraftAdmin(admin.ModelAdmin):
     filter_horizontal = ('instruments',)
-    list_display = ('name', 'country', 'developed', 'fueled_weight')
+    list_display = ('name', 'country', 'first_flight', 'fueled_weight')
     list_filter = ('country', 'manufacturer', 'instruments',
                    'electricity_source')
     list_select_related = True
@@ -190,7 +190,7 @@ class SpacecraftAdmin(admin.ModelAdmin):
         }),
         ('Electricity', {
             'fields': (('electricity_source', 'power_generation'),
-                       'batter_capacity')
+                       'battery_capacity')
         }),
         ('Propellant tanks', {
             'fields': ('tank_type', 'tank_material',

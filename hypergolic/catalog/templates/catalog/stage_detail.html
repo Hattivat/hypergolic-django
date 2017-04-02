@@ -1,0 +1,57 @@
+{% extends './generic_detail.html' %}
+
+{% block otherstuff %}
+    <ul class="list-unstyled">
+        <li><strong>Country:</strong> {{ object.country }}</li>
+        <li><strong>Manufacturer:</strong> <a href='{{ object.manufacturer.get_absolute_url }}'>{{ object.manufacturer }}</a></li>
+        <li><strong>Native name:</strong> {{ object.native_name }}</li>
+        {% if object.variant_of %}
+        <li><strong>Variant of:</strong> <a href='{{ object.variant_of.get_absolute_url }}'>{{ object.variant_of }}</a></li>
+        {% endif %}
+        {% if object.stage_set.all %}
+        <li><strong>Variants:</strong> {% for sta in object.stage_set.all %}<a href='{{ sta.get_absolute_url }}'>{{ sta }}</a>{% endfor %}</li>
+        {% endif %}
+        <li><strong>Role:</strong> <a href='{{ object.stage_role.get_absolute_url }}'>{{ object.stage_role }}</a></li>
+    </ul>
+    <h4>Metrics</h4>
+    <ul class="list-unstyled">
+        <li><strong>Height:</strong> {{ object.height }}</li>
+        <li><strong>Diameter:</strong> {{ object.diameter }}</li>
+        <li><strong>Dry weight:</strong> {{ object.dry_weight }}</li>
+        <li><strong>Fueled weight:</strong> {{ object.fueled_weight }}</li>
+    </ul>
+    <h4>Propellant tanks</h4>
+    <ul class="list-unstyled">
+        <li><strong>Tank type:</strong> <a href='{{ object.tank_type.get_absolute_url }}'>{{ object.tank_type }}</a></li>
+        <li><strong>Tank material:</strong> <a href='{{ object.tank_material.get_absolute_url }}'>{{ object.tank_material }}</a></li>
+        <li><strong>Fuel volume:</strong> {{ object.fuel_volume }}</li>
+        <li><strong>Oxidizer volume:</strong> {{ object.oxidizer_volume }}</li>
+        <li><strong>Fuel weight:</strong> {{ object.fuel_weight }}</li>
+        <li><strong>Oxidizer weight:</strong> {{ object.oxidizer_weight }}</li>
+    </ul>
+    <h4>Propulsion</h4>
+    <ul class="list-unstyled">
+        <li><strong>Main engine{% if object.num_main_engines > 1 %}s{% endif %}:</strong> <a href='{{ object.main_engine.get_absolute_url }}'>{{ object.main_engine }}</a></li>
+        {% if object.num_main_engines > 1 %}
+        <li><strong>Number of main engines:</strong> {{ object.num_main_engines }}</li>
+        {% endif %}
+        <li><strong>Auxiliary engine{% if object.num_aux_engines > 1 %}s{% endif %}:</strong> <a href='{{ object.aux_engine.get_absolute_url }}'>{{ object.aux_engine }}</a></li>
+        {% if object.num_aux_engines > 1 %}
+        <li><strong>Number of auxiliary engines:</strong> {{ object.num_aux_engines }}</li>
+        {% endif %}
+        <li><strong>Burn time:</strong> {{ object.burn_time }}</li>
+    </ul>
+    <h4>Steering</h4>
+    <ul class="list-unstyled">
+        <li><strong>Main engine{% if object.num_main_engines > 1 %}s{% endif %} gimbal:</strong> {{ object.main_gimbal_yaw_min }} - {{ object.main_gimbal_yaw_max }} yaw, {{ object.main_gimbal_pitch_min }} - {{ object.main_gimbal_pitch_max }} pitch</li>
+        <li><strong>Auxiliary engine{% if object.num_aux_engines > 1 %}s{% endif %} gimbal:</strong> {{ object.aux_gimbal_yaw_min }} - {{ object.aux_gimbal_yaw_max }} yaw, {{ object.aux_gimbal_pitch_min }} - {{ object.aux_gimbal_pitch_max }} pitch</li>
+        {% if object.fins %}
+        <li><strong>Fins:</strong> {{ object.fins }}</li>
+        {% endif %}
+    </ul>
+    <h4>History</h4>
+    <ul class="list-unstyled">
+        <li><strong>Developed:</strong> {{ object.developed }}</li>
+        <li><strong>First flight:</strong> {{ object.first_flight }}</li>
+    </ul>
+{% endblock %}
