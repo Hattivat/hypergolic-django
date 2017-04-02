@@ -10,9 +10,13 @@ def spacify(astring):
 
 
 @register.filter
-def hashfind(obj, key):
-    obj = model_to_dict(obj)
-    if key in obj:
-        return obj[key]
+def to_dict(obj):
+    return model_to_dict(obj)
+
+
+@register.filter
+def hashfind(dic, key):
+    if key in dic:
+        return dic[key]
     else:
-        return None
+        return '-'

@@ -21,9 +21,12 @@
         <li><strong>Toxicity:</strong> {{ object.toxicity }}</li>
         <li><strong>Storability:</strong> {{ object.storability }}</li>
     </ul>
-    {% if  %}
+    {% if object.propellantmix_set.all %}
     <h4>Employed in:</h4>
     <ul class="list-unstyled">
-
+        {% for mix in object.propellantmix_set.all %}
+        <li><strong>{{ mix }}</strong> Isp {{ mix.specific_impulse }}</li>
+        {% endfor %}
     </ul>
+    {% endif %}
 {% endblock %}
