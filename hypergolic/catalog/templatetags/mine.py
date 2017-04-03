@@ -20,3 +20,10 @@ def hashfind(dic, key):
         return dic[key]
     else:
         return '-'
+
+
+@register.filter
+def attr(obj, arg1):
+    att, value = arg1.split(":")
+    obj.field.widget.attrs[att] = value
+    return obj
