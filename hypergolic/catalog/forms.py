@@ -1,5 +1,11 @@
 from django import forms
-from .models import Role, StageRole, PowerCycle, Cooling, NozzleType, NozzleMaterial, Injector, Igniter, Manufacturer, Compound, PropellantMix, Engine, TankConstruction, TankMaterial, Stage, RocketSeries, Instrument, GuidanceSystem, AntennaType, ElectricitySource, LifeSupportType, AttitudeControlSystem, LandingSolution, HeatshieldMaterial, Organization, MissionTarget, Rocket, Spacecraft, CrewedSpacecraft, LaunchFacility, Mission, Astronaut, CrewedMission
+from .models import Role, StageRole, PowerCycle, Cooling, NozzleType,\
+    NozzleMaterial, Injector, Igniter, Manufacturer, Compound, PropellantMix,\
+    Engine, TankConstruction, TankMaterial, Stage, RocketSeries, Instrument,\
+    GuidanceSystem, AntennaType, ElectricitySource, LifeSupportType,\
+    AttitudeControlSystem, LandingSolution, HeatshieldMaterial, Organization,\
+    MissionTarget, Rocket, Spacecraft, CrewedSpacecraft, LaunchFacility,\
+    Mission, Astronaut, CrewedMission
 
 
 class RoleForm(forms.ModelForm):

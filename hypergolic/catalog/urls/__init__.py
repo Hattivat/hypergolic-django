@@ -3,6 +3,7 @@ from .. import views
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
+    url(r'^accounts/', include('catalog.urls.auth_urls')),
     url(r'^engine_roles/', include('catalog.urls.role_urls')),  # NOQA
     url(r'^stage_roles/', include('catalog.urls.stage_role_urls')),
     url(r'^power_cycles/', include('catalog.urls.power_cycle_urls')),
