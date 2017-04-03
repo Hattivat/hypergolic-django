@@ -1,14 +1,14 @@
 {% extends './spacecraft_detail.html' %}
 
 {% block crew %}
-<li><strong>Crew:</strong> {{ object.crew }}</li>
+<dt>Crew:</dt><dd>{{ object.crew }}</dd>
 {% endblock %}
 
 {% block volume %}
-<li><strong>Pressurized volume:</strong> {{ object.pressurized_volume }}</li>
+<dt>Pressurized volume:</dt><dd>{{ object.pressurized_volume }}</dd>
 {% endblock %}
 
 {% block lifesupport %}
-<li><strong>Life support system:</strong> <a href='{{ object.life_support.get_absolute_url }}'>{{ object.life_support }}</a></li>
-<li><strong>Supplies:</strong> {{ object.supplies_days }} days</li>
+<dt>Life support system:</dt><dd><a href='{{ object.life_support.get_absolute_url }}'>{{ object.life_support }}</a></dd>
+<dt>Supplies:</dt><dd>{{ object.supplies_days }} days</dd>
 {% endblock %}

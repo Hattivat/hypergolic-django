@@ -1,20 +1,20 @@
 {% extends './generic_detail.html' %}
 
 {% block otherstuff %}
-    <ul class="list-unstyled">
-        <li><strong>Country:</strong> {{ object.country }}</li>
-        <li><strong>Headquarters:</strong> {{ object.headquarters }}</li>
-        <li><strong>Native name:</strong> {{ object.native_name }}</li>
-        <li><strong>Date established:</strong> {{ object.established }}</li>
-        <li><strong>Status:</strong> {% if object.active %}Active{% else %}Defunct{% endif %}</li>
+    <dl class="dl-horizontal">
+        <dt>Country:</dt><dd>{{ object.country }}</dd>
+        <dt>Headquarters:</dt><dd>{{ object.headquarters }}</dd>
+        <dt>Native name:</dt><dd>{{ object.native_name }}</dd>
+        <dt>Date established:</dt><dd>{{ object.established }}</dd>
+        <dt>Status:</dt><dd>{% if object.active %}Active{% else %}Defunct{% endif %}</dd>
         {% if not object.active %}
-        <li><strong>Date defunct:</strong> {{ object.defunct }}</li>
+        <dt>Date defunct:</dt><dd>{{ object.defunct }}</dd>
             {% if object.successor %}
-            <li><strong>Successor:</strong> <a href='{{ object.successor.get_absolute_url }}'>{{ object.successor }}</a></li>
+            <dt>Successor:</dt><dd><a href='{{ object.successor.get_absolute_url }}'>{{ object.successor }}</a></dd>
             {% endif %}
         {% endif %}
-        <li><strong>Website:</strong> <a href='{{ object.website }}'>{{ object.website }}</a></li>
-    </ul>
+        <dt>Website:</dt><dd><a href='{{ object.website }}'>{{ object.website }}</a></dd>
+    </dl>
     <h2>Products</h2>
     {% if object.engine_set.all %}
     <h4>Rocket engines</h4>

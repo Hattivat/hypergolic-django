@@ -1,65 +1,65 @@
 {% extends './generic_detail.html' %}
 
 {% block otherstuff %}
-    <ul class="list-unstyled">
-        <li><strong>Original name:</strong> {{ object.native_name }}</li>
-        <li><strong>Application:</strong> <a href="{{ object.application.get_absolute_url }}">{{ object.application }}</a></li>
+    <dl class="dl-horizontal">
+        <dt>Original name:</dt><dd>{{ object.native_name }}</dd>
+        <dt>Application:</dt><dd><a href="{{ object.application.get_absolute_url }}">{{ object.application }}</a></dd>
         {% if object.variant_of %}
-        <li><strong>Variant of:</strong> <a href='{{ object.variant_of.get_absolute_url }}'>{{ object.variant_of }}</a></li>
+        <dt>Variant of:</dt><dd><a href='{{ object.variant_of.get_absolute_url }}'>{{ object.variant_of }}</a></dd>
         {% endif %}
         {% if object.engine_set %}
-        <li><strong>Variants:</strong> {% for variant in object.engine_set.all %}<a href='{{ variant.get_absolute_url }}'>{{ variant }}</a>{% endfor %}</li>
+        <dt>Variants:</dt><dd>{% for variant in object.engine_set.all %}<a href='{{ variant.get_absolute_url }}'>{{ variant }}</a>{% endfor %}</dd>
         {% endif %}
-        <li><strong>Country:</strong> {{ object.country }}</li>
-        <li><strong>Manufacturer:</strong> <a href='{{ object.manufacturer.get_absolute_url }}'>{{ object.manufacturer }}</a></li>
-        <li><strong>Developed:</strong> {{ object.developed }}</li>
-        <li><strong>First flight:</strong> {{ object.first_flight }}</li>
-    </ul>
+        <dt>Country:</dt><dd>{{ object.country }}</dd>
+        <dt>Manufacturer:</dt><dd><a href='{{ object.manufacturer.get_absolute_url }}'>{{ object.manufacturer }}</a></dd>
+        <dt>Developed:</dt><dd>{{ object.developed }}</dd>
+        <dt>First flight:</dt><dd>{{ object.first_flight }}</dd>
+    </dl>
     <h4>Performance:</h4>
-    <ul class="list-unstyled">
-        <li><strong>Specific impulse in vacuum:</strong> {{ object.specific_impulse_vac }}</li>
-        <li><strong>Specific impulse at sea level:</strong> {{ object.specific_impulse_sl }}</li>
-        <li><strong>Thrust in vacuum:</strong> {{ object.thrust_vac }}</li>
-        <li><strong>Thrust at sea level:</strong> {{ object.thrust_sl }}</li>
-        <li><strong>Coefficient of thrust in vacuum:</strong> {{ object.boiling_point }}</li>
-        <li><strong>Coefficient of thrust at sea level:</strong> {{ object.boiling_point }}</li>
-        <li><strong>Thrust-to-weight ration:</strong> {{ object.twr }}</li>
-        <li><strong>Rated burn time:</strong> {{ object.rated_burn_time }}</li>
-    </ul>
+    <dl class="dl-horizontal">
+        <dt>Specific impulse in vacuum:</dt><dd>{{ object.specific_impulse_vac }}</dd>
+        <dt>Specific impulse at sea level:</dt><dd>{{ object.specific_impulse_sl }}</dd>
+        <dt>Thrust in vacuum:</dt><dd>{{ object.thrust_vac }}</dd>
+        <dt>Thrust at sea level:</dt><dd>{{ object.thrust_sl }}</dd>
+        <dt>Coefficient of thrust in vacuum:</dt><dd>{{ object.boiling_point }}</dd>
+        <dt>Coefficient of thrust at sea level:</dt><dd>{{ object.boiling_point }}</dd>
+        <dt>Thrust-to-weight ration:</dt><dd>{{ object.twr }}</dd>
+        <dt>Rated burn time:</dt><dd>{{ object.rated_burn_time }}</dd>
+    </dl>
     <h4>Metrics:</h4>
-    <ul class="list-unstyled">
-        <li><strong>Height:</strong> {{ object.height }}</li>
-        <li><strong>Diameter:</strong> {{ object.diameter }}</li>
-        <li><strong>Dry weight:</strong> {{ object.dry_weight }}</li>
-    </ul>
+    <dl class="dl-horizontal">
+        <dt>Height:</dt><dd>{{ object.height }}</dd>
+        <dt>Diameter:</dt><dd>{{ object.diameter }}</dd>
+        <dt>Dry weight:</dt><dd>{{ object.dry_weight }}</dd>
+    </dl>
     <h4>Ignition!:</h4>
-    <ul class="list-unstyled">
-        <li><strong>Cycle:</strong> <a href='{{ object.cycle.get_absolute_url }}'>{{ object.cycle }}</a></li>
-        <li><strong>Injector type:</strong> <a href='{{ object.injector_type.get_absolute_url }}'>{{ object.injector_type }}</a></li>
-        <li><strong>Ignition method:</strong> <a href='{{ object.ignition_method.get_absolute_url }}'>{{ object.ignition_method }}</a></li>
-    </ul>
+    <dl class="dl-horizontal">
+        <dt>Cycle:</dt><dd><a href='{{ object.cycle.get_absolute_url }}'>{{ object.cycle }}</a></dd>
+        <dt>Injector type:</dt><dd><a href='{{ object.injector_type.get_absolute_url }}'>{{ object.injector_type }}</a></dd>
+        <dt>Ignition method:</dt><dd><a href='{{ object.ignition_method.get_absolute_url }}'>{{ object.ignition_method }}</a></dd>
+    </dl>
     <h4>Combustion:</h4>
-    <ul class="list-unstyled">
-        <li><strong>Propellants:</strong> <a href='{{ object.propellants.get_absolute_url }}'>{{ object.propellants }}</a></li>
-        <li><strong>Mixture ratio:</strong> {{ object.mixture_ratio }}</li>
-        <li><strong>Chamber pressure:</strong> {{ object.chamber_pressure }}</li>
-        <li><strong>Combustion chambers:</strong> {{ object.combustion_chambers }}</li>
-    </ul>
+    <dl class="dl-horizontal">
+        <dt>Propellants:</dt><dd><a href='{{ object.propellants.get_absolute_url }}'>{{ object.propellants }}</a></dd>
+        <dt>Mixture ratio:</dt><dd>{{ object.mixture_ratio }}</dd>
+        <dt>Chamber pressure:</dt><dd>{{ object.chamber_pressure }}</dd>
+        <dt>Combustion chambers:</dt><dd>{{ object.combustion_chambers }}</dd>
+    </dl>
     <h4>Nozzle:</h4>
-    <ul class="list-unstyled">
-        <li><strong>Nozzle shape:</strong> <a href='{{ object.nozzle_shape.get_absolute_url }}'>{{ object.nozzle_shape }}</a></li>
-        <li><strong>Nozzle ratio:</strong> {{ object.nozzle_ratio }}</li>
-        <li><strong>Nozzle material:</strong> <a href='{{ object.nozzle_material.get_absolute_url }}'>{{ object.nozzle_material }}</a></li>
-        <li><strong>Cooling method:</strong> <a href='{{ object.cooling_method.get_absolute_url }}'>{{ object.cooling_method }}</a></li>
-    </ul>
+    <dl class="dl-horizontal">
+        <dt>Nozzle shape:</dt><dd><a href='{{ object.nozzle_shape.get_absolute_url }}'>{{ object.nozzle_shape }}</a></dd>
+        <dt>Nozzle ratio:</dt><dd>{{ object.nozzle_ratio }}</dd>
+        <dt>Nozzle material:</dt><dd><a href='{{ object.nozzle_material.get_absolute_url }}'>{{ object.nozzle_material }}</a></dd>
+        <dt>Cooling method:</dt><dd><a href='{{ object.cooling_method.get_absolute_url }}'>{{ object.cooling_method }}</a></dd>
+    </dl>
     <h4>Flexibility:</h4>
-    <ul class="list-unstyled">
-        <li><strong>Restart capability:</strong> {{ object.restart_capability }}</li>
+    <dl class="dl-horizontal">
+        <dt>Restart capability:</dt><dd>{{ object.restart_capability }}</dd>
         {% if object.restart_capability %}
-        <li><strong>Number of restarts:</strong> {{ object.num_restarts }}</li>
+        <dt>Number of restarts:</dt><dd>{{ object.num_restarts }}</dd>
         {% endif %}
-        <li><strong>Throttle range:</strong> {{ object.throttle_range_min }} - {{ object.throttle_range_max }}</li>
-    </ul>
+        <dt>Throttle range:</dt><dd>{{ object.throttle_range_min }} - {{ object.throttle_range_max }}</dd>
+    </dl>
     <h3>Used on</h3>
     {% if object.stage_set.all %}
     <h5>Stages</h5>

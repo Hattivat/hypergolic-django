@@ -1,41 +1,41 @@
 {% extends './generic_detail.html' %}
 
 {% block otherstuff %}
-    <ul class="list-unstyled">
-        <li><strong>Country:</strong> {{ object.country }}</li>
-        <li><strong>Manufacturer:</strong> <a href='{{ object.manufacturer.get_absolute_url }}'>{{ object.manufacturer }}</a></li>
-        <li><strong>Native name:</strong> {{ object.native_name }}</li>
+    <dl class="dl-horizontal">
+        <dt>Country:</dt><dd>{{ object.country }}</dd>
+        <dt>Manufacturer:</dt><dd><a href='{{ object.manufacturer.get_absolute_url }}'>{{ object.manufacturer }}</a></dd>
+        <dt>Native name:</dt><dd>{{ object.native_name }}</dd>
         {% if object.series %}
-        <li><strong>Series:</strong> <a href='{{ object.series.get_absolute_url }}'>{{ object.series }}</a></li>
+        <dt>Series:</dt><dd><a href='{{ object.series.get_absolute_url }}'>{{ object.series }}</a></dd>
         {% endif %}
         {% if object.variant_of %}
-        <li><strong>Variant of:</strong> <a href='{{ object.variant_of.get_absolute_url }}'>{{ object.variant_of }}</a></li>
+        <dt>Variant of:</dt><dd><a href='{{ object.variant_of.get_absolute_url }}'>{{ object.variant_of }}</a></dd>
         {% endif %}
         {% if object.rocket_set.all %}
-        <li><strong>Variants:</strong> {% for variant in object.rocket_set.all %}<a href='{{ variant.get_absolute_url }}'>{{ variant }}</a>{% endfor %}</li>
+        <dt>Variants:</dt><dd>{% for variant in object.rocket_set.all %}<a href='{{ variant.get_absolute_url }}'>{{ variant }}</a>{% endfor %}</dd>
         {% endif %} 
-    </ul>
+    </dl>
     <h4>Metrics</h4>
-    <ul class="list-unstyled">
-        <li><strong>Height:</strong> {{ object.height }}</li>
-        <li><strong>Diameter:</strong> {{ object.diameter }}</li>
-        <li><strong>Dry weight:</strong> {{ object.dry_weight }}</li>
-        <li><strong>Fueled weight:</strong> {{ object.fueled_weight }}</li>
-    </ul>
+    <dl class="dl-horizontal">
+        <dt>Height:</dt><dd>{{ object.height }}</dd>
+        <dt>Diameter:</dt><dd>{{ object.diameter }}</dd>
+        <dt>Dry weight:</dt><dd>{{ object.dry_weight }}</dd>
+        <dt>Fueled weight:</dt><dd>{{ object.fueled_weight }}</dd>
+    </dl>
     <h4>Composition</h4>
-    <ul class="list-unstyled">
-        <li><strong>Stages:</strong> {% for stage in object.stages %}<a href='{{ stage.get_absolute_url }}'>{{ stage }}</a>{% endfor %}</li>
-        <li><strong>Guidance system:</strong> <a href='{{ object.guidance_system.get_absolute_url }}'>{{ object.guidance_system }}</a></li>
-        <li><strong>Fairing height:</strong> {{ object.fairing_height }}</li>
-        <li><strong>Fairing width:</strong> {{ object.fairing_width }}</li>
-    </ul>
+    <dl class="dl-horizontal">
+        <dt>Stages:</dt><dd>{% for stage in object.stages %}<a href='{{ stage.get_absolute_url }}'>{{ stage }}</a>{% endfor %}</dd>
+        <dt>Guidance system:</dt><dd><a href='{{ object.guidance_system.get_absolute_url }}'>{{ object.guidance_system }}</a></dd>
+        <dt>Fairing height:</dt><dd>{{ object.fairing_height }}</dd>
+        <dt>Fairing width:</dt><dd>{{ object.fairing_width }}</dd>
+    </dl>
     <h4>History</h4>
-    <ul class="list-unstyled">
-        <li><strong>Developed:</strong> {{ object.developed }}</li>
-        <li><strong>First flight:</strong> {{ object.first_flight }}</li>
-        <li><strong>Number of flights:</strong> {{ object.num_flights }}</li>
-        <li><strong>Number of failures:</strong> {{ object.failures }}</li>
-    </ul>
+    <dl class="dl-horizontal">
+        <dt>Developed:</dt><dd>{{ object.developed }}</dd>
+        <dt>First flight:</dt><dd>{{ object.first_flight }}</dd>
+        <dt>Number of flights:</dt><dd>{{ object.num_flights }}</dd>
+        <dt>Number of failures:</dt><dd>{{ object.failures }}</dd>
+    </dl>
     {% if object.mission_set.all or object.crewedmission_set.all %}
     <h4>Launches</h4>
     <ul class="list-unstyled">

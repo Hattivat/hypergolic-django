@@ -1,19 +1,19 @@
 {% extends './generic_detail.html' %}
 
 {% block otherstuff %}
-    <ul class="list-unstyled">
-        <li><strong>Country:</strong> {{ object.country }}</li>
-        <li><strong>Organization:</strong> <a href="{{ object.organization.get_absolute_url }}">{{ object.organization }}</a></li>
+    <dl class="dl-horizontal">
+        <dt>Country:</dt><dd>{{ object.country }}</dd>
+        <dt>Organization:</dt><dd><a href="{{ object.organization.get_absolute_url }}">{{ object.organization }}</a></dd>
         {% block crewspace %}
         {% endblock %}
-        <li><strong>Launch date:</strong> {{ object.launch_date }}</li>
-        <li><strong>Launch facility:</strong> <a href='{{ object.launch_facility.get_absolute_url }}'>{{ object.launch_facility }}</a></li>
-        <li><strong>Launch vehicle:</strong> <a href='{{ object.launch_vehicle.get_absolute_url }}'>{{ object.launch_vehicle }}</a></li>
-        <li><strong>Spacecraft:</strong> <a href='{{ object.spacecraft.get_absolute_url }}'>{{ object.spacecraft }}</a></li>
-        <li><strong>Targets:</strong> {% for target in object.targets.all %}<a href='{{ target.get_absolute_url }}'>{{ target }}</a>{% endfor %}</li>
-        <li><strong>Conclusion:</strong> {% if object.failure %}Failure{% else %}Success{% endif %}</li>
-        <li><strong>End date:</strong> {{ object.end_date }}</li>
+        <dt>Launch date:</dt><dd>{{ object.launch_date }}</dd>
+        <dt>Launch facility:</dt><dd><a href='{{ object.launch_facility.get_absolute_url }}'>{{ object.launch_facility }}</a></dd>
+        <dt>Launch vehicle:</dt><dd><a href='{{ object.launch_vehicle.get_absolute_url }}'>{{ object.launch_vehicle }}</a></dd>
+        <dt>Spacecraft:</dt><dd><a href='{{ object.spacecraft.get_absolute_url }}'>{{ object.spacecraft }}</a></dd>
+        <dt>Targets:</dt><dd>{% for target in object.targets.all %}<a href='{{ target.get_absolute_url }}'>{{ target }}</a>{% endfor %}</dd>
+        <dt>Conclusion:</dt><dd>{% if object.failure %}Failure{% else %}Success{% endif %}</dd>
+        <dt>End date:</dt><dd>{{ object.end_date }}</dd>
         {% block landing %}
         {% endblock %}
-    </ul>
+    </dl>
 {% endblock %}

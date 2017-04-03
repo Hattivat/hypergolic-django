@@ -13,15 +13,15 @@
         <img src="{{ object.picture.url }}" />
     {% endif %}
     <p>{{ object.biography }}</p>
-    <ul class="list-unstyled">
-        <li><strong>Nationality:</strong> {{ object.nationality }}</li>
-        <li><strong>Organization:</strong> <a href="{{ object.organization.get_absolute_url }}">{{ object.organization }}</a></li>
-        <li><strong>Born:</strong> {{ object.birth_date }}</li>
-        <li><strong>Birth place:</strong> {{ object.birth_place }}</li>
+    <dl class="dl-horizontal">
+        <dt>Nationality:</dt><dd>{{ object.nationadtty }}</dd>
+        <dt>Organization:</dt><dd><a href="{{ object.organization.get_absolute_url }}">{{ object.organization }}</a></dd>
+        <dt>Born:</dt><dd>{{ object.birth_date }}</dd>
+        <dt>Birth place:</dt><dd>{{ object.birth_place }}</dd>
         {% if object.death_date %}    
-            <li><strong>Died:</strong> {{ object.death_date }}</li>
+            <dt>Died:</dt><dd>{{ object.death_date }}</dd>
         {% endif %}
-    </ul>
+    </dl>
     <ul class="list-unstyled">
         <li><strong>Missions flown:</strong> {{ object.mission_set.all.count }}</li>
         {% for mission in object.mission_set.all %}

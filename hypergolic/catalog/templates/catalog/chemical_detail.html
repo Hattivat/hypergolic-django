@@ -1,7 +1,7 @@
 {% extends './generic_detail.html' %}
 
 {% block otherstuff %}
-    <ul class="list-unstyled">
-        <li><strong>Chemical formula:</strong> {{ object.chemical_formula }}</li>
-    </ul>
+    <dl class="dl-horizontal">
+        <dt>Chemical formula:</dt><dd>{{ object.chemical_formula }}</dd>
+    </dl>
 {% endblock %}

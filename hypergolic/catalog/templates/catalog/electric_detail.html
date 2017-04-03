@@ -1,7 +1,7 @@
 {% extends './generic_detail.html' %}
 
 {% block otherstuff %}
-    <ul class="list-unstyled">
-        <li><strong>Energy consumption:</strong> {{ object.energy_consumption }}</li>
-    </ul>
+    <dl class="dl-horizontal">
+        <dt>Energy consumption:</dt><dd>{{ object.energy_consumption }}</dd>
+    </dl>
 {% endblock %}

@@ -1,31 +1,31 @@
 {% extends './generic_detail.html' %}
 
 {% block otherstuff %}
-    <ul class="list-unstyled">
-        <li><strong>Role:</strong> {% if object.role %}Fuel{% else %}Oxidizer{% endif %}</li>
-        <li><strong>Chemical formula:</strong> {{ object.chemical_formula }}</li>
-        <li><strong>Also known as:</strong> {{ object.also_known_as }}</li>
+    <dl class="dl-horizontal">
+        <dt>Role:</dt><dd>{% if object.role %}Fuel{% else %}Oxidizer{% endif %}</dd>
+        <dt>Chemical formula:</dt><dd>{{ object.chemical_formula }}</dd>
+        <dt>Also known as:</dt><dd>{{ object.also_known_as }}</dd>
         {% if object.variety_of %}
-        <li><strong>Variety of:</strong> <a href='{{ object.variety_of.get_absolute_url }}'>{{ object.variety_of }}</a></li>
+        <dt>Variety of:</dt><dd><a href='{{ object.variety_of.get_absolute_url }}'>{{ object.variety_of }}</a></dd>
         {% endif %}
-    </ul>
+    </dl>
     <h4>Physical properties:</h4>
-    <ul class="list-unstyled">
-        <li><strong>Density:</strong> {{ object.density }}</li>
-        <li><strong>Melting point:</strong> {{ object.melting_point }}</li>
-        <li><strong>Boiling point:</strong> {{ object.boiling_point }}</li>
-    </ul>
+    <dl class="dl-horizontal">
+        <dt>Density:</dt><dd>{{ object.density }}</dd>
+        <dt>Melting point:</dt><dd>{{ object.melting_point }}</dd>
+        <dt>Boiling point:</dt><dd>{{ object.boiling_point }}</dd>
+    </dl>
     <h4>Other characteristics:</h4>
-    <ul class="list-unstyled">
-        <li><strong>Appearance:</strong> {{ object.appearance }}</li>
-        <li><strong>Toxicity:</strong> {{ object.toxicity }}</li>
-        <li><strong>Storability:</strong> {{ object.storability }}</li>
-    </ul>
+    <dl class="dl-horizontal">
+        <dt>Appearance:</dt><dd>{{ object.appearance }}</dd>
+        <dt>Toxicity:</dt><dd>{{ object.toxicity }}</dd>
+        <dt>Storability:</dt><dd>{{ object.storability }}</dd>
+    </dl>
     {% if object.propellantmix_set.all %}
     <h4>Employed in:</h4>
     <ul class="list-unstyled">
         {% for mix in object.propellantmix_set.all %}
-        <li><strong>{{ mix }}</strong> Isp {{ mix.specific_impulse }}</li>
+        <li><strong>{{ mix }}</strong> Isp{{ mix.specific_impulse }}</li>
         {% endfor %}
     </ul>
     {% endif %}

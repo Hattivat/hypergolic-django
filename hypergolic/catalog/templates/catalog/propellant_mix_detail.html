@@ -1,20 +1,20 @@
 {% extends './generic_detail.html' %}
 
 {% block otherstuff %}
-    <ul class="list-unstyled">
+    <dl class="dl-horizontal">
         {% if object.propellants.all.count < 2 %}
-        <li><strong>Monopropellant:</strong> <a href='{{ object.propellants.0.get_absolute_url }}'>{% object.propellants.0 %}</a></li>
+        <dt>Monopropellant:</dt><dd><a href='{{ object.propellants.0.get_absolute_url }}'>{% object.propellants.0 %}</a></dd>
         {% else %}
-        <li><strong>Fuels:</strong> {% for fuel in object.fuels %}<a href='{{ fuel.get_absolute_url }}'>{{ fuel }}</a>{% endfor %}</li>
-        <li><strong>Oxidizers:</strong> {% for oxidizer in object.oxidizers %}<a href='{{ oxidizer.get_absolute_url }}'>{{ oxidizer }}</a>{% endfor %}</li>
+        <dt>Fuels:</dt><dd>{% for fuel in object.fuels %}<a href='{{ fuel.get_absolute_url }}'>{{ fuel }}</a>{% endfor %}</dd>
+        <dt>Oxidizers:</dt><dd>{% for oxidizer in object.oxidizers %}<a href='{{ oxidizer.get_absolute_url }}'>{{ oxidizer }}</a>{% endfor %}</dd>
         {% endif %}
-        <li><strong>Hypergolic:</strong> {% if object.hypergolic %}Yes{% else %}No{% endif %}</li>
-        <li><strong>Specific impulse (in vacuum):</strong> {{ object.specific_impulse }}</li>
-        <li><strong>Specific impulse (at sea level):</strong> {{ object.specific_impulse_sl }}</li>
-        <li><strong>Characteristic velocity:</strong> {{ object.characteristic_velocity }}</li>
-        <li><strong>Optimum ratio:</strong> {{ object.optimum_ratio }}</li>
-        <li><strong>Combustion temperature:</strong> {{ object.combustion_temp }}</li>
-    </ul>
+        <dt>Hypergolic:</dt><dd>{% if object.hypergolic %}Yes{% else %}No{% endif %}</dd>
+        <dt>Specific impulse (in vacuum):</dt><dd>{{ object.specific_impulse }}</dd>
+        <dt>Specific impulse (at sea level):</dt><dd>{{ object.specific_impulse_sl }}</dd>
+        <dt>Characteristic velocity:</dt><dd>{{ object.characteristic_velocity }}</dd>
+        <dt>Optimum ratio:</dt><dd>{{ object.optimum_ratio }}</dd>
+        <dt>Combustion temperature:</dt><dd>{{ object.combustion_temp }}</dd>
+    </dl>
     {% if object.engine_set.all %}
     <h4>Employed in:</h4>
     <ul class="list-unstyled">
