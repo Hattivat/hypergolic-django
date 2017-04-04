@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Register a new account{% endblock %}
+
+{% block content %}
+<h4>Registering a new account</h4>
+<p>If you are interested in having a contributor account, please write us a short email describing your motivation using the form below.</p>
+<form action="https://formspree.io/support@hypergolic.janiczek.eu" method="POST">
+    <input type="text" name="name" placeholder="Your name" required /><br />
+    <input type="email" name="_replyto" placeholder="Your e-mail" required /><br />
+    <input type="text" name="_subject" placeholder="Subject" /><br />
+    <textarea name="message" placeholder="Type your message here..." required></textarea><br />
+    <input type="submit" value="Send" /><br />
+    <input type="hidden" name="_next" value="hattivat.github.io/index.html#contact" />
+</form>
+{% endblock %}

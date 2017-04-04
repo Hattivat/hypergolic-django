@@ -1,8 +1,10 @@
 from django.conf.urls import include, url
+from django.views.generic.base import TemplateView
 from .. import views
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
+    url(r'^register/$', TemplateView.as_view(template_name='registration/register.html'), name='register'),
     url(r'^accounts/', include('catalog.urls.auth_urls')),
     url(r'^engine_roles/', include('catalog.urls.role_urls')),  # NOQA
     url(r'^stage_roles/', include('catalog.urls.stage_role_urls')),
