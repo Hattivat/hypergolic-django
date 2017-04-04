@@ -25,6 +25,7 @@ class LaunchFacilityCreateView(GenericCreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.creator = self.request.user
         obj.save()
         return super(LaunchFacilityCreateView, self).form_valid(form)
 
@@ -40,6 +41,7 @@ class LaunchFacilityUpdateView(UpdateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.modifier = self.request.user
         obj.save()
         return super(LaunchFacilityUpdateView, self).form_valid(form)
 

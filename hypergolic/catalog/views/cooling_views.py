@@ -25,6 +25,7 @@ class CoolingCreateView(GenericCreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.creator = self.request.user
         obj.save()
         return super(CoolingCreateView, self).form_valid(form)
 
@@ -41,6 +42,7 @@ class CoolingUpdateView(UpdateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.modifier = self.request.user
         obj.save()
         return super(CoolingUpdateView, self).form_valid(form)
 

@@ -25,6 +25,7 @@ class NozzleTypeCreateView(GenericCreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.creator = self.request.user
         obj.save()
         return super(NozzleTypeCreateView, self).form_valid(form)
 
@@ -41,6 +42,7 @@ class NozzleTypeUpdateView(UpdateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.modifier = self.request.user
         obj.save()
         return super(NozzleTypeUpdateView, self).form_valid(form)
 

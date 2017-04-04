@@ -37,6 +37,7 @@ class RocketCreateView(GenericCreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.creator = self.request.user
         obj.save()
         return super(RocketCreateView, self).form_valid(form)
 
@@ -57,6 +58,7 @@ class RocketUpdateView(UpdateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.modifier = self.request.user
         obj.save()
         return super(RocketUpdateView, self).form_valid(form)
 

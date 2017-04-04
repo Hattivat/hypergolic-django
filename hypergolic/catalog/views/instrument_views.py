@@ -25,6 +25,7 @@ class InstrumentCreateView(GenericCreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.creator = self.request.user
         obj.save()
         return super(InstrumentCreateView, self).form_valid(form)
 
@@ -41,6 +42,7 @@ class InstrumentUpdateView(UpdateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.modifier = self.request.user
         obj.save()
         return super(InstrumentUpdateView, self).form_valid(form)
 

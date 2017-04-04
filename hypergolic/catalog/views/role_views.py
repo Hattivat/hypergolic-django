@@ -25,6 +25,7 @@ class RoleCreateView(GenericCreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.creator = self.request.user
         obj.save()
         return super(RoleCreateView, self).form_valid(form)
 
@@ -41,6 +42,7 @@ class RoleUpdateView(UpdateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.modifier = self.request.user
         obj.save()
         return super(RoleUpdateView, self).form_valid(form)
 

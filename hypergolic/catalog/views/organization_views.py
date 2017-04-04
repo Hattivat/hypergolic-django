@@ -25,6 +25,7 @@ class OrganizationCreateView(GenericCreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.creator = self.request.user
         obj.save()
         return super(OrganizationCreateView, self).form_valid(form)
 
@@ -41,6 +42,7 @@ class OrganizationUpdateView(UpdateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.modifier = self.request.user
         obj.save()
         return super(OrganizationUpdateView, self).form_valid(form)
 

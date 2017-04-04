@@ -26,6 +26,12 @@ class CompoundCreateView(GenericCreateView):
     # 'boiling_point', 'appearance', 'toxicity', 'storability', 'illustration']
     success_url = reverse_lazy("compound_list")
 
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.creator = self.request.user
+        obj.save()
+        return super(CompoundCreateView, self).form_valid(form)
+
     def get_success_url(self):
         return reverse("compound_detail", args=(self.object.pk,))
 
@@ -41,6 +47,7 @@ class CompoundUpdateView(UpdateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.modifier = self.request.user
         obj.save()
         return super(CompoundUpdateView, self).form_valid(form)
 

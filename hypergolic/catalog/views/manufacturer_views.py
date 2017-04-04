@@ -24,6 +24,7 @@ class ManufacturerCreateView(GenericCreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.creator = self.request.user
         obj.save()
         return super(ManufacturerCreateView, self).form_valid(form)
 
@@ -39,6 +40,7 @@ class ManufacturerUpdateView(UpdateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.modifier = self.request.user
         obj.save()
         return super(ManufacturerUpdateView, self).form_valid(form)
 

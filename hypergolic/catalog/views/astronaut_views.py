@@ -27,6 +27,12 @@ class AstronautCreateView(GenericCreateView):
     template_name = "catalog/generic_create.html"
     success_url = reverse_lazy("astronaut_list")
 
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.creator = self.request.user
+        obj.save()
+        return super(AstronautUpdateView, self).form_valid(form)
+
     def get_success_url(self):
         return reverse("astronaut_detail", args=(self.object.pk,))
 
@@ -39,6 +45,12 @@ class AstronautUpdateView(UpdateView):
     # 'sources', 'picture']
     template_name = "catalog/generic_update.html"
     initial = {}
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.modifier = self.request.user
+        obj.save()
+        return super(AstronautUpdateView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse("astronaut_detail", args=(self.object.pk,))

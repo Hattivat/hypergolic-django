@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.urls import reverse
 from .constants import YEARS, DEGREES, COUNTRIES
 from .helpers import underscore
@@ -38,6 +39,10 @@ class Basic(models.Model):
 
 
 class Role(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='engine_roles_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='engine_roles_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='engineroles/')
 
@@ -47,16 +52,28 @@ class Role(Basic):
 
 
 class StageRole(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='stage_roles_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='stage_roles_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='stageroles/')
 
 
 class PowerCycle(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='power_cycles_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='power_cycles_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='powercycles/')
 
 
 class Cooling(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='cooling_methods_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='coolig_methods_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='coolingmethods/')
 
@@ -66,22 +83,38 @@ class Cooling(Basic):
 
 
 class NozzleType(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='nozzle_types_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='nozzle_types_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='nozzletypes/')
 
 
 class NozzleMaterial(Basic):
     chemical_formula = models.CharField(max_length=30, blank=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='nozzle_materials_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='nozzle_materials_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='nozzlematerials/')
 
 
 class Injector(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='injectors_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='injectors_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='injectors/')
 
 
 class Igniter(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='igniters_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='igniters_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='igniters/')
 
@@ -98,6 +131,10 @@ class Manufacturer(Basic):
                                   related_name="predecessor")
     headquarters = models.CharField(max_length=100, blank=True)
     website = models.URLField(max_length=100, blank=True, null=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='manufacturers_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='manufacturers_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='manufacturers/')
 
@@ -118,6 +155,10 @@ class Compound(Basic):
     appearance = models.CharField(max_length=250, blank=True)
     toxicity = models.CharField(max_length=20, choices=DEGREES, blank=True)
     storability = models.CharField(max_length=20, choices=DEGREES, blank=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='compounds_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='compounds_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='chemcompounds/')
 
@@ -141,6 +182,10 @@ class PropellantMix(models.Model):
     sources = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='propellant_mixes_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='propellant_mixes_modified')
 
     def __str__(self):
         mix = (propellant.name for propellant in self.propellants.all())
@@ -148,7 +193,7 @@ class PropellantMix(models.Model):
 
     def get_absolute_url(self):
         return reverse('propellant_mix_detail', kwargs={'pk': self.pk})
-    
+
     def get_create_url(self):
         return reverse('propellant_mix_create'.format(underscore(self.__class__.__name__)))
 
@@ -159,7 +204,7 @@ class PropellantMix(models.Model):
     def get_delete_url(self):
         return reverse('propellant_mix_delete'.format(underscore(self.__class__.__name__)),
                        kwargs={'pk': self.pk})
-    
+
     def get_list_url(self):
         return reverse('{}_list'.format(underscore(self.__class__.__name__)))
 
@@ -229,16 +274,28 @@ class Engine(Complex):
     throttle_range_max = models.PositiveSmallIntegerField(default=100,
                                                           blank=True,
                                                           null=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='engines_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='engines_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='engines/')
 
 
 class TankConstruction(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='tank_constructions_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='tank_constructions_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='tanktypes/')
 
 
 class TankMaterial(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='tank_materials_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='tank_materials_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='tankmaterials/')
 
@@ -288,11 +345,19 @@ class Stage(Complex):
                                       blank=True, null=True)
     fins = models.PositiveSmallIntegerField(default=0)
     burn_time = models.PositiveIntegerField(blank=True, null=True)  # seconds
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='stages_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='stages_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='stages/')
 
 
 class RocketSeries(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='rocket_series_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='rocket_series_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='rocketseries/')
 
@@ -303,6 +368,10 @@ class RocketSeries(Basic):
 class Instrument(Basic):
     # energy consumption in watts
     energy_consumption = models.PositiveIntegerField(blank=True, null=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='instruments_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='instruments_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='instruments/')
 
@@ -310,16 +379,28 @@ class Instrument(Basic):
 class GuidanceSystem(Basic):
     # energy consumption in watts
     energy_consumption = models.PositiveIntegerField(blank=True, null=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='guidance_systems_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='guidance_systems_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='guidancesystems/')
 
 
 class AntennaType(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='antenna_types_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='antenna_types_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='antennatypes/')
 
 
 class ElectricitySource(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='electricity_sources_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='electricity_sources_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='electrsources/')
 
@@ -327,16 +408,28 @@ class ElectricitySource(Basic):
 class LifeSupportType(Basic):
     # energy consumption in watts
     energy_consumption = models.PositiveIntegerField(blank=True, null=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='lss_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='lss_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='lifesupport/')
 
 
 class AttitudeControlSystem(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='acs_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='acs_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='attitudesystems/')
 
 
 class LandingSolution(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='landing_solutions_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='landing_solutions_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='landingsolutions/')
 
@@ -344,15 +437,27 @@ class LandingSolution(Basic):
 class HeatshieldMaterial(Basic):
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='heatshieldmaterials/')
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='heatshield_materials_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='heatshield_materials_modified')
     chemical_formula = models.CharField(max_length=30, blank=True, null=True)
 
 
 class Organization(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='organizations_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='organizations_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='organizations/')
 
 
 class MissionTarget(Basic):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='mission_targets_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='mission_targets_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='missiontargets/')
 
@@ -371,6 +476,10 @@ class Rocket(Complex):
                                                    verbose_name="number of \
                                                    flights")
     failures = models.PositiveSmallIntegerField(default=0)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='rockets_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='rockets_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='rockets/')
 
@@ -426,6 +535,10 @@ class Spacecraft(Complex):
                                   blank=True, null=True)
     tank_material = models.ForeignKey(TankMaterial, on_delete=models.SET_NULL,
                                       blank=True, null=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='spacecraft_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='spacecraft_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='spacecrafts/')
 
@@ -445,6 +558,10 @@ class LaunchFacility(Basic):
     latitude = models.PositiveSmallIntegerField()
     longitude = models.PositiveSmallIntegerField()
     elevation = models.PositiveSmallIntegerField(blank=True, null=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='launch_facilities_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='launch_facilities_modified')
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='launchfacilities/')
 
@@ -475,6 +592,10 @@ class BaseMission(Basic):
 
 class Mission(BaseMission):
     spacecraft = models.ForeignKey(Spacecraft, on_delete=models.PROTECT)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='missions_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='missions_modified')
 
 
 class Astronaut(models.Model):
@@ -491,6 +612,10 @@ class Astronaut(models.Model):
     sources = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='astronauts_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='astronauts_modified')
     picture = models.ImageField(blank=True, null=True,
                                 upload_to='astronauts/')
 
@@ -520,6 +645,10 @@ class CrewedMission(BaseMission):
     crew = models.ManyToManyField(Astronaut)
     spacecraft = models.ForeignKey(CrewedSpacecraft, on_delete=models.PROTECT)
     landing_site = models.CharField(max_length=100, blank=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                related_name='crewed_missions_created')
+    modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                 related_name='crewed_missions_modified')
 
     def print_crew(self):
         return ', '.join([target.__str__() for target in self.crew.all()])

@@ -41,6 +41,7 @@ class EngineCreateView(GenericCreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.creator = self.request.user
         obj.save()
         return super(EngineCreateView, self).form_valid(form)
 
@@ -66,6 +67,7 @@ class EngineUpdateView(UpdateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.modifier = self.request.user
         obj.save()
         return super(EngineUpdateView, self).form_valid(form)
 

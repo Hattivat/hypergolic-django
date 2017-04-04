@@ -25,6 +25,7 @@ class IgniterCreateView(GenericCreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.creator = self.request.user
         obj.save()
         return super(IgniterCreateView, self).form_valid(form)
 
@@ -41,6 +42,7 @@ class IgniterUpdateView(UpdateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.modifier = self.request.user
         obj.save()
         return super(IgniterUpdateView, self).form_valid(form)
 

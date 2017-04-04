@@ -25,6 +25,7 @@ class PowerCycleCreateView(GenericCreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.creator = self.request.user
         obj.save()
         return super(PowerCycleCreateView, self).form_valid(form)
 
@@ -41,6 +42,7 @@ class PowerCycleUpdateView(UpdateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.modifier = self.request.user
         obj.save()
         return super(PowerCycleUpdateView, self).form_valid(form)
 

@@ -25,6 +25,7 @@ class AntennaTypeCreateView(GenericCreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.creator = self.request.user
         obj.save()
         return super(AntennaTypeCreateView, self).form_valid(form)
 
@@ -41,6 +42,7 @@ class AntennaTypeUpdateView(UpdateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.modifier = self.request.user
         obj.save()
         return super(AntennaTypeUpdateView, self).form_valid(form)
 

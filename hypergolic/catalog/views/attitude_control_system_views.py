@@ -25,6 +25,7 @@ class AttitudeControlSystemCreateView(GenericCreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        obj.creator = self.request.user
         obj.save()
         return super(AttitudeControlSystemCreateView, self).form_valid(form)
 
@@ -38,6 +39,12 @@ class AttitudeControlSystemUpdateView(UpdateView):
     # fields = ['name', 'description', 'sources', 'illustration']
     template_name = "catalog/generic_update.html"
     initial = {}
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.modifier = self.request.user
+        obj.save()
+        return super(AttitudeControlSystemUpdateView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse("attitude_control_system_detail", args=(self.object.pk,))
