@@ -49,6 +49,9 @@ class CompoundAdmin(admin.ModelAdmin):
         ('Other characteristics', {
             'fields': ('appearance', 'toxicity', 'storability', 'description',
                        'illustration', 'sources')
+        }),
+        ('Record history', {
+            'fields': ('creator', 'modifier')
         })
     )
 
@@ -102,6 +105,9 @@ class EngineAdmin(admin.ModelAdmin):
         }),
         ('History', {
             'fields': (('developed', 'first_flight'), 'description', 'sources')
+        }),
+        ('Record history', {
+            'fields': ('creator', 'modifier')
         })
     )
 
@@ -138,6 +144,9 @@ class StageAdmin(admin.ModelAdmin):
         }),
         ('History', {
             'fields': (('developed', 'first_flight'), 'description', 'sources')
+        }),
+        ('Record history', {
+            'fields': ('creator', 'modifier')
         })
     )
 
@@ -164,6 +173,9 @@ class RocketAdmin(admin.ModelAdmin):
         ('History', {
             'fields': (('developed', 'first_flight'), ('num_flights',
                        'failures'), 'description', 'sources')
+        }),
+        ('Record history', {
+            'fields': ('creator', 'modifier')
         })
     )
 
@@ -207,6 +219,9 @@ class SpacecraftAdmin(admin.ModelAdmin):
         ('History', {
             'fields': (('developed', 'first_flight'), ('num_flights',
                        'failures'), 'description', 'sources')
+        }),
+        ('Record history', {
+            'fields': ('creator', 'modifier')
         })
     )
 
@@ -251,6 +266,9 @@ class CrewedSpacecraftAdmin(admin.ModelAdmin):
         ('History', {
             'fields': (('developed', 'first_flight'), ('num_flights',
                        'failures'), 'description', 'sources')
+        }),
+        ('Record history', {
+            'fields': ('creator', 'modifier')
         })
     )
 
@@ -268,6 +286,9 @@ class LaunchFacilityAdmin(admin.ModelAdmin):
         }),
         ('Other', {
             'fields': ('description', 'illustration', 'sources')
+        }),
+        ('Record history', {
+            'fields': ('creator', 'modifier')
         })
     )
 
@@ -290,6 +311,9 @@ class MissionAdmin(admin.ModelAdmin):
         ('History', {
             'fields': (('launch_date', 'launch_facility'),
                        ('end_date', 'failure'), 'description', 'illustration')
+        }),
+        ('Record history', {
+            'fields': ('creator', 'modifier')
         })
     )
 
@@ -314,6 +338,9 @@ class CrewedMissionAdmin(admin.ModelAdmin):
             'fields': (('launch_date', 'launch_facility'),
                        ('end_date', 'failure', 'landing_site'), 'description',
                        'illustration')
+        }),
+        ('Record history', {
+            'fields': ('creator', 'modifier')
         })
     )
 
@@ -330,5 +357,8 @@ class AstronautAdmin(admin.ModelAdmin):
         ('Bio', {
             'fields': (('birth_date', 'birth_place'), 'death_date',
                        'biography', 'sources')
+        }),
+        ('Record history', {
+            'fields': ('creator', 'modifier')
         })
     )
