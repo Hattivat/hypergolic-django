@@ -3,7 +3,7 @@
 {% block otherstuff %}
     <dl class="dl-horizontal">
         {% if object.propellants.all.count < 2 %}
-        <dt>Monopropellant:</dt><dd><a href='{{ object.propellants.0.get_absolute_url }}'>{% object.propellants.0 %}</a></dd>
+        <dt>Monopropellant:</dt><dd><a href='{{ object.propellants.0.get_absolute_url }}'>{{ object.propellants.0 }}</a></dd>
         {% else %}
         <dt>Fuels:</dt><dd>{% for fuel in object.fuels %}<a href='{{ fuel.get_absolute_url }}'>{{ fuel }}</a>{% endfor %}</dd>
         <dt>Oxidizers:</dt><dd>{% for oxidizer in object.oxidizers %}<a href='{{ oxidizer.get_absolute_url }}'>{{ oxidizer }}</a>{% endfor %}</dd>

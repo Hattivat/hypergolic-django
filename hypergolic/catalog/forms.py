@@ -558,7 +558,7 @@ class PropellantMixForm(forms.ModelForm):
 
     class Meta:
         model = PropellantMix
-        fields = ['abbreviation', 'hypergolic', 'specific_impulse', 'specific_impulse_sl', 'characteristic_velocity', 'optimum_ratio', 'combustion_temp', 'description', 'sources']
+        fields = ['propellants', 'abbreviation', 'hypergolic', 'specific_impulse', 'specific_impulse_sl', 'characteristic_velocity', 'optimum_ratio', 'combustion_temp', 'description', 'sources']
         exclude = []
         widgets = None
         localized_fields = None
