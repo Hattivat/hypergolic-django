@@ -18,6 +18,13 @@ class GenericListView(ListView):
         context['create_link'] = reverse('{}_create'.format(inspector_gadget))
         return context
 
+    def get_queryset(self):
+        result = super(GenericListView, self).get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            result = result.filter(name_icontains=query)
+        return result
+
 
 class GenericCreateView(CreateView):
     template_name = "catalog/generic_create.html"
