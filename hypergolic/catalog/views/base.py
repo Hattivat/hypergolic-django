@@ -22,7 +22,7 @@ class GenericListView(ListView):
         result = super(GenericListView, self).get_queryset()
         query = self.request.GET.get('q')
         if query:
-            result = result.filter(name_icontains=query)
+            result = result.filter(name__icontains=query)
         return result
 
 
