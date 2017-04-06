@@ -89,6 +89,10 @@ ENV/
 .ropeproject
 
 # my additions
-static
-!static/js/hypergol.js
-!static/css/hypergol.css
+/**/static/*
+!/**/static/js
+/**/static/js/*
+!/**/static/js/hypergol.js
+!/**/static/css
+/**/static/css/*
+!/**/static/css/hypergol.scss
