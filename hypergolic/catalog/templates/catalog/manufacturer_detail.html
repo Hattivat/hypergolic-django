@@ -6,6 +6,9 @@
         <dt>Headquarters:</dt><dd>{{ object.headquarters }}</dd>
         <dt>Native name:</dt><dd>{{ object.native_name }}</dd>
         <dt>Date established:</dt><dd>{{ object.established }}</dd>
+        {% if object.predecessor.all %}
+        <dt>Predecessors:</dt><dd>{% for prede in object.predecessor.all %}<a href='{{ prede.get_absolute_url }}'>{{ prede }}</a>{% endfor %}</dd>
+        {% endif %}
         <dt>Status:</dt><dd>{% if object.active %}Active{% else %}Defunct{% endif %}</dd>
         {% if not object.active %}
         <dt>Date defunct:</dt><dd>{{ object.defunct }}</dd>
