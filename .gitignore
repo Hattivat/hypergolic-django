@@ -90,3 +90,5 @@ ENV/
 
 # my additions
 static
+!/static/js/hypergol.js
+!/static/css/hypergol.css
