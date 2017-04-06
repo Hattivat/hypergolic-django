@@ -5,8 +5,8 @@
         {% if object.propellants.all.count < 2 %}
         <dt>Monopropellant:</dt><dd><a href='{{ object.propellants.0.get_absolute_url }}'>{{ object.propellants.0 }}</a></dd>
         {% else %}
-        <dt>Fuels:</dt><dd>{% for fuel in object.fuels %}<a href='{{ fuel.get_absolute_url }}'>{{ fuel }}</a>{% endfor %}</dd>
-        <dt>Oxidizers:</dt><dd>{% for oxidizer in object.oxidizers %}<a href='{{ oxidizer.get_absolute_url }}'>{{ oxidizer }}</a>{% endfor %}</dd>
+        <dt>Fuels:</dt><dd>{% for fuel in fuels.all %}<a href='{{ fuel.get_absolute_url }}'>{{ fuel }}</a>{% endfor %}</dd>
+        <dt>Oxidizers:</dt><dd>{% for oxidizer in oxidizers.all %}<a href='{{ oxidizer.get_absolute_url }}'>{{ oxidizer }}</a>{% endfor %}</dd>
         {% endif %}
         <dt>Hypergolic:</dt><dd>{% if object.hypergolic %}Yes{% else %}No{% endif %}</dd>
         <dt>Specific impulse (in vacuum):</dt><dd>{{ object.specific_impulse }}</dd>

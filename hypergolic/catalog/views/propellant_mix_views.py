@@ -19,8 +19,9 @@ class PropellantMixDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         ret = super(PropellantMixDetailView, self).get_context_data(**kwargs)
-        ret['fuels'] = self.object.propellants.filter(role=True)
-        ret['oxidizers'] = self.object.propellants.filter(role=False)
+        props = self.object.propellants.all()
+        ret['fuels'] = props.filter(role=True)
+        ret['oxidizers'] = props.filter(role=False)
         return ret
 
 
