@@ -22,7 +22,8 @@ class GenericListView(ListView):
         result = super(GenericListView, self).get_queryset()
         query = self.request.GET.get('q')
         if query:
-            result = result.filter(name__icontains=query)
+            # this is needed because not all models have a 'name' field
+            result = [x for x in result if query.lower() in x.__str__().lower()]
         return result
 
 
