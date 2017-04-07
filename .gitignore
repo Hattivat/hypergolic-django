@@ -96,3 +96,4 @@ ENV/
 !/**/static/css
 /**/static/css/*
 !/**/static/css/hypergol.scss
+migrations
