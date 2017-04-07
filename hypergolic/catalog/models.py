@@ -6,9 +6,16 @@ from .helpers import underscore
 
 
 class Basic(models.Model):
+    """An abstract model serving as a generic base for most other models in
+    this app."""
+
     name = models.CharField(max_length=50, primary_key=True, unique=True)
-    description = models.TextField(blank=True)
-    sources = models.TextField()
+    description = models.TextField(blank=True, help_text="Please use your own \
+                                   words and do not plagiarise content from \
+                                   elsewhere.")
+    sources = models.TextField(help_text="Please list the sources you have \
+                               used to obtain/verify the information you are \
+                               adding.")
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
@@ -39,6 +46,8 @@ class Basic(models.Model):
 
 
 class Role(Basic):
+    """A model for engine roles, e.g. 'first stage', 'vernier', 'landing'."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='engine_roles_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -52,6 +61,9 @@ class Role(Basic):
 
 
 class StageRole(Basic):
+    """A model for stage roles, e.g. 'first stage', 'third stage', 'lunar
+    ascent stage'."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='stage_roles_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -61,6 +73,9 @@ class StageRole(Basic):
 
 
 class PowerCycle(Basic):
+    """A model for storing rocket engine power cycles, such as 'gas generator'
+    or 'expander cycle'."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='power_cycles_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -70,6 +85,9 @@ class PowerCycle(Basic):
 
 
 class Cooling(Basic):
+    """A model for cooling solutions, such as 'ablative', 'regenerative
+    (corrugated metal shell)', etc."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='cooling_methods_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -83,6 +101,8 @@ class Cooling(Basic):
 
 
 class NozzleType(Basic):
+    """A model for nozzle types, generally shapes."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='nozzle_types_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -92,6 +112,8 @@ class NozzleType(Basic):
 
 
 class NozzleMaterial(Basic):
+    """A model for materials used to construct rocket nozzles."""
+
     chemical_formula = models.CharField(max_length=30, blank=True)
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='nozzle_materials_created')
@@ -102,6 +124,8 @@ class NozzleMaterial(Basic):
 
 
 class Injector(Basic):
+    """A model for types of rocket engine injectors."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='injectors_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -111,6 +135,8 @@ class Injector(Basic):
 
 
 class Igniter(Basic):
+    """A model for rocket engine ignition solutions."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='igniters_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -120,16 +146,31 @@ class Igniter(Basic):
 
 
 class Manufacturer(Basic):
-    native_name = models.CharField(max_length=100, blank=True)
+    """A model for manufacturers of space equipment."""
+
+    native_name = models.CharField(max_length=100, blank=True, help_text="The \
+                                   name of the manufacturer as it would appear \
+                                   in its native language and script.")
     country = models.CharField(max_length=50, choices=COUNTRIES)
     established = models.PositiveSmallIntegerField(choices=YEARS, blank=True,
                                                    null=True)
-    active = models.NullBooleanField(blank=True, null=True)
+    active = models.NullBooleanField(blank=True, null=True, help_text="Is \
+                                     the company is still alive and producing \
+                                     things under its logo, as opposed to \
+                                     being defunct or merged into some other \
+                                     company")
     defunct = models.PositiveSmallIntegerField(choices=YEARS, blank=True,
-                                               null=True)
+                                               null=True, help_text="If the \
+                                               company is no longer active, \
+                                               please give the year it ceased \
+                                               operating.")
     successor = models.ForeignKey('self', blank=True, null=True,
-                                  related_name="predecessor")
-    headquarters = models.CharField(max_length=100, blank=True)
+                                  related_name="predecessor", help_text="If \
+                                  the company was merged with/into some other \
+                                  organization, please tell us it's name.")
+    headquarters = models.CharField(max_length=100, blank=True, help_text="The \
+                                    city and country in which this \
+                                    manufacturer's headquarters are.")
     website = models.URLField(max_length=100, blank=True, null=True)
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='manufacturers_created')
@@ -140,21 +181,39 @@ class Manufacturer(Basic):
 
 
 class Compound(Basic):
-    role = models.BooleanField(choices=((True, 'Fuel'), (False, 'Oxidizer')))
+    """A model for chemical compounds used for propulsion."""
+
+    role = models.BooleanField(choices=((True, 'Fuel'), (False, 'Oxidizer')),
+                               help_text="Is this compound used as a fuel, \
+                               or as an oxidizer? In case of a monopropellant,\
+                               choose the fuel setting.")
     chemical_formula = models.CharField(max_length=30, blank=True)
     also_known_as = models.CharField(max_length=50, blank=True)
     variety_of = models.ForeignKey('self', on_delete=models.SET_NULL,
                                    blank=True, null=True,
                                    related_name="version")
-    density = models.FloatField(blank=True, null=True)  # in g/ml
-    # melting_point and boiling_point in degrees Celsius
+    density = models.FloatField(blank=True, null=True, help_text="In g/ml")
     melting_point = models.DecimalField(max_digits=6, decimal_places=2,
-                                        blank=True, null=True)
+                                        blank=True, null=True, help_text="In \
+                                        degrees Celsius")
     boiling_point = models.DecimalField(max_digits=6, decimal_places=2,
-                                        blank=True, null=True)
-    appearance = models.CharField(max_length=250, blank=True)
-    toxicity = models.CharField(max_length=20, choices=DEGREES, blank=True)
-    storability = models.CharField(max_length=20, choices=DEGREES, blank=True)
+                                        blank=True, null=True, help_text="In \
+                                        degrees Celcius")
+    appearance = models.CharField(max_length=250, blank=True, help_text="Use \
+                                  adjectives, such as 'transparent', or \
+                                  'reddish brown'.")
+    toxicity = models.CharField(max_length=20, choices=DEGREES, blank=True,
+                                help_text="How dangerous the compound and/or \
+                                the compounds created in its combustion are \
+                                for humans in case of skin contact or \
+                                inhalation (disregard oral ingestion, as it \
+                                is unlikely to happen involuntarily).")
+    storability = models.CharField(max_length=20, choices=DEGREES, blank=True,
+                                   help_text="How quickly the compound boils \
+                                   off or otherwise spoils in typical \
+                                   conditions. For example, Liquid Hydrogen \
+                                   scores 'very low', while a typical solid \
+                                   rocket fuel scores 'very high'.")
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='compounds_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -164,22 +223,42 @@ class Compound(Basic):
 
 
 class PropellantMix(models.Model):
-    propellants = models.ManyToManyField(Compound)
-    abbreviation = models.CharField(max_length=30, blank=True)
-    hypergolic = models.BooleanField(default=False)
-    specific_impulse = models.PositiveIntegerField()  # stored in m/s
-    specific_impulse_sl = models.PositiveIntegerField(blank=True, null=True)
+    """A model for propellant mixtures used for propulsion. This usually
+    means a fuel/oxidizer pair, but we also allow for more exotic
+    solutions."""
+
+    propellants = models.ManyToManyField(Compound, help_text="The chemical \
+                                         compounds used in this mixture, \
+                                         typically although not exclusivily \
+                                         one oxidizer and one fuel compound.")
+    abbreviation = models.CharField(max_length=30, blank=True, help_text="A \
+                                    shorter way to refer to the propellant \
+                                    combination, often colloquial (e.g. \
+                                    'hydrolox').")
+    hypergolic = models.BooleanField(default=False, help_text="Whether or not \
+                                     this particular combination of chemical \
+                                     compounds ignites spontaneusly (without \
+                                     an external spark or flame) on contact. \
+                                     If unsure, leave it at 'False'.")
+    specific_impulse = models.PositiveIntegerField(help_text="In m/s")
+    specific_impulse_sl = models.PositiveIntegerField(blank=True, null=True,
+                                                      help_text="In m/s")
     characteristic_velocity = models.PositiveIntegerField(blank=True,
                                                           null=True)
     optimum_ratio = models.DecimalField(max_digits=5, decimal_places=2,
-                                        blank=True, null=True)
-    # combustion temperature is degree Kelvin!
+                                        blank=True, null=True, help_text="As \
+                                        a ratio of 'x to 1'.")
     combustion_temp = models.DecimalField(max_digits=6, decimal_places=1,
                                           blank=True, null=True,
                                           verbose_name="combustion \
-                                          temperature")
-    description = models.TextField(blank=True)
-    sources = models.TextField()
+                                          temperature", help_text="In degrees \
+                                          Kelvin")
+    description = models.TextField(blank=True, help_text="Please use your own \
+                                   words and do not plagiarise content from \
+                                   elsewhere.")
+    sources = models.TextField(help_text="Please list the sources you have \
+                               used to obtain/verify the information you are \
+                               adding.")
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -213,45 +292,72 @@ class PropellantMix(models.Model):
 
 
 class Complex(Basic):
+    """An abstract model to serve as a base for models of the most complex
+    pieces of spacefaring equipment, such as engines, spacecraft, etc."""
+
     name = models.CharField(max_length=50)
     country = models.CharField(max_length=50, choices=COUNTRIES)
     variant_of = models.ForeignKey('self', on_delete=models.SET_NULL,
                                    blank=True, null=True)
-    native_name = models.CharField(max_length=50, blank=True)
+    native_name = models.CharField(max_length=50, blank=True, help_text="The\
+                                   name of the part as it would appear in the \
+                                   native language and script of its \
+                                   manufacturer.")
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.PROTECT,
                                      blank=True, null=True)
     developed = models.PositiveSmallIntegerField(choices=YEARS, blank=True,
                                                  null=True)
     first_flight = models.PositiveSmallIntegerField(choices=YEARS, blank=True,
                                                     null=True)
-    height = models.PositiveIntegerField(blank=True, null=True)  # stored in mm
-    diameter = models.PositiveIntegerField(blank=True, null=True)  # milimeters
-    dry_weight = models.PositiveIntegerField(blank=True, null=True)  # in grams
+    height = models.PositiveIntegerField(blank=True, null=True, help_text="In \
+                                         milimetres (1/1000th of a metre)")
+    diameter = models.PositiveIntegerField(blank=True, null=True, help_text="\
+                                           In milimetres (1/1000th of a \
+                                           metre)")
+    dry_weight = models.PositiveIntegerField(blank=True, null=True,
+                                             help_text="In grams")
 
     class Meta:
         abstract = True
 
 
 class Engine(Complex):
+    """A model for all sorts of rocket engines."""
+
     application = models.ForeignKey(Role, on_delete=models.SET_NULL,
-                                    blank=True, null=True)
+                                    blank=True, null=True, help_text="The \
+                                    role in which this engine is usually \
+                                    employed.")
     propellants = models.ForeignKey(PropellantMix, on_delete=models.PROTECT)
     mixture_ratio = models.DecimalField(max_digits=8, decimal_places=4,
-                                        blank=True, null=True)
+                                        blank=True, null=True,
+                                        help_text="The ratio of oxidizer \
+                                        to fuel used in this engine.")
     cycle = models.ForeignKey(PowerCycle, on_delete=models.SET_NULL,
-                              blank=True, null=True)
-    specific_impulse_vac = models.PositiveIntegerField()  # stored in m/s
-    specific_impulse_sl = models.PositiveIntegerField()  # stored in m/s
-    thrust_sl = models.PositiveIntegerField()  # stored in newtons
-    thrust_vac = models.PositiveIntegerField()  # stored in newtons
-    twr = models.DecimalField(max_digits=6, decimal_places=2, blank=True)
-    # chamber pressure is stored in Pascals
-    chamber_pressure = models.PositiveIntegerField(blank=True, null=True)
-    combustion_chambers = models.PositiveSmallIntegerField(default=1)
-    # rated burn time is stored in seconds
-    rated_burn_time = models.PositiveSmallIntegerField(blank=True, null=True)
+                              blank=True, null=True, help_text="The power \
+                              cycle employed in this engine, e.g. 'staged \
+                              combustion'.")
+    specific_impulse_vac = models.PositiveIntegerField(help_text="In m/s")
+    specific_impulse_sl = models.PositiveIntegerField(help_text="In m/s")
+    thrust_sl = models.PositiveIntegerField(help_text="In Newtons")
+    thrust_vac = models.PositiveIntegerField(help_text="In Newtons")
+    twr = models.DecimalField(max_digits=6, decimal_places=2, blank=True,
+                              verbose_name="Thrust-to-Weight Ratio")
+    chamber_pressure = models.PositiveIntegerField(blank=True, null=True,
+                                                   help_text="In Pascals")
+    combustion_chambers = models.PositiveSmallIntegerField(default=1,
+                                                           help_text="The \
+                                                           number of \
+                                                           combustion chambers\
+                                                            this engine has, \
+                                                           almost always one.")
+    rated_burn_time = models.PositiveSmallIntegerField(blank=True, null=True,
+                                                       help_text="In seconds")
     nozzle_ratio = models.DecimalField(max_digits=6, decimal_places=2,
-                                       blank=True, null=True)
+                                       blank=True, null=True, help_text="The \
+                                       ratio of the area of nozzle exit to \
+                                       the area of nozzle throat. Also known \
+                                       as section ratio or expansion ratio.")
     nozzle_shape = models.ForeignKey(NozzleType, on_delete=models.PROTECT,
                                      blank=True, null=True)
     nozzle_material = models.ForeignKey(NozzleMaterial,
@@ -261,19 +367,38 @@ class Engine(Complex):
                                        blank=True, null=True)
     injector_type = models.ForeignKey(Injector, on_delete=models.PROTECT,
                                       blank=True, null=True)
-    coefficient_of_thrust_vac = models.FloatField(blank=True, null=True)
-    coefficient_of_thrust_sl = models.FloatField(blank=True, null=True)
+    coefficient_of_thrust_vac = models.FloatField(blank=True, null=True,
+                                                  verbose_name="Coefficient \
+                                                  of thrust in vacuum")
+    coefficient_of_thrust_sl = models.FloatField(blank=True, null=True,
+                                                 verbose_name="Coefficient of \
+                                                 thrust at sea level")
     ignition_method = models.ForeignKey(Igniter, on_delete=models.SET_NULL,
                                         blank=True, null=True)
-    restart_capability = models.BooleanField(default=False)
+    restart_capability = models.BooleanField(default=False, help_text="Whether\
+                                              or not the engine can be \
+                                              restarted in flight. For the \
+                                              overwhelming majority of rocket \
+                                              engines the answer is 'no'.")
     num_restarts = models.PositiveSmallIntegerField(default=0, blank=True,
-                                                    null=True)
+                                                    null=True, verbose_name="\
+                                                    number of restarts",
+                                                    help_text="How many times \
+                                                    the rocket can be safely \
+                                                    restarted in flight.")
     throttle_range_min = models.PositiveSmallIntegerField(default=100,
                                                           blank=True,
-                                                          null=True)
+                                                          null=True,
+                                                          help_text="As a \
+                                                          percentage of rated \
+                                                          thrust")
     throttle_range_max = models.PositiveSmallIntegerField(default=100,
                                                           blank=True,
-                                                          null=True)
+                                                          null=True,
+                                                          help_text="As a \
+                                                          percentage of rated \
+                                                          thrust; confusingly,\
+                                                           can be over 100.")
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='engines_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -283,6 +408,8 @@ class Engine(Complex):
 
 
 class TankConstruction(Basic):
+    """A model for rocket propellant tank construction types."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='tank_constructions_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -292,6 +419,8 @@ class TankConstruction(Basic):
 
 
 class TankMaterial(Basic):
+    """A model for materials used to construct rocket propellant tanks."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='tank_materials_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -301,20 +430,25 @@ class TankMaterial(Basic):
 
 
 class Stage(Complex):
+    """A model for all kinds of rocket stages."""
+
     stage_role = models.ForeignKey(StageRole, on_delete=models.PROTECT,
                                    null=True)
-    dry_weight = models.BigIntegerField(blank=True, null=True)
-    fueled_weight = models.BigIntegerField()  # stored in grams
-    # volumes are stored in litres
-    oxidizer_volume = models.PositiveIntegerField(blank=True, null=True)
-    fuel_volume = models.PositiveIntegerField(blank=True, null=True)
-    # weights are stored in kilograms
-    oxidizer_weight = models.BigIntegerField(blank=True, null=True)
-    fuel_weight = models.BigIntegerField(blank=True, null=True)
+    dry_weight = models.BigIntegerField(blank=True, null=True, help_text="In \
+                                        grams")
+    fueled_weight = models.BigIntegerField(help_text="In grams")
+    oxidizer_volume = models.PositiveIntegerField(blank=True, null=True,
+                                                  help_text="In litres")
+    fuel_volume = models.PositiveIntegerField(blank=True, null=True,
+                                              help_text="In litres")
+    oxidizer_weight = models.BigIntegerField(blank=True, null=True,
+                                             help_text="In kilograms")
+    fuel_weight = models.BigIntegerField(blank=True, null=True, help_text="In \
+                                         kilograms")
     main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
                                     related_name='stage_main')
     num_main_engines = models.PositiveSmallIntegerField(default=1,
-                                                        verbose_name="number\
+                                                        verbose_name="number \
                                                         of main engines")
     main_gimbal_yaw_min = models.DecimalField(max_digits=4, decimal_places=1,
                                               blank=True, null=True)
@@ -344,7 +478,8 @@ class Stage(Complex):
     tank_material = models.ForeignKey(TankMaterial, on_delete=models.SET_NULL,
                                       blank=True, null=True)
     fins = models.PositiveSmallIntegerField(default=0)
-    burn_time = models.PositiveIntegerField(blank=True, null=True)  # seconds
+    burn_time = models.PositiveIntegerField(blank=True, null=True,
+                                            help_text="In seconds")
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='stages_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -354,6 +489,8 @@ class Stage(Complex):
 
 
 class RocketSeries(Basic):
+    """A model to store rocket families, such as 'Atlas' or 'Ariane'."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='rocket_series_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -366,8 +503,10 @@ class RocketSeries(Basic):
 
 
 class Instrument(Basic):
-    # energy consumption in watts
-    energy_consumption = models.PositiveIntegerField(blank=True, null=True)
+    """A model for all kinds of scientific instruments used in space."""
+
+    energy_consumption = models.PositiveIntegerField(blank=True, null=True,
+                                                     help_text="In watts")
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='instruments_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -377,8 +516,10 @@ class Instrument(Basic):
 
 
 class GuidanceSystem(Basic):
-    # energy consumption in watts
-    energy_consumption = models.PositiveIntegerField(blank=True, null=True)
+    """A model for types of guidance systems used in rocketry."""
+
+    energy_consumption = models.PositiveIntegerField(blank=True, null=True,
+                                                     help_text="In watts")
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='guidance_systems_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -388,6 +529,8 @@ class GuidanceSystem(Basic):
 
 
 class AntennaType(Basic):
+    """A model for types of antennas used on spacecraft."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='antenna_types_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -397,6 +540,9 @@ class AntennaType(Basic):
 
 
 class ElectricitySource(Basic):
+    """A model for kinds of electricity sources used in space, such as
+    solar panels or RTG generators."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='electricity_sources_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -406,8 +552,11 @@ class ElectricitySource(Basic):
 
 
 class LifeSupportType(Basic):
-    # energy consumption in watts
-    energy_consumption = models.PositiveIntegerField(blank=True, null=True)
+    """A model for types of life support systems used in spacecraft, focusing
+    mostly on the chemical compounds used."""
+
+    energy_consumption = models.PositiveIntegerField(blank=True, null=True,
+                                                     help_text="In watts")
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='lss_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -417,6 +566,9 @@ class LifeSupportType(Basic):
 
 
 class AttitudeControlSystem(Basic):
+    """A model for kinds of attitude control systems employed by spacecraft.
+    This typically means RCS engines, but there are other options."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='acs_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -426,6 +578,9 @@ class AttitudeControlSystem(Basic):
 
 
 class LandingSolution(Basic):
+    """A model for landing solutions, such as 'propulsive', 'parachutes',
+    'glider', etc."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='landing_solutions_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -435,6 +590,8 @@ class LandingSolution(Basic):
 
 
 class HeatshieldMaterial(Basic):
+    """A model for materials used to construct heatshields for spacecraft."""
+
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='heatshieldmaterials/')
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -445,6 +602,11 @@ class HeatshieldMaterial(Basic):
 
 
 class Organization(Basic):
+    """A model for spacefaring organizations, such as NASA, or ESA. This is
+    intended first and foremost to reflect multi-national efforts and allow
+    us to distinguish between different organizations within a country, e.g.
+    NASA vs. USAF missions."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='organizations_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -454,6 +616,9 @@ class Organization(Basic):
 
 
 class MissionTarget(Basic):
+    """A model for mission targets, generally meaning astronomical objects,
+    e.g. 'Mars', 'Halley's comet', 'Titan'."""
+
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='mission_targets_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -463,19 +628,29 @@ class MissionTarget(Basic):
 
 
 class Rocket(Complex):
+    """A model for rockets as whole units, without payload."""
+
     series = models.ForeignKey(RocketSeries, on_delete=models.PROTECT,
-                               blank=True, null=True)
+                               blank=True, null=True, help_text="If this \
+                               rocket is part of a series, such as 'Ariane', \
+                               or 'Saturn', you can specify it here.")
     stages = models.ManyToManyField(Stage)
-    dry_weight = models.BigIntegerField(blank=True, null=True)
-    fueled_weight = models.BigIntegerField()  # stored in grams
+    dry_weight = models.BigIntegerField(blank=True, null=True, help_text="\
+                                        in grams")
+    fueled_weight = models.BigIntegerField(help_text="in grams")
     guidance_system = models.ForeignKey(GuidanceSystem, blank=True, null=True,
                                         on_delete=models.SET_NULL)
-    fairing_height = models.PositiveIntegerField(blank=True, null=True)  # mm
-    fairing_width = models.PositiveIntegerField(blank=True, null=True)  # mm
+    fairing_height = models.PositiveIntegerField(blank=True, null=True,
+                                                 help_text="in milimetres")
+    fairing_width = models.PositiveIntegerField(blank=True, null=True,
+                                                help_text="in milimetres")
     num_flights = models.PositiveSmallIntegerField(default=0,
                                                    verbose_name="number of \
                                                    flights")
-    failures = models.PositiveSmallIntegerField(default=0)
+    failures = models.PositiveSmallIntegerField(default=0, help_text="The \
+                                                number of times this Rocket\
+                                                has catastrophically failed\
+                                                during a mission.")
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='rockets_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -488,37 +663,57 @@ class Rocket(Complex):
 
 
 class Spacecraft(Complex):
-    instruments = models.ManyToManyField(Instrument, blank=True)
+    """A model for robotic (uncrewed) spacecraft of all kinds."""
+
+    instruments = models.ManyToManyField(Instrument, blank=True, help_name="\
+                                         scientific instruments present on \
+                                         this spacecraft")
     guidance_system = models.ForeignKey(GuidanceSystem, blank=True, null=True,
                                         on_delete=models.SET_NULL)
     attitude_control_system = models.ForeignKey(AttitudeControlSystem,
                                                 on_delete=models.SET_NULL,
                                                 blank=True, null=True)
-    # battery capacity in watthours, power generation in watts
-    battery_capacity = models.PositiveIntegerField(blank=True, null=True)
+    battery_capacity = models.PositiveIntegerField(blank=True, null=True,
+                                                   help_text="in watt-hours")
     electricity_source = models.ForeignKey(ElectricitySource, blank=True,
                                            on_delete=models.SET_NULL,
                                            null=True)
-    power_generation = models.PositiveIntegerField(blank=True, null=True)
+    power_generation = models.PositiveIntegerField(blank=True, null=True,
+                                                   help_text="in watts")
     antenna_type = models.ForeignKey(AntennaType, blank=True, null=True,
                                      on_delete=models.SET_NULL)
-    # antenna gain in dBi, transmitter power in watts
-    antenna_gain = models.PositiveSmallIntegerField(blank=True, null=True)
-    transmitter_power = models.PositiveIntegerField(blank=True, null=True)
+    antenna_gain = models.PositiveSmallIntegerField(blank=True, null=True,
+                                                    help_text="in dBi")
+    transmitter_power = models.PositiveIntegerField(blank=True, null=True,
+                                                    help_text="in watts")
     heatshield = models.ForeignKey(HeatshieldMaterial, blank=True, null=True,
-                                   on_delete=models.PROTECT)
+                                   on_delete=models.PROTECT, help_text="If \
+                                   this spacecraft is equipped with a \
+                                   heatshield, please specify its type")
     landing_solution = models.ForeignKey(LandingSolution, blank=True,
-                                         null=True, on_delete=models.PROTECT)
+                                         null=True, on_delete=models.PROTECT,
+                                         help_text="If this spacecraft is \
+                                         capable of landing, please specify \
+                                         the means by which it achieves this \
+                                         feat")
     num_flights = models.PositiveSmallIntegerField(default=0,
                                                    verbose_name='number of \
                                                    flights')
-    failures = models.PositiveSmallIntegerField(default=0)
-    fueled_weight = models.PositiveIntegerField()  # stored in grams
+    failures = models.PositiveSmallIntegerField(default=0, help_text="The \
+                                                number of times this \
+                                                spacecraft (not the rocket \
+                                                lifting it) has failed on a \
+                                                mission")
+    fueled_weight = models.PositiveIntegerField(help_text="in grams")
     # volumes in litres, weights in grams
-    oxidizer_volume = models.PositiveIntegerField(blank=True, null=True)
-    fuel_volume = models.PositiveIntegerField(blank=True, null=True)
-    oxidizer_weight = models.PositiveIntegerField(blank=True, null=True)
-    fuel_weight = models.PositiveIntegerField(blank=True, null=True)
+    oxidizer_volume = models.PositiveIntegerField(blank=True, null=True,
+                                                  help_text="in litres")
+    fuel_volume = models.PositiveIntegerField(blank=True, null=True,
+                                              help_text="in litres")
+    oxidizer_weight = models.PositiveIntegerField(blank=True, null=True,
+                                                  help_text="in grams")
+    fuel_weight = models.PositiveIntegerField(blank=True, null=True,
+                                              help_text="in grams")
     main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
                                     related_name='spacecraft_main')
     num_main_engines = models.PositiveSmallIntegerField(default=1,
@@ -544,15 +739,24 @@ class Spacecraft(Complex):
 
 
 class CrewedSpacecraft(Spacecraft):
+    """A model for all sorts of crewed (manned) spacecraft."""
+
     crew = models.PositiveSmallIntegerField(default=1)
     life_support = models.ForeignKey(LifeSupportType, blank=True, null=True,
                                      on_delete=models.SET_NULL)
-    supplies_days = models.PositiveSmallIntegerField(blank=True, null=True)
-    # volume in litres
-    pressurized_volume = models.PositiveIntegerField(blank=True, null=True)
+    supplies_days = models.PositiveSmallIntegerField(blank=True, null=True,
+                                                     help_text="For how many \
+                                                     days could the life \
+                                                     support supplies last.")
+    pressurized_volume = models.PositiveIntegerField(blank=True, null=True,
+                                                     help_text="pressurized \
+                                                     (safe for crew) space \
+                                                     in litres")
 
 
 class LaunchFacility(Basic):
+    """A model for launch facilities, such as the Baikonur cosmodrome."""
+
     location = models.CharField(max_length=50)
     owning_country = models.CharField(max_length=50, choices=COUNTRIES)
     latitude = models.PositiveSmallIntegerField()
@@ -570,6 +774,9 @@ class LaunchFacility(Basic):
 
 
 class BaseMission(Basic):
+    """An abstract model serving as a base for CrewedMission and (robotic)
+    Mission models"""
+
     country = models.CharField(max_length=50, choices=COUNTRIES)
     organization = models.ForeignKey(Organization, on_delete=models.PROTECT,
                                      blank=True, null=True)
@@ -577,9 +784,14 @@ class BaseMission(Basic):
     end_date = models.DateTimeField()
     launch_facility = models.ForeignKey(LaunchFacility,
                                         on_delete=models.PROTECT)
-    launch_vehicle = models.ForeignKey(Rocket, on_delete=models.PROTECT)
-    targets = models.ManyToManyField(MissionTarget)
-    failure = models.BooleanField(default=False)
+    launch_vehicle = models.ForeignKey(Rocket, on_delete=models.PROTECT,
+                                       help_text="the rocket type used in \
+                                       the mission")
+    targets = models.ManyToManyField(MissionTarget, help_text="the places the \
+                                     mission was supposed to reach")
+    failure = models.BooleanField(default=False, help_text="whether or not \
+                                  the mission ended in failure for whatever \
+                                  reason")
     illustration = models.ImageField(blank=True, null=True,
                                      upload_to='missions/')
 
@@ -591,6 +803,8 @@ class BaseMission(Basic):
 
 
 class Mission(BaseMission):
+    """A model for all sorts of uncrewed missions, test launches, etc."""
+
     spacecraft = models.ForeignKey(Spacecraft, on_delete=models.PROTECT)
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='missions_created')
@@ -599,6 +813,8 @@ class Mission(BaseMission):
 
 
 class Astronaut(models.Model):
+    """A model for astronauts/cosmonauts."""
+
     first_name = models.CharField(max_length=50)
     middle_names = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50)
@@ -608,8 +824,12 @@ class Astronaut(models.Model):
     birth_date = models.DateTimeField(blank=True, null=True)
     birth_place = models.CharField(max_length=100)
     death_date = models.DateTimeField(blank=True, null=True)
-    biography = models.TextField(blank=True)
-    sources = models.TextField()
+    biography = models.TextField(blank=True, help_text="Please use your own \
+                                   words and do not plagiarise content from \
+                                   elsewhere.")
+    sources = models.TextField(help_text="Please list the sources you have \
+                               used to obtain/verify the information you are \
+                               adding.")
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -642,7 +862,10 @@ class Astronaut(models.Model):
 
 
 class CrewedMission(BaseMission):
-    crew = models.ManyToManyField(Astronaut)
+    """A model for all kinds of manned missions/launches."""
+
+    crew = models.ManyToManyField(Astronaut, help_text="the astronauts on \
+                                  board the spacecraft")
     spacecraft = models.ForeignKey(CrewedSpacecraft, on_delete=models.PROTECT)
     landing_site = models.CharField(max_length=100, blank=True)
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
