@@ -13,7 +13,6 @@ class RoleForm(forms.ModelForm):
     class Meta:
         model = Role
         fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
         widgets = None
         localized_fields = None
         labels = {}

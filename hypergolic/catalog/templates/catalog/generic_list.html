@@ -21,13 +21,15 @@
         {% endif %}
     </div>
     <table class="table table-hover table-responsive">
+        {% for instance in object_list %}
+        {% if forloop.first %}
         <tr>
             <td><strong>Name</strong></td>
             {% for column in display_data %}
-            <td><strong>{{ column|spacify|capfirst }}</strong></td>
+            <td><strong>{{ instance|verbose_name:column|capfirst }}</strong></td>
             {% endfor %}
         </tr>
-        {% for instance in object_list %}
+        {% endif %}
         <tr onclick="window.document.location='{{ instance.get_absolute_url }}';">
             <td>{{ instance }}</td>
             {% with instance|to_dict as dic %}
