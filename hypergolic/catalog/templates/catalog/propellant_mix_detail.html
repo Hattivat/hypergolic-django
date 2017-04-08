@@ -2,6 +2,7 @@
 
 {% block otherstuff %}
     <dl class="dl-horizontal">
+        <dt>Abbreviation:</dt><dd>{{ object.abbreviation }}</dd>
         {% if object.propellants.all.count < 2 %}
         <dt>Monopropellant:</dt><dd><a href='{{ object.propellants.0.get_absolute_url }}'>{{ object.propellants.0 }}</a></dd>
         {% else %}
