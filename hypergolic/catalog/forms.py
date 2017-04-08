@@ -116,7 +116,7 @@ class ManufacturerForm(BasicForm):
         model = Manufacturer
         fields = ['name', 'native_name', 'country', 'headquarters',
                   'established', 'active', 'defunct', 'successor',
-                  'description', 'website', 'illustration', 'sources']
+                  'website', 'description', 'illustration', 'sources']
         exclude = []
         widgets = None
         localized_fields = None
@@ -157,10 +157,10 @@ class CompoundForm(BasicForm):
 
     class Meta(BasicForm.Meta):
         model = Compound
-        fields = ['name', 'description', 'sources', 'role', 'chemical_formula',
-                  'also_known_as', 'variety_of', 'density', 'melting_point',
+        fields = ['name', 'also_known_as', 'role', 'chemical_formula',
+                  'variety_of', 'density', 'melting_point',
                   'boiling_point', 'appearance', 'toxicity', 'storability',
-                  'illustration']
+                  'description', 'illustration', 'sources']
         exclude = []
         widgets = None
         localized_fields = None
@@ -169,7 +169,7 @@ class CompoundForm(BasicForm):
         error_messages = {}
 
     def __init__(self, *args, **kwargs):
-        return super(CompoundForm, self).__init__(*args, **kwargs)
+        super(CompoundForm, self).__init__(*args, **kwargs)
 
     def is_valid(self):
         return super(CompoundForm, self).is_valid()

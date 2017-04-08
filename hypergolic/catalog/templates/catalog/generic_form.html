@@ -5,7 +5,7 @@
     {% for field in form %}
         {% if field.errors %}
         <div class="form-group has-error">
-            <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+            <label class="control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
             {{ field|attr:"class:form-control" }}
             {% if field.help_text %}
             <p class="help-block"><small>{{ field.help_text }}</small></p>
@@ -18,7 +18,7 @@
         </div>
         {% else %}
         <div class="form-group">
-            <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+            <label class="control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
             {% if field.field.widget.input_type == 'file' %}
             {{ field|attr:"class:form-control-file" }}
             {% else %}
