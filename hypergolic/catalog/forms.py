@@ -112,7 +112,7 @@ class IgniterForm(BasicForm):
 
 class ManufacturerForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = Manufacturer
         fields = ['name', 'native_name', 'country', 'headquarters',
                   'established', 'active', 'defunct', 'successor',
@@ -153,11 +153,14 @@ class ManufacturerForm(BasicForm):
         return super(ManufacturerForm, self).save(commit)
 
 
-class CompoundForm(forms.ModelForm):
+class CompoundForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = Compound
-        fields = ['name', 'description', 'sources', 'role', 'chemical_formula', 'also_known_as', 'variety_of', 'density', 'melting_point', 'boiling_point', 'appearance', 'toxicity', 'storability', 'illustration']
+        fields = ['name', 'description', 'sources', 'role', 'chemical_formula',
+                  'also_known_as', 'variety_of', 'density', 'melting_point',
+                  'boiling_point', 'appearance', 'toxicity', 'storability',
+                  'illustration']
         exclude = []
         widgets = None
         localized_fields = None

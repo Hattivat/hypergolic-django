@@ -240,9 +240,13 @@ class PropellantMix(models.Model):
                                      compounds ignites spontaneusly (without \
                                      an external spark or flame) on contact. \
                                      If unsure, leave it at 'False'.")
-    specific_impulse = models.PositiveIntegerField(help_text="In m/s")
+    specific_impulse = models.PositiveIntegerField(help_text="In m/s",
+                                                   verbose_name="Specific \
+                                                   impulse in vacuum")
     specific_impulse_sl = models.PositiveIntegerField(blank=True, null=True,
-                                                      help_text="In m/s")
+                                                      help_text="In m/s",
+                                                      verbose_name="Specific \
+                                                      impulse at sea level")
     characteristic_velocity = models.PositiveIntegerField(blank=True,
                                                           null=True,
                                                           help_text="In m/s")
