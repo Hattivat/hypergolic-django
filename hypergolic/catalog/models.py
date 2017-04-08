@@ -244,7 +244,8 @@ class PropellantMix(models.Model):
     specific_impulse_sl = models.PositiveIntegerField(blank=True, null=True,
                                                       help_text="In m/s")
     characteristic_velocity = models.PositiveIntegerField(blank=True,
-                                                          null=True)
+                                                          null=True,
+                                                          help_text="In m/s")
     optimum_ratio = models.DecimalField(max_digits=5, decimal_places=2,
                                         blank=True, null=True, help_text="As \
                                         a ratio of 'x to 1'.")
