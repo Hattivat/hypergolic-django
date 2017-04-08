@@ -149,16 +149,16 @@ class Manufacturer(Basic):
     """A model for manufacturers of space equipment."""
 
     native_name = models.CharField(max_length=100, blank=True, help_text="The \
-                                   name of the manufacturer as it would appear \
+                                   name of the manufacturer as it would appear\
                                    in its native language and script.")
     country = models.CharField(max_length=50, choices=COUNTRIES)
     established = models.PositiveSmallIntegerField(choices=YEARS, blank=True,
                                                    null=True)
     active = models.NullBooleanField(blank=True, null=True, help_text="Is \
-                                     the company is still alive and producing \
+                                     the company still alive and producing \
                                      things under its logo, as opposed to \
                                      being defunct or merged into some other \
-                                     company")
+                                     company?")
     defunct = models.PositiveSmallIntegerField(choices=YEARS, blank=True,
                                                null=True, help_text="If the \
                                                company is no longer active, \
@@ -167,10 +167,10 @@ class Manufacturer(Basic):
     successor = models.ForeignKey('self', blank=True, null=True,
                                   related_name="predecessor", help_text="If \
                                   the company was merged with/into some other \
-                                  organization, please tell us it's name.")
+                                  organization, please tell us its name.")
     headquarters = models.CharField(max_length=100, blank=True, help_text="The \
                                     city and country in which this \
-                                    manufacturer's headquarters are.")
+                                    manufacturer's headquarters are located.")
     website = models.URLField(max_length=100, blank=True, null=True)
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='manufacturers_created')
@@ -665,7 +665,7 @@ class Rocket(Complex):
 class Spacecraft(Complex):
     """A model for robotic (uncrewed) spacecraft of all kinds."""
 
-    instruments = models.ManyToManyField(Instrument, blank=True, help_name="\
+    instruments = models.ManyToManyField(Instrument, blank=True, help_text="\
                                          scientific instruments present on \
                                          this spacecraft")
     guidance_system = models.ForeignKey(GuidanceSystem, blank=True, null=True,

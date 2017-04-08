@@ -8,11 +8,11 @@ from .models import Role, StageRole, PowerCycle, Cooling, NozzleType,\
     Mission, Astronaut, CrewedMission
 
 
-class RoleForm(forms.ModelForm):
+class BasicForm(forms.ModelForm):
 
     class Meta:
         model = Role
-        fields = ['name', 'description', 'sources', 'illustration']
+        fields = ['name', 'description', 'illustration', 'sources']
         widgets = None
         localized_fields = None
         labels = {}
@@ -20,13 +20,13 @@ class RoleForm(forms.ModelForm):
         error_messages = {}
 
     def __init__(self, *args, **kwargs):
-        return super(RoleForm, self).__init__(*args, **kwargs)
+        super(BasicForm, self).__init__(*args, **kwargs)
 
     def is_valid(self):
-        return super(RoleForm, self).is_valid()
+        return super(BasicForm, self).is_valid()
 
     def full_clean(self):
-        return super(RoleForm, self).full_clean()
+        return super(BasicForm, self).full_clean()
 
     def clean_name(self):
         name = self.cleaned_data.get("name", None)
@@ -45,396 +45,87 @@ class RoleForm(forms.ModelForm):
         return illustration
 
     def clean(self):
-        return super(RoleForm, self).clean()
+        return super(BasicForm, self).clean()
 
     def validate_unique(self):
-        return super(RoleForm, self).validate_unique()
+        return super(BasicForm, self).validate_unique()
 
     def save(self, commit=True):
-        return super(RoleForm, self).save(commit)
+        return super(BasicForm, self).save(commit)
 
 
-class StageRoleForm(forms.ModelForm):
+class RoleForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
+        model = Role
+
+
+class StageRoleForm(BasicForm):
+
+    class Meta(BasicForm.Meta):
         model = StageRole
-        fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(StageRoleForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(StageRoleForm, self).is_valid()
-
-    def full_clean(self):
-        return super(StageRoleForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(StageRoleForm, self).clean()
-
-    def validate_unique(self):
-        return super(StageRoleForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(StageRoleForm, self).save(commit)
 
 
-class PowerCycleForm(forms.ModelForm):
+class PowerCycleForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = PowerCycle
-        fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(PowerCycleForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(PowerCycleForm, self).is_valid()
-
-    def full_clean(self):
-        return super(PowerCycleForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(PowerCycleForm, self).clean()
-
-    def validate_unique(self):
-        return super(PowerCycleForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(PowerCycleForm, self).save(commit)
 
 
-class CoolingForm(forms.ModelForm):
+class CoolingForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = Cooling
-        fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(CoolingForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(CoolingForm, self).is_valid()
-
-    def full_clean(self):
-        return super(CoolingForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(CoolingForm, self).clean()
-
-    def validate_unique(self):
-        return super(CoolingForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(CoolingForm, self).save(commit)
 
 
-class NozzleTypeForm(forms.ModelForm):
+class NozzleTypeForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = NozzleType
-        fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(NozzleTypeForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(NozzleTypeForm, self).is_valid()
-
-    def full_clean(self):
-        return super(NozzleTypeForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(NozzleTypeForm, self).clean()
-
-    def validate_unique(self):
-        return super(NozzleTypeForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(NozzleTypeForm, self).save(commit)
 
 
-class NozzleMaterialForm(forms.ModelForm):
+class ChemForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = NozzleMaterial
-        fields = ['name', 'description', 'sources', 'chemical_formula', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(NozzleMaterialForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(NozzleMaterialForm, self).is_valid()
-
-    def full_clean(self):
-        return super(NozzleMaterialForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_chemical_formula(self):
-        chemical_formula = self.cleaned_data.get("chemical_formula", None)
-        return chemical_formula
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(NozzleMaterialForm, self).clean()
-
-    def validate_unique(self):
-        return super(NozzleMaterialForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(NozzleMaterialForm, self).save(commit)
+        fields = ['name', 'chemical_formula', 'description', 'illustration',
+                  'sources']
 
 
-class InjectorForm(forms.ModelForm):
+class NozzleMaterialForm(ChemForm):
 
-    class Meta:
+    class Meta(ChemForm.Meta):
+        model = NozzleMaterial
+
+
+class InjectorForm(BasicForm):
+
+    class Meta(BasicForm.Meta):
         model = Injector
-        fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(InjectorForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(InjectorForm, self).is_valid()
-
-    def full_clean(self):
-        return super(InjectorForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(InjectorForm, self).clean()
-
-    def validate_unique(self):
-        return super(InjectorForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(InjectorForm, self).save(commit)
 
 
-class IgniterForm(forms.ModelForm):
+class IgniterForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = Igniter
-        fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(IgniterForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(IgniterForm, self).is_valid()
-
-    def full_clean(self):
-        return super(IgniterForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(IgniterForm, self).clean()
-
-    def validate_unique(self):
-        return super(IgniterForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(IgniterForm, self).save(commit)
 
 
-class ManufacturerForm(forms.ModelForm):
+class ManufacturerForm(BasicForm):
 
     class Meta:
         model = Manufacturer
-        fields = ['name', 'description', 'sources', 'native_name', 'country', 'established', 'active', 'defunct', 'successor', 'headquarters', 'website', 'illustration']
+        fields = ['name', 'native_name', 'country', 'headquarters',
+                  'established', 'active', 'defunct', 'successor',
+                  'description', 'website', 'illustration', 'sources']
         exclude = []
         widgets = None
         localized_fields = None
         labels = {}
-        help_texts = {}
         error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(ManufacturerForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(ManufacturerForm, self).is_valid()
-
-    def full_clean(self):
-        return super(ManufacturerForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_native_name(self):
-        native_name = self.cleaned_data.get("native_name", None)
-        return native_name
-
-    def clean_country(self):
-        country = self.cleaned_data.get("country", None)
-        return country
 
     def clean_established(self):
         established = self.cleaned_data.get("established", None)
         return established
-
-    def clean_active(self):
-        active = self.cleaned_data.get("active", None)
-        return active
 
     def clean_defunct(self):
         defunct = self.cleaned_data.get("defunct", None)
@@ -451,10 +142,6 @@ class ManufacturerForm(forms.ModelForm):
     def clean_website(self):
         website = self.cleaned_data.get("website", None)
         return website
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
 
     def clean(self):
         return super(ManufacturerForm, self).clean()

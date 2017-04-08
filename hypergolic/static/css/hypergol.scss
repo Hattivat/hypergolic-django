@@ -1,8 +1,13 @@
 body {
     margin-top: 16px;
     margin-right: 16px;
+    margin-bottom: 16px;
 }
 
 tr:hover {
     cursor: pointer;
+}
+
+.backlink {
+    padding-bottom: 12px;
 }

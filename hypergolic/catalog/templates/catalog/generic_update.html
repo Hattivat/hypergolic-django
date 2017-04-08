@@ -9,10 +9,6 @@
     <div class="col-sm-4">
         <a href="{{ object.get_absolute_url }}">Cancel</a>
         <a href="{{ object.get_delete_url }}">Request deletion</a>
-        <form action="" method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Confirm" />
-        </form>
+        {% include './generic_form.html' %}
     </div>
 {% endblock %}
