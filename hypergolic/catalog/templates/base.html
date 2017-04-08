@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}" />
         <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}" />
         <link rel="stylesheet" href="{% static 'css/hypergol.css' %}" />
+        {% block morecss %}
+        {% endblock %}
     </head>
     <body>
         <!--[if lte IE 9]>
@@ -69,6 +71,8 @@
         </div>
         <script src="{% static 'js/jquery-3.2.0.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        {% block morejs %}
+        {% endblock %}
         <script src="{% static 'js/hypergol.js' %}"></script>
     </body>
 </html>

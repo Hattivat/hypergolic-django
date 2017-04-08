@@ -32,3 +32,8 @@ def attr(obj, arg1):
 @register.filter
 def verbose_name(obj, field):
     return obj._meta.get_field(field).verbose_name
+
+
+@register.filter('classy')
+def classy(obj):
+    return obj.__class__.__name__

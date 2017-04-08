@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block morecss %}
+<link rel="stylesheet" href="{% static 'css/multi-select.css' %}" />
+{% endblock %}
 
 {% block title %}
     Update {{ object }}
@@ -6,9 +11,13 @@
 
 {% block content %}
     <h1>Update {{ object }}</h1>
-    <div class="col-sm-4">
+    <div class="col-sm-6">
         <a href="{{ object.get_absolute_url }}">Cancel</a>
         <a href="{{ object.get_delete_url }}">Request deletion</a>
         {% include './generic_form.html' %}
     </div>
+{% endblock %}
+
+{% block morejs %}
+<script src="{% static 'js/jquery.multi-select.js' %}"></script>
 {% endblock %}

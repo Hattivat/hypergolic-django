@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.admin.widgets import FilteredSelectMultiple
 from .models import Role, StageRole, PowerCycle, Cooling, NozzleType,\
     NozzleMaterial, Injector, Igniter, Manufacturer, Compound, PropellantMix,\
     Engine, TankConstruction, TankMaterial, Stage, RocketSeries, Instrument,\
@@ -117,40 +118,6 @@ class ManufacturerForm(BasicForm):
         fields = ['name', 'native_name', 'country', 'headquarters',
                   'established', 'active', 'defunct', 'successor',
                   'website', 'description', 'illustration', 'sources']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        error_messages = {}
-
-    def clean_established(self):
-        established = self.cleaned_data.get("established", None)
-        return established
-
-    def clean_defunct(self):
-        defunct = self.cleaned_data.get("defunct", None)
-        return defunct
-
-    def clean_successor(self):
-        successor = self.cleaned_data.get("successor", None)
-        return successor
-
-    def clean_headquarters(self):
-        headquarters = self.cleaned_data.get("headquarters", None)
-        return headquarters
-
-    def clean_website(self):
-        website = self.cleaned_data.get("website", None)
-        return website
-
-    def clean(self):
-        return super(ManufacturerForm, self).clean()
-
-    def validate_unique(self):
-        return super(ManufacturerForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(ManufacturerForm, self).save(commit)
 
 
 class CompoundForm(BasicForm):
@@ -161,94 +128,16 @@ class CompoundForm(BasicForm):
                   'variety_of', 'density', 'melting_point',
                   'boiling_point', 'appearance', 'toxicity', 'storability',
                   'description', 'illustration', 'sources']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        super(CompoundForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(CompoundForm, self).is_valid()
-
-    def full_clean(self):
-        return super(CompoundForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_role(self):
-        role = self.cleaned_data.get("role", None)
-        return role
-
-    def clean_chemical_formula(self):
-        chemical_formula = self.cleaned_data.get("chemical_formula", None)
-        return chemical_formula
-
-    def clean_also_known_as(self):
-        also_known_as = self.cleaned_data.get("also_known_as", None)
-        return also_known_as
-
-    def clean_variety_of(self):
-        variety_of = self.cleaned_data.get("variety_of", None)
-        return variety_of
-
-    def clean_density(self):
-        density = self.cleaned_data.get("density", None)
-        return density
-
-    def clean_melting_point(self):
-        melting_point = self.cleaned_data.get("melting_point", None)
-        return melting_point
-
-    def clean_boiling_point(self):
-        boiling_point = self.cleaned_data.get("boiling_point", None)
-        return boiling_point
-
-    def clean_appearance(self):
-        appearance = self.cleaned_data.get("appearance", None)
-        return appearance
-
-    def clean_toxicity(self):
-        toxicity = self.cleaned_data.get("toxicity", None)
-        return toxicity
-
-    def clean_storability(self):
-        storability = self.cleaned_data.get("storability", None)
-        return storability
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(CompoundForm, self).clean()
-
-    def validate_unique(self):
-        return super(CompoundForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(CompoundForm, self).save(commit)
 
 
-class PropellantMixForm(forms.ModelForm):
+class PropellantMixForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = PropellantMix
-        fields = ['propellants', 'abbreviation', 'hypergolic', 'specific_impulse', 'specific_impulse_sl', 'characteristic_velocity', 'optimum_ratio', 'combustion_temp', 'description', 'sources']
-        exclude = []
+        fields = ['propellants', 'abbreviation', 'hypergolic',
+                  'specific_impulse', 'specific_impulse_sl',
+                  'characteristic_velocity', 'optimum_ratio',
+                  'combustion_temp', 'description', 'sources']
         widgets = None
         localized_fields = None
         labels = {}
@@ -256,7 +145,7 @@ class PropellantMixForm(forms.ModelForm):
         error_messages = {}
 
     def __init__(self, *args, **kwargs):
-        return super(PropellantMixForm, self).__init__(*args, **kwargs)
+        super(PropellantMixForm, self).__init__(*args, **kwargs)
 
     def is_valid(self):
         return super(PropellantMixForm, self).is_valid()
