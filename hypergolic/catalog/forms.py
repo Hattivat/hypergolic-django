@@ -144,66 +144,23 @@ class PropellantMixForm(BasicForm):
         help_texts = {}
         error_messages = {}
 
-    def __init__(self, *args, **kwargs):
-        super(PropellantMixForm, self).__init__(*args, **kwargs)
 
-    def is_valid(self):
-        return super(PropellantMixForm, self).is_valid()
+class EngineForm(BasicForm):
 
-    def full_clean(self):
-        return super(PropellantMixForm, self).full_clean()
-
-    def clean_abbreviation(self):
-        abbreviation = self.cleaned_data.get("abbreviation", None)
-        return abbreviation
-
-    def clean_hypergolic(self):
-        hypergolic = self.cleaned_data.get("hypergolic", None)
-        return hypergolic
-
-    def clean_specific_impulse(self):
-        specific_impulse = self.cleaned_data.get("specific_impulse", None)
-        return specific_impulse
-
-    def clean_specific_impulse_sl(self):
-        specific_impulse_sl = self.cleaned_data.get("specific_impulse_sl", None)
-        return specific_impulse_sl
-
-    def clean_characteristic_velocity(self):
-        characteristic_velocity = self.cleaned_data.get("characteristic_velocity", None)
-        return characteristic_velocity
-
-    def clean_optimum_ratio(self):
-        optimum_ratio = self.cleaned_data.get("optimum_ratio", None)
-        return optimum_ratio
-
-    def clean_combustion_temp(self):
-        combustion_temp = self.cleaned_data.get("combustion_temp", None)
-        return combustion_temp
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean(self):
-        return super(PropellantMixForm, self).clean()
-
-    def validate_unique(self):
-        return super(PropellantMixForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(PropellantMixForm, self).save(commit)
-
-
-class EngineForm(forms.ModelForm):
-
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = Engine
-        fields = ['description', 'sources', 'name', 'country', 'variant_of', 'native_name', 'manufacturer', 'developed', 'first_flight', 'height', 'diameter', 'dry_weight', 'application', 'propellants', 'mixture_ratio', 'cycle', 'specific_impulse_vac', 'specific_impulse_sl', 'thrust_sl', 'thrust_vac', 'twr', 'chamber_pressure', 'combustion_chambers', 'rated_burn_time', 'nozzle_ratio', 'nozzle_shape', 'nozzle_material', 'cooling_method', 'injector_type', 'coefficient_of_thrust_vac', 'coefficient_of_thrust_sl', 'ignition_method', 'restart_capability', 'num_restarts', 'throttle_range_min', 'throttle_range_max', 'illustration']
+        fields = ['description', 'sources', 'name', 'country', 'variant_of',
+                  'native_name', 'manufacturer', 'developed', 'first_flight',
+                  'height', 'diameter', 'dry_weight', 'application',
+                  'propellants', 'mixture_ratio', 'cycle',
+                  'specific_impulse_vac', 'specific_impulse_sl', 'thrust_sl',
+                  'thrust_vac', 'twr', 'chamber_pressure',
+                  'combustion_chambers', 'rated_burn_time', 'nozzle_ratio',
+                  'nozzle_shape', 'nozzle_material', 'cooling_method',
+                  'injector_type', 'coefficient_of_thrust_vac',
+                  'coefficient_of_thrust_sl', 'ignition_method',
+                  'restart_capability', 'num_restarts', 'throttle_range_min',
+                  'throttle_range_max', 'illustration']
         exclude = []
         widgets = None
         localized_fields = None

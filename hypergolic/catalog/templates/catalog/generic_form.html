@@ -6,7 +6,13 @@
         {% if field.errors %}
         <div class="form-group has-error">
             <label class="control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {% if field.field.widget.input_type == 'file' %}
+            {{ field|attr:"class:form-control-file" }}
+            {% else %}
             {{ field|attr:"class:form-control" }}
+            {% if field.field.queryset.0.get_create_url %}
+            <a href="{{ field.field.queryset.0.get_create_url }}" class="glyphicon glyphicon-plus" target="_blank" title="Create a new one"></a>
+            {% endif %}
             {% if field.help_text %}
             <p class="help-block"><small>{{ field.help_text }}</small></p>
             {% endif %}
@@ -23,6 +29,9 @@
             {{ field|attr:"class:form-control-file" }}
             {% else %}
             {{ field|attr:"class:form-control" }}
+            {% endif %}
+            {% if field.field.queryset.0.get_create_url %}
+            <a href="{{ field.field.queryset.0.get_create_url }}" class="glyphicon glyphicon-plus" target="_blank" title="Create a new one"></a>
             {% endif %}
             {% if field.help_text %}
             <p class="help-block"><small>{{ field.help_text }}</small></p>
