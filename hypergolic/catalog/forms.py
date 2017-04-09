@@ -6,6 +6,7 @@ from .models import Role, StageRole, PowerCycle, Cooling, NozzleType,\
     AttitudeControlSystem, LandingSolution, HeatshieldMaterial, Organization,\
     MissionTarget, Rocket, Spacecraft, CrewedSpacecraft, LaunchFacility,\
     Mission, Astronaut, CrewedMission
+from .helpers import wrong_year_order
 
 
 class BasicForm(forms.ModelForm):
@@ -120,15 +121,11 @@ class ManufacturerForm(BasicForm):
 
     def clean(self):
         cleaned_data = super(ManufacturerForm, self).clean()
-        tryestab = cleaned_data.get('established')
-        if tryestab:
-            estab = int(tryestab)
-        trydefun = cleaned_data.get('defunct')
-        if trydefun:
-            defun = int(trydefun)
+        estab = cleaned_data.get('established')
+        defun = cleaned_data.get('defunct')
         activ = cleaned_data.get('active')
         sucsr = cleaned_data.get('successor')
-        if tryestab and trydefun and estab > defun:
+        if wrong_year_order(estab, defun):
             raise forms.ValidationError("A manufacturer cannot become \
                                         defunct before it is established")
         if activ is not False:
@@ -156,201 +153,43 @@ class PropellantMixForm(BasicForm):
                   'specific_impulse', 'specific_impulse_sl',
                   'characteristic_velocity', 'optimum_ratio',
                   'combustion_temp', 'description', 'sources']
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
 
 
 class EngineForm(BasicForm):
 
     class Meta(BasicForm.Meta):
         model = Engine
-        fields = ['description', 'sources', 'name', 'country', 'variant_of',
-                  'native_name', 'manufacturer', 'developed', 'first_flight',
-                  'height', 'diameter', 'dry_weight', 'application',
-                  'propellants', 'mixture_ratio', 'cycle',
-                  'specific_impulse_vac', 'specific_impulse_sl', 'thrust_sl',
-                  'thrust_vac', 'twr', 'chamber_pressure',
-                  'combustion_chambers', 'rated_burn_time', 'nozzle_ratio',
-                  'nozzle_shape', 'nozzle_material', 'cooling_method',
-                  'injector_type', 'coefficient_of_thrust_vac',
-                  'coefficient_of_thrust_sl', 'ignition_method',
-                  'restart_capability', 'num_restarts', 'throttle_range_min',
-                  'throttle_range_max', 'illustration']
-        exclude = []
+        fields = ['name', 'native_name', 'application', 'country',
+                  'manufacturer', 'variant_of', 'specific_impulse_vac',
+                  'specific_impulse_sl', 'thrust_vac', 'thrust_sl', 'twr',
+                  'coefficient_of_thrust_vac', 'coefficient_of_thrust_sl',
+                  'rated_burn_time', 'height', 'diameter', 'dry_weight',
+                  'cycle', 'injector_type', 'ignition_method', 'propellants',
+                  'mixture_ratio', 'chamber_pressure', 'combustion_chambers',
+                  'nozzle_ratio', 'nozzle_shape', 'nozzle_material',
+                  'cooling_method', 'restart_capability', 'num_restarts',
+                  'throttle_range_min', 'throttle_range_max', 'developed',
+                  'first_flight', 'illustration', 'description', 'sources']
         widgets = None
         localized_fields = None
         labels = {}
         help_texts = {}
         error_messages = {}
 
-    def __init__(self, *args, **kwargs):
-        return super(EngineForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(EngineForm, self).is_valid()
-
-    def full_clean(self):
-        return super(EngineForm, self).full_clean()
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_country(self):
-        country = self.cleaned_data.get("country", None)
-        return country
-
-    def clean_variant_of(self):
-        variant_of = self.cleaned_data.get("variant_of", None)
-        return variant_of
-
-    def clean_native_name(self):
-        native_name = self.cleaned_data.get("native_name", None)
-        return native_name
-
-    def clean_manufacturer(self):
-        manufacturer = self.cleaned_data.get("manufacturer", None)
-        return manufacturer
-
-    def clean_developed(self):
-        developed = self.cleaned_data.get("developed", None)
-        return developed
-
-    def clean_first_flight(self):
-        first_flight = self.cleaned_data.get("first_flight", None)
-        return first_flight
-
-    def clean_height(self):
-        height = self.cleaned_data.get("height", None)
-        return height
-
-    def clean_diameter(self):
-        diameter = self.cleaned_data.get("diameter", None)
-        return diameter
-
-    def clean_dry_weight(self):
-        dry_weight = self.cleaned_data.get("dry_weight", None)
-        return dry_weight
-
-    def clean_application(self):
-        application = self.cleaned_data.get("application", None)
-        return application
-
-    def clean_propellants(self):
-        propellants = self.cleaned_data.get("propellants", None)
-        return propellants
-
-    def clean_mixture_ratio(self):
-        mixture_ratio = self.cleaned_data.get("mixture_ratio", None)
-        return mixture_ratio
-
-    def clean_cycle(self):
-        cycle = self.cleaned_data.get("cycle", None)
-        return cycle
-
-    def clean_specific_impulse_vac(self):
-        specific_impulse_vac = self.cleaned_data.get("specific_impulse_vac", None)
-        return specific_impulse_vac
-
-    def clean_specific_impulse_sl(self):
-        specific_impulse_sl = self.cleaned_data.get("specific_impulse_sl", None)
-        return specific_impulse_sl
-
-    def clean_thrust_sl(self):
-        thrust_sl = self.cleaned_data.get("thrust_sl", None)
-        return thrust_sl
-
-    def clean_thrust_vac(self):
-        thrust_vac = self.cleaned_data.get("thrust_vac", None)
-        return thrust_vac
-
-    def clean_twr(self):
-        twr = self.cleaned_data.get("twr", None)
-        return twr
-
-    def clean_chamber_pressure(self):
-        chamber_pressure = self.cleaned_data.get("chamber_pressure", None)
-        return chamber_pressure
-
-    def clean_combustion_chambers(self):
-        combustion_chambers = self.cleaned_data.get("combustion_chambers", None)
-        return combustion_chambers
-
-    def clean_rated_burn_time(self):
-        rated_burn_time = self.cleaned_data.get("rated_burn_time", None)
-        return rated_burn_time
-
-    def clean_nozzle_ratio(self):
-        nozzle_ratio = self.cleaned_data.get("nozzle_ratio", None)
-        return nozzle_ratio
-
-    def clean_nozzle_shape(self):
-        nozzle_shape = self.cleaned_data.get("nozzle_shape", None)
-        return nozzle_shape
-
-    def clean_nozzle_material(self):
-        nozzle_material = self.cleaned_data.get("nozzle_material", None)
-        return nozzle_material
-
-    def clean_cooling_method(self):
-        cooling_method = self.cleaned_data.get("cooling_method", None)
-        return cooling_method
-
-    def clean_injector_type(self):
-        injector_type = self.cleaned_data.get("injector_type", None)
-        return injector_type
-
-    def clean_coefficient_of_thrust_vac(self):
-        coefficient_of_thrust_vac = self.cleaned_data.get("coefficient_of_thrust_vac", None)
-        return coefficient_of_thrust_vac
-
-    def clean_coefficient_of_thrust_sl(self):
-        coefficient_of_thrust_sl = self.cleaned_data.get("coefficient_of_thrust_sl", None)
-        return coefficient_of_thrust_sl
-
-    def clean_ignition_method(self):
-        ignition_method = self.cleaned_data.get("ignition_method", None)
-        return ignition_method
-
-    def clean_restart_capability(self):
-        restart_capability = self.cleaned_data.get("restart_capability", None)
-        return restart_capability
-
-    def clean_num_restarts(self):
-        num_restarts = self.cleaned_data.get("num_restarts", None)
-        return num_restarts
-
-    def clean_throttle_range_min(self):
-        throttle_range_min = self.cleaned_data.get("throttle_range_min", None)
-        return throttle_range_min
-
-    def clean_throttle_range_max(self):
-        throttle_range_max = self.cleaned_data.get("throttle_range_max", None)
-        return throttle_range_max
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
     def clean(self):
-        return super(EngineForm, self).clean()
-
-    def validate_unique(self):
-        return super(EngineForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(EngineForm, self).save(commit)
+        cleaned_data = super(EngineForm, self).clean()
+        devel = cleaned_data.get('developed')
+        defun = cleaned_data.get('defunct')
+        activ = cleaned_data.get('active')
+        sucsr = cleaned_data.get('successor')
+        if wrong_year_order(devel, defun):
+            raise forms.ValidationError("A manufacturer cannot become \
+                                        defunct before it is established")
+        if activ is not False:
+            if sucsr or defun:
+                raise forms.ValidationError("Please set the 'active' field\
+                                            to 'No' first.")
+        return cleaned_data
 
 
 class TankConstructionForm(forms.ModelForm):
