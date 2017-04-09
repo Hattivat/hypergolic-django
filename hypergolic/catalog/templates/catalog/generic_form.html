@@ -10,6 +10,7 @@
             {{ field|attr:"class:form-control-file" }}
             {% else %}
             {{ field|attr:"class:form-control" }}
+            {% endif %}
             {% if field.field.queryset.0.get_create_url %}
             <a href="{{ field.field.queryset.0.get_create_url }}" class="glyphicon glyphicon-plus" target="_blank" title="Create a new one"></a>
             {% endif %}
