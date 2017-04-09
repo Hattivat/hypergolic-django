@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.admin.widgets import FilteredSelectMultiple
 from .models import Role, StageRole, PowerCycle, Cooling, NozzleType,\
     NozzleMaterial, Injector, Igniter, Manufacturer, Compound, PropellantMix,\
     Engine, TankConstruction, TankMaterial, Stage, RocketSeries, Instrument,\
@@ -118,6 +117,25 @@ class ManufacturerForm(BasicForm):
         fields = ['name', 'native_name', 'country', 'headquarters',
                   'established', 'active', 'defunct', 'successor',
                   'website', 'description', 'illustration', 'sources']
+
+    def clean(self):
+        cleaned_data = super(ManufacturerForm, self).clean()
+        tryestab = cleaned_data.get('established')
+        if tryestab:
+            estab = int(tryestab)
+        trydefun = cleaned_data.get('defunct')
+        if trydefun:
+            defun = int(trydefun)
+        activ = cleaned_data.get('active')
+        sucsr = cleaned_data.get('successor')
+        if tryestab and trydefun and estab > defun:
+            raise forms.ValidationError("A manufacturer cannot become \
+                                        defunct before it is established")
+        if activ is not False:
+            if sucsr or defun:
+                raise forms.ValidationError("Please set the 'active' field\
+                                            to 'No' first.")
+        return cleaned_data
 
 
 class CompoundForm(BasicForm):
