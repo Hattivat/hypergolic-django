@@ -180,15 +180,19 @@ class EngineForm(BasicForm):
         cleaned_data = super(EngineForm, self).clean()
         devel = cleaned_data.get('developed')
         defun = cleaned_data.get('defunct')
-        activ = cleaned_data.get('active')
-        sucsr = cleaned_data.get('successor')
+        thr_min = cleaned_data.get('throttle_range_min')
+        thr_max = cleaned_data.get('throttle_range_max')
+        restarts = cleaned_data.get('number_of_restarts')
+        restcap = cleaned_data.get('restart_capability')
         if wrong_year_order(devel, defun):
             raise forms.ValidationError("A manufacturer cannot become \
                                         defunct before it is established")
-        if activ is not False:
-            if sucsr or defun:
-                raise forms.ValidationError("Please set the 'active' field\
-                                            to 'No' first.")
+        if thr_min > thr_max:
+            raise forms.ValidationError("Minimum throttle cannot be greater \
+                                        than maximum throttle")
+        if not restcap and restarts > 0:
+            raise forms.ValidationError("Please click on the 'restart \
+                                        capability' checkbox first")
         return cleaned_data
 
 
