@@ -278,19 +278,19 @@ class PropellantMix(models.Model):
     def get_absolute_url(self):
         return reverse('propellant_mix_detail', kwargs={'pk': self.pk})
 
-    def get_create_url(self):
-        return reverse('propellant_mix_create'.format(underscore(self.__class__.__name__)))
+    @staticmethod
+    def get_create_url():
+        return reverse('propellant_mix_create')
 
     def get_update_url(self):
-        return reverse('propellant_mix_update'.format(underscore(self.__class__.__name__)),
-                       kwargs={'pk': self.pk})
+        return reverse('propellant_mix_update', kwargs={'pk': self.pk})
 
     def get_delete_url(self):
-        return reverse('propellant_mix_delete'.format(underscore(self.__class__.__name__)),
-                       kwargs={'pk': self.pk})
+        return reverse('propellant_mix_delete', kwargs={'pk': self.pk})
 
-    def get_list_url(self):
-        return reverse('{}_list'.format(underscore(self.__class__.__name__)))
+    @staticmethod
+    def get_list_url():
+        return reverse('propellant_mix_list')
 
     class Meta:
         verbose_name_plural = "Propellant mixes"
@@ -850,7 +850,8 @@ class Astronaut(models.Model):
     def get_absolute_url(self):
         return reverse('astronaut_detail', kwargs={'pk': self.pk})
 
-    def get_create_url(self):
+    @staticmethod
+    def get_create_url():
         return reverse('astronaut_create')
 
     def get_update_url(self):
@@ -859,7 +860,8 @@ class Astronaut(models.Model):
     def get_delete_url(self):
         return reverse('astronaut_delete', kwargs={'pk': self.pk})
 
-    def get_list_url(self):
+    @staticmethod
+    def get_list_url():
         return reverse('astronaut_list')
 
     class Meta:
