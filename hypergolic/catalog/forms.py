@@ -179,14 +179,14 @@ class EngineForm(BasicForm):
     def clean(self):
         cleaned_data = super(EngineForm, self).clean()
         devel = cleaned_data.get('developed')
-        defun = cleaned_data.get('defunct')
+        flight = cleaned_data.get('first_flight')
         thr_min = cleaned_data.get('throttle_range_min')
         thr_max = cleaned_data.get('throttle_range_max')
         restarts = cleaned_data.get('number_of_restarts')
         restcap = cleaned_data.get('restart_capability')
-        if wrong_year_order(devel, defun):
-            raise forms.ValidationError("A manufacturer cannot become \
-                                        defunct before it is established")
+        if wrong_year_order(devel, flight):
+            raise forms.ValidationError("Things cannot fly before they are \
+                                        developed")
         if thr_min > thr_max:
             raise forms.ValidationError("Minimum throttle cannot be greater \
                                         than maximum throttle")
@@ -196,1350 +196,223 @@ class EngineForm(BasicForm):
         return cleaned_data
 
 
-class TankConstructionForm(forms.ModelForm):
+class TankConstructionForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = TankConstruction
-        fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(TankConstructionForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(TankConstructionForm, self).is_valid()
-
-    def full_clean(self):
-        return super(TankConstructionForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(TankConstructionForm, self).clean()
-
-    def validate_unique(self):
-        return super(TankConstructionForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(TankConstructionForm, self).save(commit)
 
 
-class TankMaterialForm(forms.ModelForm):
+class TankMaterialForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = TankMaterial
-        fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(TankMaterialForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(TankMaterialForm, self).is_valid()
-
-    def full_clean(self):
-        return super(TankMaterialForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(TankMaterialForm, self).clean()
-
-    def validate_unique(self):
-        return super(TankMaterialForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(TankMaterialForm, self).save(commit)
 
 
-class StageForm(forms.ModelForm):
+class StageForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = Stage
-        fields = ['description', 'sources', 'name', 'country', 'variant_of', 'native_name', 'manufacturer', 'developed', 'first_flight', 'height', 'diameter', 'stage_role', 'dry_weight', 'fueled_weight', 'oxidizer_volume', 'fuel_volume', 'oxidizer_weight', 'fuel_weight', 'main_engine', 'num_main_engines', 'main_gimbal_yaw_min', 'main_gimbal_yaw_max', 'main_gimbal_pitch_min', 'main_gimbal_pitch_max', 'aux_engine', 'num_aux_engines', 'aux_gimbal_yaw_min', 'aux_gimbal_yaw_max', 'aux_gimbal_pitch_min', 'aux_gimbal_pitch_max', 'tank_type', 'tank_material', 'fins', 'burn_time', 'illustration']
-        exclude = []
+        fields = ['name', 'native_name', 'variant_of', 'stage_role', 'country',
+                  'manufacturer', 'height', 'diameter',  'dry_weight',
+                  'fueled_weight', 'tank_type', 'tank_material', 'fuel_volume',
+                  'oxidizer_volume', 'fuel_weight', 'oxidizer_weight',
+                  'main_engine', 'num_main_engines', 'aux_engine',
+                  'num_aux_engines', 'burn_time', 'main_gimbal_yaw_min',
+                  'main_gimbal_yaw_max', 'main_gimbal_pitch_min',
+                  'main_gimbal_pitch_max', 'aux_gimbal_yaw_min',
+                  'aux_gimbal_yaw_max', 'aux_gimbal_pitch_min',
+                  'aux_gimbal_pitch_max', 'fins', 'developed', 'first_flight',
+                  'illustration', 'description', 'sources']
         widgets = None
         localized_fields = None
         labels = {}
         help_texts = {}
         error_messages = {}
 
-    def __init__(self, *args, **kwargs):
-        return super(StageForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(StageForm, self).is_valid()
-
-    def full_clean(self):
-        return super(StageForm, self).full_clean()
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_country(self):
-        country = self.cleaned_data.get("country", None)
-        return country
-
-    def clean_variant_of(self):
-        variant_of = self.cleaned_data.get("variant_of", None)
-        return variant_of
-
-    def clean_native_name(self):
-        native_name = self.cleaned_data.get("native_name", None)
-        return native_name
-
-    def clean_manufacturer(self):
-        manufacturer = self.cleaned_data.get("manufacturer", None)
-        return manufacturer
-
-    def clean_developed(self):
-        developed = self.cleaned_data.get("developed", None)
-        return developed
-
-    def clean_first_flight(self):
-        first_flight = self.cleaned_data.get("first_flight", None)
-        return first_flight
-
-    def clean_height(self):
-        height = self.cleaned_data.get("height", None)
-        return height
-
-    def clean_diameter(self):
-        diameter = self.cleaned_data.get("diameter", None)
-        return diameter
-
-    def clean_stage_role(self):
-        stage_role = self.cleaned_data.get("stage_role", None)
-        return stage_role
-
-    def clean_dry_weight(self):
-        dry_weight = self.cleaned_data.get("dry_weight", None)
-        return dry_weight
-
-    def clean_fueled_weight(self):
-        fueled_weight = self.cleaned_data.get("fueled_weight", None)
-        return fueled_weight
-
-    def clean_oxidizer_volume(self):
-        oxidizer_volume = self.cleaned_data.get("oxidizer_volume", None)
-        return oxidizer_volume
-
-    def clean_fuel_volume(self):
-        fuel_volume = self.cleaned_data.get("fuel_volume", None)
-        return fuel_volume
-
-    def clean_oxidizer_weight(self):
-        oxidizer_weight = self.cleaned_data.get("oxidizer_weight", None)
-        return oxidizer_weight
-
-    def clean_fuel_weight(self):
-        fuel_weight = self.cleaned_data.get("fuel_weight", None)
-        return fuel_weight
-
-    def clean_main_engine(self):
-        main_engine = self.cleaned_data.get("main_engine", None)
-        return main_engine
-
-    def clean_num_main_engines(self):
-        num_main_engines = self.cleaned_data.get("num_main_engines", None)
-        return num_main_engines
-
-    def clean_main_gimbal_yaw_min(self):
-        main_gimbal_yaw_min = self.cleaned_data.get("main_gimbal_yaw_min", None)
-        return main_gimbal_yaw_min
-
-    def clean_main_gimbal_yaw_max(self):
-        main_gimbal_yaw_max = self.cleaned_data.get("main_gimbal_yaw_max", None)
-        return main_gimbal_yaw_max
-
-    def clean_main_gimbal_pitch_min(self):
-        main_gimbal_pitch_min = self.cleaned_data.get("main_gimbal_pitch_min", None)
-        return main_gimbal_pitch_min
-
-    def clean_main_gimbal_pitch_max(self):
-        main_gimbal_pitch_max = self.cleaned_data.get("main_gimbal_pitch_max", None)
-        return main_gimbal_pitch_max
-
-    def clean_aux_engine(self):
-        aux_engine = self.cleaned_data.get("aux_engine", None)
-        return aux_engine
-
-    def clean_num_aux_engines(self):
-        num_aux_engines = self.cleaned_data.get("num_aux_engines", None)
-        return num_aux_engines
-
-    def clean_aux_gimbal_yaw_min(self):
-        aux_gimbal_yaw_min = self.cleaned_data.get("aux_gimbal_yaw_min", None)
-        return aux_gimbal_yaw_min
-
-    def clean_aux_gimbal_yaw_max(self):
-        aux_gimbal_yaw_max = self.cleaned_data.get("aux_gimbal_yaw_max", None)
-        return aux_gimbal_yaw_max
-
-    def clean_aux_gimbal_pitch_min(self):
-        aux_gimbal_pitch_min = self.cleaned_data.get("aux_gimbal_pitch_min", None)
-        return aux_gimbal_pitch_min
-
-    def clean_aux_gimbal_pitch_max(self):
-        aux_gimbal_pitch_max = self.cleaned_data.get("aux_gimbal_pitch_max", None)
-        return aux_gimbal_pitch_max
-
-    def clean_tank_type(self):
-        tank_type = self.cleaned_data.get("tank_type", None)
-        return tank_type
-
-    def clean_tank_material(self):
-        tank_material = self.cleaned_data.get("tank_material", None)
-        return tank_material
-
-    def clean_fins(self):
-        fins = self.cleaned_data.get("fins", None)
-        return fins
-
-    def clean_burn_time(self):
-        burn_time = self.cleaned_data.get("burn_time", None)
-        return burn_time
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
     def clean(self):
-        return super(StageForm, self).clean()
+        cleaned_data = super(StageForm, self).clean()
+        devel = cleaned_data.get('developed')
+        flight = cleaned_data.get('first_flight')
+        if wrong_year_order(devel, flight):
+            raise forms.ValidationError("Things cannot fly before they are \
+                                        developed")
 
-    def validate_unique(self):
-        return super(StageForm, self).validate_unique()
 
-    def save(self, commit=True):
-        return super(StageForm, self).save(commit)
+class RocketSeriesForm(BasicForm):
 
-
-class RocketSeriesForm(forms.ModelForm):
-
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = RocketSeries
-        fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(RocketSeriesForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(RocketSeriesForm, self).is_valid()
-
-    def full_clean(self):
-        return super(RocketSeriesForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(RocketSeriesForm, self).clean()
-
-    def validate_unique(self):
-        return super(RocketSeriesForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(RocketSeriesForm, self).save(commit)
 
 
-class InstrumentForm(forms.ModelForm):
+class InstrumentForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = Instrument
-        fields = ['name', 'description', 'sources', 'energy_consumption', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(InstrumentForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(InstrumentForm, self).is_valid()
-
-    def full_clean(self):
-        return super(InstrumentForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_energy_consumption(self):
-        energy_consumption = self.cleaned_data.get("energy_consumption", None)
-        return energy_consumption
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(InstrumentForm, self).clean()
-
-    def validate_unique(self):
-        return super(InstrumentForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(InstrumentForm, self).save(commit)
+        fields = ['name', 'energy_consumption', 'description', 'illustration',
+                  'sources']
 
 
-class GuidanceSystemForm(forms.ModelForm):
+class GuidanceSystemForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = GuidanceSystem
-        fields = ['name', 'description', 'sources', 'energy_consumption', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(GuidanceSystemForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(GuidanceSystemForm, self).is_valid()
-
-    def full_clean(self):
-        return super(GuidanceSystemForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_energy_consumption(self):
-        energy_consumption = self.cleaned_data.get("energy_consumption", None)
-        return energy_consumption
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(GuidanceSystemForm, self).clean()
-
-    def validate_unique(self):
-        return super(GuidanceSystemForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(GuidanceSystemForm, self).save(commit)
+        fields = ['name', 'energy_consumption', 'description', 'illustration',
+                  'sources']
 
 
-class AntennaTypeForm(forms.ModelForm):
+class AntennaTypeForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = AntennaType
-        fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(AntennaTypeForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(AntennaTypeForm, self).is_valid()
-
-    def full_clean(self):
-        return super(AntennaTypeForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(AntennaTypeForm, self).clean()
-
-    def validate_unique(self):
-        return super(AntennaTypeForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(AntennaTypeForm, self).save(commit)
 
 
-class ElectricitySourceForm(forms.ModelForm):
+class ElectricitySourceForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = ElectricitySource
-        fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(ElectricitySourceForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(ElectricitySourceForm, self).is_valid()
-
-    def full_clean(self):
-        return super(ElectricitySourceForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(ElectricitySourceForm, self).clean()
-
-    def validate_unique(self):
-        return super(ElectricitySourceForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(ElectricitySourceForm, self).save(commit)
 
 
-class LifeSupportTypeForm(forms.ModelForm):
+class LifeSupportTypeForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = LifeSupportType
-        fields = ['name', 'description', 'sources', 'energy_consumption', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(LifeSupportTypeForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(LifeSupportTypeForm, self).is_valid()
-
-    def full_clean(self):
-        return super(LifeSupportTypeForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_energy_consumption(self):
-        energy_consumption = self.cleaned_data.get("energy_consumption", None)
-        return energy_consumption
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(LifeSupportTypeForm, self).clean()
-
-    def validate_unique(self):
-        return super(LifeSupportTypeForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(LifeSupportTypeForm, self).save(commit)
+        fields = ['name', 'energy_consumption', 'description', 'illustration',
+                  'sources']
 
 
-class AttitudeControlSystemForm(forms.ModelForm):
+class AttitudeControlSystemForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = AttitudeControlSystem
-        fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(AttitudeControlSystemForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(AttitudeControlSystemForm, self).is_valid()
-
-    def full_clean(self):
-        return super(AttitudeControlSystemForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(AttitudeControlSystemForm, self).clean()
-
-    def validate_unique(self):
-        return super(AttitudeControlSystemForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(AttitudeControlSystemForm, self).save(commit)
 
 
-class LandingSolutionForm(forms.ModelForm):
+class LandingSolutionForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = LandingSolution
-        fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(LandingSolutionForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(LandingSolutionForm, self).is_valid()
-
-    def full_clean(self):
-        return super(LandingSolutionForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(LandingSolutionForm, self).clean()
-
-    def validate_unique(self):
-        return super(LandingSolutionForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(LandingSolutionForm, self).save(commit)
 
 
-class HeatshieldMaterialForm(forms.ModelForm):
+class HeatshieldMaterialForm(ChemForm):
 
-    class Meta:
+    class Meta(ChemForm.Meta):
         model = HeatshieldMaterial
-        fields = ['name', 'description', 'sources', 'illustration', 'chemical_formula']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(HeatshieldMaterialForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(HeatshieldMaterialForm, self).is_valid()
-
-    def full_clean(self):
-        return super(HeatshieldMaterialForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean_chemical_formula(self):
-        chemical_formula = self.cleaned_data.get("chemical_formula", None)
-        return chemical_formula
-
-    def clean(self):
-        return super(HeatshieldMaterialForm, self).clean()
-
-    def validate_unique(self):
-        return super(HeatshieldMaterialForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(HeatshieldMaterialForm, self).save(commit)
 
 
-class OrganizationForm(forms.ModelForm):
+class OrganizationForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = Organization
-        fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(OrganizationForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(OrganizationForm, self).is_valid()
-
-    def full_clean(self):
-        return super(OrganizationForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(OrganizationForm, self).clean()
-
-    def validate_unique(self):
-        return super(OrganizationForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(OrganizationForm, self).save(commit)
 
 
-class MissionTargetForm(forms.ModelForm):
+class MissionTargetForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = MissionTarget
-        fields = ['name', 'description', 'sources', 'illustration']
-        exclude = []
-        widgets = None
-        localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(MissionTargetForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(MissionTargetForm, self).is_valid()
-
-    def full_clean(self):
-        return super(MissionTargetForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(MissionTargetForm, self).clean()
-
-    def validate_unique(self):
-        return super(MissionTargetForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(MissionTargetForm, self).save(commit)
 
 
-class RocketForm(forms.ModelForm):
+class RocketForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = Rocket
-        fields = ['description', 'sources', 'name', 'country', 'variant_of', 'native_name', 'manufacturer', 'developed', 'first_flight', 'height', 'diameter', 'series', 'dry_weight', 'fueled_weight', 'guidance_system', 'fairing_height', 'fairing_width', 'num_flights', 'failures', 'illustration']
-        exclude = []
+        fields = ['name',  'native_name', 'country', 'variant_of',
+                  'manufacturer', 'series', 'height', 'diameter', 'dry_weight',
+                  'fueled_weight', 'stages', 'fairing_height', 'fairing_width',
+                  'guidance_system', 'developed', 'first_flight',
+                  'num_flights', 'failures', 'description', 'illustration',
+                  'sources']
         widgets = None
         localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(RocketForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(RocketForm, self).is_valid()
-
-    def full_clean(self):
-        return super(RocketForm, self).full_clean()
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_country(self):
-        country = self.cleaned_data.get("country", None)
-        return country
-
-    def clean_variant_of(self):
-        variant_of = self.cleaned_data.get("variant_of", None)
-        return variant_of
-
-    def clean_native_name(self):
-        native_name = self.cleaned_data.get("native_name", None)
-        return native_name
-
-    def clean_manufacturer(self):
-        manufacturer = self.cleaned_data.get("manufacturer", None)
-        return manufacturer
-
-    def clean_developed(self):
-        developed = self.cleaned_data.get("developed", None)
-        return developed
-
-    def clean_first_flight(self):
-        first_flight = self.cleaned_data.get("first_flight", None)
-        return first_flight
-
-    def clean_height(self):
-        height = self.cleaned_data.get("height", None)
-        return height
-
-    def clean_diameter(self):
-        diameter = self.cleaned_data.get("diameter", None)
-        return diameter
-
-    def clean_series(self):
-        series = self.cleaned_data.get("series", None)
-        return series
-
-    def clean_dry_weight(self):
-        dry_weight = self.cleaned_data.get("dry_weight", None)
-        return dry_weight
-
-    def clean_fueled_weight(self):
-        fueled_weight = self.cleaned_data.get("fueled_weight", None)
-        return fueled_weight
-
-    def clean_guidance_system(self):
-        guidance_system = self.cleaned_data.get("guidance_system", None)
-        return guidance_system
-
-    def clean_fairing_height(self):
-        fairing_height = self.cleaned_data.get("fairing_height", None)
-        return fairing_height
-
-    def clean_fairing_width(self):
-        fairing_width = self.cleaned_data.get("fairing_width", None)
-        return fairing_width
-
-    def clean_num_flights(self):
-        num_flights = self.cleaned_data.get("num_flights", None)
-        return num_flights
-
-    def clean_failures(self):
-        failures = self.cleaned_data.get("failures", None)
-        return failures
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
 
     def clean(self):
-        return super(RocketForm, self).clean()
+        cleaned_data = super(RocketForm, self).clean()
+        devel = cleaned_data.get('developed')
+        flight = cleaned_data.get('first_flight')
+        numfly = cleaned_data.get('num_flights')
+        fails = cleaned_data.get('failures')
+        if wrong_year_order(devel, flight):
+            raise forms.ValidationError("Things cannot fly before they are \
+                                        developed")
+        if fails > numfly:
+            raise forms.ValidationError("Number of failures cannot exceed the \
+                                        number of attempted flights")
 
-    def validate_unique(self):
-        return super(RocketForm, self).validate_unique()
 
-    def save(self, commit=True):
-        return super(RocketForm, self).save(commit)
+class SpacecraftForm(BasicForm):
 
-
-class SpacecraftForm(forms.ModelForm):
-
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = Spacecraft
-        fields = ['description', 'sources', 'name', 'country', 'variant_of', 'native_name', 'manufacturer', 'developed', 'first_flight', 'height', 'diameter', 'dry_weight', 'guidance_system', 'attitude_control_system', 'battery_capacity', 'electricity_source', 'power_generation', 'antenna_type', 'antenna_gain', 'transmitter_power', 'heatshield', 'landing_solution', 'num_flights', 'failures', 'fueled_weight', 'oxidizer_volume', 'fuel_volume', 'oxidizer_weight', 'fuel_weight', 'main_engine', 'num_main_engines', 'aux_engine', 'num_aux_engines', 'tank_type', 'tank_material', 'illustration']
-        exclude = []
+        fields = ['name', 'native_name', 'country', 'variant_of',
+                  'manufacturer', 'height', 'diameter', 'dry_weight',
+                  'fueled_weight', 'instruments', 'guidance_system',
+                  'antenna_type', 'antenna_gain', 'transmitter_power',
+                  'attitude_control_system', 'battery_capacity',
+                  'electricity_source', 'power_generation', 'tank_type',
+                  'tank_material', 'fuel_volume', 'oxidizer_volume',
+                  'fuel_weight', 'oxidizer_weight', 'main_engine',
+                  'num_main_engines', 'aux_engine', 'num_aux_engines',
+                  'heatshield', 'landing_solution', 'developed',
+                  'first_flight', 'num_flights', 'failures',
+                  'illustration', 'description', 'sources']
         widgets = None
         localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(SpacecraftForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(SpacecraftForm, self).is_valid()
-
-    def full_clean(self):
-        return super(SpacecraftForm, self).full_clean()
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_country(self):
-        country = self.cleaned_data.get("country", None)
-        return country
-
-    def clean_variant_of(self):
-        variant_of = self.cleaned_data.get("variant_of", None)
-        return variant_of
-
-    def clean_native_name(self):
-        native_name = self.cleaned_data.get("native_name", None)
-        return native_name
-
-    def clean_manufacturer(self):
-        manufacturer = self.cleaned_data.get("manufacturer", None)
-        return manufacturer
-
-    def clean_developed(self):
-        developed = self.cleaned_data.get("developed", None)
-        return developed
-
-    def clean_first_flight(self):
-        first_flight = self.cleaned_data.get("first_flight", None)
-        return first_flight
-
-    def clean_height(self):
-        height = self.cleaned_data.get("height", None)
-        return height
-
-    def clean_diameter(self):
-        diameter = self.cleaned_data.get("diameter", None)
-        return diameter
-
-    def clean_dry_weight(self):
-        dry_weight = self.cleaned_data.get("dry_weight", None)
-        return dry_weight
-
-    def clean_guidance_system(self):
-        guidance_system = self.cleaned_data.get("guidance_system", None)
-        return guidance_system
-
-    def clean_attitude_control_system(self):
-        attitude_control_system = self.cleaned_data.get("attitude_control_system", None)
-        return attitude_control_system
-
-    def clean_battery_capacity(self):
-        battery_capacity = self.cleaned_data.get("battery_capacity", None)
-        return battery_capacity
-
-    def clean_electricity_source(self):
-        electricity_source = self.cleaned_data.get("electricity_source", None)
-        return electricity_source
-
-    def clean_power_generation(self):
-        power_generation = self.cleaned_data.get("power_generation", None)
-        return power_generation
-
-    def clean_antenna_type(self):
-        antenna_type = self.cleaned_data.get("antenna_type", None)
-        return antenna_type
-
-    def clean_antenna_gain(self):
-        antenna_gain = self.cleaned_data.get("antenna_gain", None)
-        return antenna_gain
-
-    def clean_transmitter_power(self):
-        transmitter_power = self.cleaned_data.get("transmitter_power", None)
-        return transmitter_power
-
-    def clean_heatshield(self):
-        heatshield = self.cleaned_data.get("heatshield", None)
-        return heatshield
-
-    def clean_landing_solution(self):
-        landing_solution = self.cleaned_data.get("landing_solution", None)
-        return landing_solution
-
-    def clean_num_flights(self):
-        num_flights = self.cleaned_data.get("num_flights", None)
-        return num_flights
-
-    def clean_failures(self):
-        failures = self.cleaned_data.get("failures", None)
-        return failures
-
-    def clean_fueled_weight(self):
-        fueled_weight = self.cleaned_data.get("fueled_weight", None)
-        return fueled_weight
-
-    def clean_oxidizer_volume(self):
-        oxidizer_volume = self.cleaned_data.get("oxidizer_volume", None)
-        return oxidizer_volume
-
-    def clean_fuel_volume(self):
-        fuel_volume = self.cleaned_data.get("fuel_volume", None)
-        return fuel_volume
-
-    def clean_oxidizer_weight(self):
-        oxidizer_weight = self.cleaned_data.get("oxidizer_weight", None)
-        return oxidizer_weight
-
-    def clean_fuel_weight(self):
-        fuel_weight = self.cleaned_data.get("fuel_weight", None)
-        return fuel_weight
-
-    def clean_main_engine(self):
-        main_engine = self.cleaned_data.get("main_engine", None)
-        return main_engine
-
-    def clean_num_main_engines(self):
-        num_main_engines = self.cleaned_data.get("num_main_engines", None)
-        return num_main_engines
-
-    def clean_aux_engine(self):
-        aux_engine = self.cleaned_data.get("aux_engine", None)
-        return aux_engine
-
-    def clean_num_aux_engines(self):
-        num_aux_engines = self.cleaned_data.get("num_aux_engines", None)
-        return num_aux_engines
-
-    def clean_tank_type(self):
-        tank_type = self.cleaned_data.get("tank_type", None)
-        return tank_type
-
-    def clean_tank_material(self):
-        tank_material = self.cleaned_data.get("tank_material", None)
-        return tank_material
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
 
     def clean(self):
-        return super(SpacecraftForm, self).clean()
+        cleaned_data = super(SpacecraftForm, self).clean()
+        devel = cleaned_data.get('developed')
+        flight = cleaned_data.get('first_flight')
+        numfly = cleaned_data.get('num_flights')
+        fails = cleaned_data.get('failures')
+        if wrong_year_order(devel, flight):
+            raise forms.ValidationError("Things cannot fly before they are \
+                                        developed")
+        if fails > numfly:
+            raise forms.ValidationError("Number of failures cannot exceed the \
+                                        number of attempted flights")
 
-    def validate_unique(self):
-        return super(SpacecraftForm, self).validate_unique()
 
-    def save(self, commit=True):
-        return super(SpacecraftForm, self).save(commit)
+class CrewedSpacecraftForm(BasicForm):
 
-
-class CrewedSpacecraftForm(forms.ModelForm):
-
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = CrewedSpacecraft
-        fields = ['description', 'sources', 'name', 'country', 'variant_of', 'native_name', 'manufacturer', 'developed', 'first_flight', 'height', 'diameter', 'dry_weight', 'guidance_system', 'attitude_control_system', 'battery_capacity', 'electricity_source', 'power_generation', 'antenna_type', 'antenna_gain', 'transmitter_power', 'heatshield', 'landing_solution', 'num_flights', 'failures', 'fueled_weight', 'oxidizer_volume', 'fuel_volume', 'oxidizer_weight', 'fuel_weight', 'main_engine', 'num_main_engines', 'aux_engine', 'num_aux_engines', 'tank_type', 'tank_material', 'illustration', 'spacecraft_ptr', 'crew', 'life_support', 'supplies_days', 'pressurized_volume']
-        exclude = []
+        fields = ['name', 'native_name', 'country', 'variant_of',
+                  'manufacturer', 'height', 'diameter', 'dry_weight',
+                  'fueled_weight', 'crew', 'pressurized_volume', 'instruments',
+                  'guidance_system', 'antenna_type', 'antenna_gain',
+                  'transmitter_power', 'attitude_control_system',
+                  'life_support', 'supplies_days', 'battery_capacity',
+                  'electricity_source', 'power_generation', 'tank_type',
+                  'tank_material', 'fuel_volume', 'oxidizer_volume',
+                  'fuel_weight', 'oxidizer_weight', 'main_engine',
+                  'num_main_engines', 'aux_engine', 'num_aux_engines',
+                  'heatshield', 'landing_solution', 'developed',
+                  'first_flight', 'num_flights', 'failures',
+                  'illustration', 'description', 'sources']
         widgets = None
         localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(CrewedSpacecraftForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(CrewedSpacecraftForm, self).is_valid()
-
-    def full_clean(self):
-        return super(CrewedSpacecraftForm, self).full_clean()
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_country(self):
-        country = self.cleaned_data.get("country", None)
-        return country
-
-    def clean_variant_of(self):
-        variant_of = self.cleaned_data.get("variant_of", None)
-        return variant_of
-
-    def clean_native_name(self):
-        native_name = self.cleaned_data.get("native_name", None)
-        return native_name
-
-    def clean_manufacturer(self):
-        manufacturer = self.cleaned_data.get("manufacturer", None)
-        return manufacturer
-
-    def clean_developed(self):
-        developed = self.cleaned_data.get("developed", None)
-        return developed
-
-    def clean_first_flight(self):
-        first_flight = self.cleaned_data.get("first_flight", None)
-        return first_flight
-
-    def clean_height(self):
-        height = self.cleaned_data.get("height", None)
-        return height
-
-    def clean_diameter(self):
-        diameter = self.cleaned_data.get("diameter", None)
-        return diameter
-
-    def clean_dry_weight(self):
-        dry_weight = self.cleaned_data.get("dry_weight", None)
-        return dry_weight
-
-    def clean_guidance_system(self):
-        guidance_system = self.cleaned_data.get("guidance_system", None)
-        return guidance_system
-
-    def clean_attitude_control_system(self):
-        attitude_control_system = self.cleaned_data.get("attitude_control_system", None)
-        return attitude_control_system
-
-    def clean_battery_capacity(self):
-        battery_capacity = self.cleaned_data.get("battery_capacity", None)
-        return battery_capacity
-
-    def clean_electricity_source(self):
-        electricity_source = self.cleaned_data.get("electricity_source", None)
-        return electricity_source
-
-    def clean_power_generation(self):
-        power_generation = self.cleaned_data.get("power_generation", None)
-        return power_generation
-
-    def clean_antenna_type(self):
-        antenna_type = self.cleaned_data.get("antenna_type", None)
-        return antenna_type
-
-    def clean_antenna_gain(self):
-        antenna_gain = self.cleaned_data.get("antenna_gain", None)
-        return antenna_gain
-
-    def clean_transmitter_power(self):
-        transmitter_power = self.cleaned_data.get("transmitter_power", None)
-        return transmitter_power
-
-    def clean_heatshield(self):
-        heatshield = self.cleaned_data.get("heatshield", None)
-        return heatshield
-
-    def clean_landing_solution(self):
-        landing_solution = self.cleaned_data.get("landing_solution", None)
-        return landing_solution
-
-    def clean_num_flights(self):
-        num_flights = self.cleaned_data.get("num_flights", None)
-        return num_flights
-
-    def clean_failures(self):
-        failures = self.cleaned_data.get("failures", None)
-        return failures
-
-    def clean_fueled_weight(self):
-        fueled_weight = self.cleaned_data.get("fueled_weight", None)
-        return fueled_weight
-
-    def clean_oxidizer_volume(self):
-        oxidizer_volume = self.cleaned_data.get("oxidizer_volume", None)
-        return oxidizer_volume
-
-    def clean_fuel_volume(self):
-        fuel_volume = self.cleaned_data.get("fuel_volume", None)
-        return fuel_volume
-
-    def clean_oxidizer_weight(self):
-        oxidizer_weight = self.cleaned_data.get("oxidizer_weight", None)
-        return oxidizer_weight
-
-    def clean_fuel_weight(self):
-        fuel_weight = self.cleaned_data.get("fuel_weight", None)
-        return fuel_weight
-
-    def clean_main_engine(self):
-        main_engine = self.cleaned_data.get("main_engine", None)
-        return main_engine
-
-    def clean_num_main_engines(self):
-        num_main_engines = self.cleaned_data.get("num_main_engines", None)
-        return num_main_engines
-
-    def clean_aux_engine(self):
-        aux_engine = self.cleaned_data.get("aux_engine", None)
-        return aux_engine
-
-    def clean_num_aux_engines(self):
-        num_aux_engines = self.cleaned_data.get("num_aux_engines", None)
-        return num_aux_engines
-
-    def clean_tank_type(self):
-        tank_type = self.cleaned_data.get("tank_type", None)
-        return tank_type
-
-    def clean_tank_material(self):
-        tank_material = self.cleaned_data.get("tank_material", None)
-        return tank_material
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean_spacecraft_ptr(self):
-        spacecraft_ptr = self.cleaned_data.get("spacecraft_ptr", None)
-        return spacecraft_ptr
-
-    def clean_crew(self):
-        crew = self.cleaned_data.get("crew", None)
-        return crew
-
-    def clean_life_support(self):
-        life_support = self.cleaned_data.get("life_support", None)
-        return life_support
-
-    def clean_supplies_days(self):
-        supplies_days = self.cleaned_data.get("supplies_days", None)
-        return supplies_days
-
-    def clean_pressurized_volume(self):
-        pressurized_volume = self.cleaned_data.get("pressurized_volume", None)
-        return pressurized_volume
 
     def clean(self):
-        return super(CrewedSpacecraftForm, self).clean()
+        cleaned_data = super(CrewedSpacecraftForm, self).clean()
+        devel = cleaned_data.get('developed')
+        flight = cleaned_data.get('first_flight')
+        numfly = cleaned_data.get('num_flights')
+        fails = cleaned_data.get('failures')
+        if wrong_year_order(devel, flight):
+            raise forms.ValidationError("Things cannot fly before they are \
+                                        developed")
+        if fails > numfly:
+            raise forms.ValidationError("Number of failures cannot exceed the \
+                                        number of attempted flights")
 
-    def validate_unique(self):
-        return super(CrewedSpacecraftForm, self).validate_unique()
 
-    def save(self, commit=True):
-        return super(CrewedSpacecraftForm, self).save(commit)
+class LaunchFacilityForm(BasicForm):
 
-
-class LaunchFacilityForm(forms.ModelForm):
-
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = LaunchFacility
-        fields = ['name', 'description', 'sources', 'location', 'owning_country', 'latitude', 'longitude', 'elevation', 'illustration']
-        exclude = []
+        fields = ['name', 'owning_country', 'location', 'latitude',
+                  'longitude', 'elevation', 'illustration', 'description',
+                  'sources']
         widgets = None
         localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(LaunchFacilityForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(LaunchFacilityForm, self).is_valid()
-
-    def full_clean(self):
-        return super(LaunchFacilityForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_location(self):
-        location = self.cleaned_data.get("location", None)
-        return location
-
-    def clean_owning_country(self):
-        owning_country = self.cleaned_data.get("owning_country", None)
-        return owning_country
-
-    def clean_latitude(self):
-        latitude = self.cleaned_data.get("latitude", None)
-        return latitude
-
-    def clean_longitude(self):
-        longitude = self.cleaned_data.get("longitude", None)
-        return longitude
-
-    def clean_elevation(self):
-        elevation = self.cleaned_data.get("elevation", None)
-        return elevation
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean(self):
-        return super(LaunchFacilityForm, self).clean()
-
-    def validate_unique(self):
-        return super(LaunchFacilityForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(LaunchFacilityForm, self).save(commit)
 
 
 class MissionForm(forms.ModelForm):

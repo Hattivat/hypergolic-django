@@ -239,7 +239,7 @@ class CrewedSpacecraftAdmin(admin.ModelAdmin):
         }),
         ('Metrics', {
             'fields': ('height', 'diameter', ('dry_weight', 'fueled_weight'),
-                       'pressurized_volume')
+                       'crew', 'pressurized_volume')
         }),
         ('Equipment', {
             'fields': ('instruments', 'guidance_system', ('antenna_type',
