@@ -190,7 +190,7 @@ class EngineForm(BasicForm):
         if thr_min > thr_max:
             raise forms.ValidationError("Minimum throttle cannot be greater \
                                         than maximum throttle")
-        if not restcap and restarts > 0:
+        if not restcap and restarts and restarts > 0:
             raise forms.ValidationError("Please click on the 'restart \
                                         capability' checkbox first")
         return cleaned_data
