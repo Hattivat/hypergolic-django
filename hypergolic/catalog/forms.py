@@ -415,243 +415,60 @@ class LaunchFacilityForm(BasicForm):
         localized_fields = None
 
 
-class MissionForm(forms.ModelForm):
+class MissionForm(BasicForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = Mission
-        fields = ['name', 'description', 'sources', 'country', 'organization', 'launch_date', 'end_date', 'launch_facility', 'launch_vehicle', 'spacecraft', 'failure', 'illustration']
-        exclude = []
+        fields = ['name', 'country', 'organization', 'launch_vehicle',
+                  'spacecraft', 'targets', 'launch_date', 'launch_facility',
+                  'end_date', 'failure', 'illustration', 'description',
+                  'sources']
         widgets = None
         localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(MissionForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(MissionForm, self).is_valid()
-
-    def full_clean(self):
-        return super(MissionForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_country(self):
-        country = self.cleaned_data.get("country", None)
-        return country
-
-    def clean_organization(self):
-        organization = self.cleaned_data.get("organization", None)
-        return organization
-
-    def clean_launch_date(self):
-        launch_date = self.cleaned_data.get("launch_date", None)
-        return launch_date
-
-    def clean_end_date(self):
-        end_date = self.cleaned_data.get("end_date", None)
-        return end_date
-
-    def clean_launch_facility(self):
-        launch_facility = self.cleaned_data.get("launch_facility", None)
-        return launch_facility
-
-    def clean_launch_vehicle(self):
-        launch_vehicle = self.cleaned_data.get("launch_vehicle", None)
-        return launch_vehicle
-
-    def clean_spacecraft(self):
-        spacecraft = self.cleaned_data.get("spacecraft", None)
-        return spacecraft
-
-    def clean_failure(self):
-        failure = self.cleaned_data.get("failure", None)
-        return failure
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
 
     def clean(self):
-        return super(MissionForm, self).clean()
-
-    def validate_unique(self):
-        return super(MissionForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(MissionForm, self).save(commit)
+        cleaned_data = super(MissionForm, self).clean()
+        launch = cleaned_data.get('launch_date')
+        end = cleaned_data.get('end_date')
+        if launch > end:
+            raise forms.ValidationError("End date cannot be earlier than the\
+                                        launch date")
 
 
 class AstronautForm(forms.ModelForm):
 
     class Meta:
         model = Astronaut
-        fields = ['first_name', 'middle_names', 'last_name', 'nationality', 'organization', 'birth_date', 'birth_place', 'death_date', 'biography', 'sources', 'picture']
-        exclude = []
+        fields = ['first_name', 'middle_names', 'last_name', 'nationality',
+                  'organization', 'birth_date', 'birth_place', 'death_date',
+                  'picture', 'biography', 'sources']
         widgets = None
         localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(AstronautForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(AstronautForm, self).is_valid()
-
-    def full_clean(self):
-        return super(AstronautForm, self).full_clean()
-
-    def clean_first_name(self):
-        first_name = self.cleaned_data.get("first_name", None)
-        return first_name
-
-    def clean_middle_names(self):
-        middle_names = self.cleaned_data.get("middle_names", None)
-        return middle_names
-
-    def clean_last_name(self):
-        last_name = self.cleaned_data.get("last_name", None)
-        return last_name
-
-    def clean_nationality(self):
-        nationality = self.cleaned_data.get("nationality", None)
-        return nationality
-
-    def clean_organization(self):
-        organization = self.cleaned_data.get("organization", None)
-        return organization
-
-    def clean_birth_date(self):
-        birth_date = self.cleaned_data.get("birth_date", None)
-        return birth_date
-
-    def clean_birth_place(self):
-        birth_place = self.cleaned_data.get("birth_place", None)
-        return birth_place
-
-    def clean_death_date(self):
-        death_date = self.cleaned_data.get("death_date", None)
-        return death_date
-
-    def clean_biography(self):
-        biography = self.cleaned_data.get("biography", None)
-        return biography
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_picture(self):
-        picture = self.cleaned_data.get("picture", None)
-        return picture
 
     def clean(self):
-        return super(AstronautForm, self).clean()
-
-    def validate_unique(self):
-        return super(AstronautForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(AstronautForm, self).save(commit)
+        cleaned_data = super(AstronautForm, self).clean()
+        born = cleaned_data.get('birth_date')
+        died = cleaned_data.get('death_date')
+        if born > died:
+            raise forms.ValidationError("Death date cannot be earlier than the\
+                                        birth date")
 
 
 class CrewedMissionForm(forms.ModelForm):
 
-    class Meta:
+    class Meta(BasicForm.Meta):
         model = CrewedMission
-        fields = ['name', 'description', 'sources', 'country', 'organization', 'launch_date', 'end_date', 'launch_facility', 'launch_vehicle', 'spacecraft', 'failure', 'illustration', 'landing_site']
-        exclude = []
+        fields = ['name', 'country', 'organization', 'crew', 'launch_vehicle',
+                  'spacecraft', 'targets', 'launch_date', 'launch_facility',
+                  'end_date', 'failure', 'landing_site', 'description',
+                  'illustration', 'sources']
         widgets = None
         localized_fields = None
-        labels = {}
-        help_texts = {}
-        error_messages = {}
-
-    def __init__(self, *args, **kwargs):
-        return super(CrewedMissionForm, self).__init__(*args, **kwargs)
-
-    def is_valid(self):
-        return super(CrewedMissionForm, self).is_valid()
-
-    def full_clean(self):
-        return super(CrewedMissionForm, self).full_clean()
-
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None)
-        return name
-
-    def clean_description(self):
-        description = self.cleaned_data.get("description", None)
-        return description
-
-    def clean_sources(self):
-        sources = self.cleaned_data.get("sources", None)
-        return sources
-
-    def clean_country(self):
-        country = self.cleaned_data.get("country", None)
-        return country
-
-    def clean_organization(self):
-        organization = self.cleaned_data.get("organization", None)
-        return organization
-
-    def clean_launch_date(self):
-        launch_date = self.cleaned_data.get("launch_date", None)
-        return launch_date
-
-    def clean_end_date(self):
-        end_date = self.cleaned_data.get("end_date", None)
-        return end_date
-
-    def clean_launch_facility(self):
-        launch_facility = self.cleaned_data.get("launch_facility", None)
-        return launch_facility
-
-    def clean_launch_vehicle(self):
-        launch_vehicle = self.cleaned_data.get("launch_vehicle", None)
-        return launch_vehicle
-
-    def clean_spacecraft(self):
-        spacecraft = self.cleaned_data.get("spacecraft", None)
-        return spacecraft
-
-    def clean_failure(self):
-        failure = self.cleaned_data.get("failure", None)
-        return failure
-
-    def clean_illustration(self):
-        illustration = self.cleaned_data.get("illustration", None)
-        return illustration
-
-    def clean_mission_ptr(self):
-        mission_ptr = self.cleaned_data.get("mission_ptr", None)
-        return mission_ptr
-
-    def clean_landing_site(self):
-        landing_site = self.cleaned_data.get("landing_site", None)
-        return landing_site
 
     def clean(self):
-        return super(CrewedMissionForm, self).clean()
-
-    def validate_unique(self):
-        return super(CrewedMissionForm, self).validate_unique()
-
-    def save(self, commit=True):
-        return super(CrewedMissionForm, self).save(commit)
-
+        cleaned_data = super(CrewedMissionForm, self).clean()
+        launch = cleaned_data.get('launch_date')
+        end = cleaned_data.get('end_date')
+        if launch > end:
+            raise forms.ValidationError("End date cannot be earlier than the\
+                                        launch date")
