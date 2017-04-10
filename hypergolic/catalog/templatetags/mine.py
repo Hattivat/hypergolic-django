@@ -1,5 +1,6 @@
 from django import template
 from django.forms.models import model_to_dict
+from django.core.exceptions import FieldDoesNotExist
 
 register = template.Library()
 
@@ -31,9 +32,23 @@ def attr(obj, arg1):
 
 @register.filter
 def verbose_name(obj, field):
-    return obj._meta.get_field(field).verbose_name
+    try:
+        return obj._meta.get_field(field).verbose_name
+    except FieldDoesNotExist:
+        return field.replace('_', ' ')
 
 
-@register.filter('classy')
+@register.filter
 def classy(obj):
     return obj.__class__.__name__
+
+
+@register.filter
+def dot(obj, lookup):
+    if hasattr(obj, lookup):
+        try:
+            return getattr(obj, lookup)()
+        except TypeError:
+            return getattr(obj, lookup)
+    else:
+        return '-'

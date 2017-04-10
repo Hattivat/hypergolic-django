@@ -664,7 +664,7 @@ class Rocket(Complex):
                                      upload_to='rockets/')
 
     def num_stages(self):
-        return len(self.stages.objects.all())
+        return self.stages.count()
 
 
 class Spacecraft(Complex):

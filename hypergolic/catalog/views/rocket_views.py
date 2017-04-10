@@ -11,8 +11,7 @@ from django.http import Http404
 class RocketListView(GenericListView):
     model = Rocket
     template_name = "catalog/generic_list.html"
-    # had to remove 'stages'/'num_stages' as it didn't work as intended
-    display_data = ('country', 'first_flight',
+    display_data = ('country', 'first_flight', 'num_stages',
                     'num_flights', 'failures')
 
 

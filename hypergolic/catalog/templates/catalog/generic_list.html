@@ -32,11 +32,9 @@
         {% endif %}
         <tr onclick="window.document.location='{{ instance.get_absolute_url }}';">
             <td>{{ instance }}</td>
-            {% with instance|to_dict as dic %}
             {% for column in display_data %}
-                <td>{{ dic|hashfind:column }}</td>
+                <td>{{ instance|dot:column }}</td>
             {% endfor %}
-            {% endwith %}
         {% empty %}
             <td>No {{ verbose_plural }} yet.</td>
         {% endfor %}
