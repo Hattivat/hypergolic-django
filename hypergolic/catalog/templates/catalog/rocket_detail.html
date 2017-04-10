@@ -24,7 +24,7 @@
     </dl>
     <h4>Composition</h4>
     <dl class="dl-horizontal">
-        <dt>Stages:</dt><dd>{% for stage in object.stages %}<a href='{{ stage.get_absolute_url }}'>{{ stage }}</a>{% endfor %}</dd>
+        <dt>Stages:</dt><dd>{% for stage in object.stages.all %}<a href='{{ stage.get_absolute_url }}'>{{ stage }}</a>{% endfor %}</dd>
         <dt>Guidance system:</dt><dd><a href='{{ object.guidance_system.get_absolute_url }}'>{{ object.guidance_system }}</a></dd>
         <dt>Fairing height:</dt><dd>{{ object.fairing_height }}</dd>
         <dt>Fairing width:</dt><dd>{{ object.fairing_width }}</dd>
