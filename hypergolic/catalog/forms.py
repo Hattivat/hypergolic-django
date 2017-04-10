@@ -182,7 +182,7 @@ class EngineForm(BasicForm):
         flight = cleaned_data.get('first_flight')
         thr_min = cleaned_data.get('throttle_range_min')
         thr_max = cleaned_data.get('throttle_range_max')
-        restarts = cleaned_data.get('number_of_restarts')
+        restarts = cleaned_data.get('num_restarts')
         restcap = cleaned_data.get('restart_capability')
         if wrong_year_order(devel, flight):
             raise forms.ValidationError("Things cannot fly before they are \
@@ -190,7 +190,7 @@ class EngineForm(BasicForm):
         if thr_min > thr_max:
             raise forms.ValidationError("Minimum throttle cannot be greater \
                                         than maximum throttle")
-        if not restcap and restarts and restarts > 0:
+        if not restcap and restarts > 0:
             raise forms.ValidationError("Please click on the 'restart \
                                         capability' checkbox first")
         return cleaned_data
