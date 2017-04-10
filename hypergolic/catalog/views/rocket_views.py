@@ -7,11 +7,12 @@ from django.core.urlresolvers import reverse_lazy
 from django.core.urlresolvers import reverse
 from django.http import Http404
 
- 
+
 class RocketListView(GenericListView):
     model = Rocket
     template_name = "catalog/generic_list.html"
-    display_data = ('country', 'num_stages', 'first_flight',
+    # had to remove 'stages'/'num_stages' as it didn't work as intended
+    display_data = ('country', 'first_flight',
                     'num_flights', 'failures')
 
 
