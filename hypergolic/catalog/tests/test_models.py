@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.contrib.auth.models import User, AnonymousUser
 from catalog.models import Role
 
 
@@ -7,8 +6,6 @@ class RoleModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.myuser = User.objects.create_user(username='testuser',
-                                              password='ytrewq')
         Role.objects.create(name='aaa', description='loremipsum', sources='xx')
 
     def test_verbose_name(self):
