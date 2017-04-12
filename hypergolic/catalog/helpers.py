@@ -10,3 +10,7 @@ def wrong_year_order(y1, y2):
         if int(y1) > int(y2):
             return True
     return False
+
+
+def strip_mid_whitespace(astring):
+    return " ".join(astring.split())
