@@ -51,6 +51,8 @@ class PropellantMixModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
+        """The dance below is necessary due to the presence of a many-to-many
+        field (propellants)"""
         hydra = Compound.objects.create(name='hydrazine', role=True,
                                         sources='xx')
         hydra.save()
@@ -83,3 +85,35 @@ class PropellantMixModelTest(TestCase):
     def test_str(self):
         tester = PropellantMix.objects.get(pk=1)
         self.assertEquals(tester.__str__(), 'hydrazine/nitrogen tetroxide')
+
+    def test_get_absolute_url(self):
+        tester = PropellantMix.objects.get(pk=1)
+        self.assertEquals(tester.get_absolute_url(),
+                          '/propellant_mixes/1/')
+
+    def test_get_create_url(self):
+        tester = PropellantMix.objects.get(pk=1)
+        self.assertEquals(tester.get_create_url(),
+                          '/propellant_mixes/create/')
+
+    def test_get_update_url(self):
+        tester = PropellantMix.objects.get(pk=1)
+        self.assertEquals(tester.get_update_url(),
+                          '/propellant_mixes/1/update/')
+
+    def test_get_delete_url(self):
+        tester = PropellantMix.objects.get(pk=1)
+        self.assertEquals(tester.get_delete_url(),
+                          '/propellant_mixes/1/delete/')
+
+    def test_get_list_url(self):
+        tester = PropellantMix.objects.get(pk=1)
+        self.assertEquals(tester.get_list_url(),
+                          '/propellant_mixes/')
+
+
+class EngineModelTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        pass
