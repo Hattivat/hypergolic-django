@@ -230,7 +230,7 @@ class SpacecraftAdmin(admin.ModelAdmin):
 class CrewedSpacecraftAdmin(admin.ModelAdmin):
     list_display = ('name', 'country', 'developed', 'fueled_weight')
     list_filter = ('country', 'manufacturer', 'instruments',
-                   'electricity_source')
+                   'electricity_source', 'crew')
     list_select_related = True
     fieldsets = (
         (None, {

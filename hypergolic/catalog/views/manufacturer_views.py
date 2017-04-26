@@ -1,14 +1,16 @@
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
-from .base import GenericListView, GenericCreateView
-from ..models import Manufacturer
-from ..forms import ManufacturerForm
 from django.core.urlresolvers import reverse_lazy
 from django.core.urlresolvers import reverse
+from catalog.views.base import GenericListView, GenericCreateView
+from catalog.models import Manufacturer
+from catalog.forms import ManufacturerForm
+from catalog.filters import ManufacturerFilter
 
 
 class ManufacturerListView(GenericListView):
     model = Manufacturer
+    f = ManufacturerFilter
     display_data = ('country', 'established', 'active', 'defunct')
 
 

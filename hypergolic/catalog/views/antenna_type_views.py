@@ -1,10 +1,10 @@
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
-from .base import GenericListView, GenericCreateView
-from ..models import AntennaType
-from ..forms import AntennaTypeForm
 from django.core.urlresolvers import reverse_lazy
 from django.core.urlresolvers import reverse
+from catalog.views.base import GenericListView, GenericCreateView
+from catalog.models import AntennaType
+from catalog.forms import AntennaTypeForm
 
 
 class AntennaTypeListView(GenericListView):

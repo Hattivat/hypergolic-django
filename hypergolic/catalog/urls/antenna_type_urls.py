@@ -1,6 +1,7 @@
 from django.conf.urls import url
-from ..views import (AntennaTypeListView, AntennaTypeCreateView, AntennaTypeDetailView,
-                     AntennaTypeUpdateView, AntennaTypeDeleteView)
+from catalog.views import (AntennaTypeListView, AntennaTypeCreateView,
+                           AntennaTypeDetailView, AntennaTypeUpdateView,
+                           AntennaTypeDeleteView)
 from django.contrib.auth.decorators import login_required
 
 

@@ -1,7 +1,7 @@
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 from django.core.urlresolvers import reverse
-from ..helpers import underscore
+from catalog.helpers import underscore
 
 
 class GenericListView(ListView):
@@ -16,6 +16,12 @@ class GenericListView(ListView):
         context['display_data'] = self.display_data
         inspector_gadget = underscore(self.model.__name__)
         context['create_link'] = reverse('{}_create'.format(inspector_gadget))
+        try:
+            filt = self.f(self.request.GET, queryset=self.model.objects.all())
+            context['filter'] = filt
+            context['object_list'] = filt.qs
+        except AttributeError:
+            context['filter'] = False
         return context
 
     def get_queryset(self):

@@ -1,3 +1,5 @@
 Django==1.10.6
+django-filter==1.0.2
+olefile==0.44
+Pillow==4.0.0
 psycopg2==2.7.1
-pillow==4.0.0
