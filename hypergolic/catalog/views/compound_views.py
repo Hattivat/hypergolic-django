@@ -1,14 +1,16 @@
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
-from .base import GenericListView, GenericCreateView
-from ..models import Compound
-from ..forms import CompoundForm
+from catalog.views.base import GenericListView, GenericCreateView
+from catalog.models import Compound
+from catalog.forms import CompoundForm
+from catalog.filters import CompoundFilter
 from django.core.urlresolvers import reverse_lazy
 from django.core.urlresolvers import reverse
 
 
 class CompoundListView(GenericListView):
     model = Compound
+    f = CompoundFilter
     display_data = ('role', 'chemical_formula', 'also_known_as',
                     'density')
 

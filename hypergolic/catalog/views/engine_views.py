@@ -1,14 +1,16 @@
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
-from .base import GenericListView, GenericCreateView
-from ..models import Engine
-from ..forms import EngineForm
+from catalog.views.base import GenericListView, GenericCreateView
+from catalog.models import Engine
+from catalog.forms import EngineForm
+from catalog.filters import EngineFilter
 from django.core.urlresolvers import reverse_lazy
 from django.core.urlresolvers import reverse
 
 
 class EngineListView(GenericListView):
     model = Engine
+    f = EngineFilter
     display_data = ('country', 'developed', 'application',
                     'propellants', 'cycle', 'specific_impulse_vac',
                     'thrust_vac', 'twr')
@@ -26,16 +28,6 @@ class EngineDetailView(DetailView):
 class EngineCreateView(GenericCreateView):
     model = Engine
     form_class = EngineForm
-    # fields = ['description', 'sources', 'name', 'country', 'variant_of',
-    # 'native_name', 'manufacturer', 'developed', 'first_flight', 'height',
-    # 'diameter', 'dry_weight', 'application', 'propellants', 'mixture_ratio',
-    # 'cycle', 'specific_impulse_vac', 'specific_impulse_sl', 'thrust_sl',
-    # 'thrust_vac', 'twr', 'chamber_pressure', 'combustion_chambers',
-    # 'rated_burn_time', 'nozzle_ratio', 'nozzle_shape', 'nozzle_material',
-    # 'cooling_method', 'injector_type', 'coefficient_of_thrust_vac',
-    # 'coefficient_of_thrust_sl', 'ignition_method', 'restart_capability',
-    # 'num_restarts', 'throttle_range_min', 'throttle_range_max',
-    # 'illustration']
     template_name = "catalog/generic_create.html"
     success_url = reverse_lazy("engine_list")
 
@@ -52,16 +44,6 @@ class EngineCreateView(GenericCreateView):
 class EngineUpdateView(UpdateView):
     model = Engine
     form_class = EngineForm
-    # fields = ['description', 'sources', 'name', 'country', 'variant_of',
-    # 'native_name', 'manufacturer', 'developed', 'first_flight', 'height',
-    # 'diameter', 'dry_weight', 'application', 'propellants', 'mixture_ratio',
-    # 'cycle', 'specific_impulse_vac', 'specific_impulse_sl', 'thrust_sl',
-    # 'thrust_vac', 'twr', 'chamber_pressure', 'combustion_chambers',
-    # 'rated_burn_time', 'nozzle_ratio', 'nozzle_shape', 'nozzle_material',
-    # 'cooling_method', 'injector_type', 'coefficient_of_thrust_vac',
-    # 'coefficient_of_thrust_sl', 'ignition_method', 'restart_capability',
-    # 'num_restarts', 'throttle_range_min', 'throttle_range_max',
-    # 'illustration']
     template_name = "catalog/generic_update.html"
     initial = {}
 

@@ -1,14 +1,16 @@
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
-from .base import GenericListView, GenericCreateView
-from ..models import PropellantMix
-from ..forms import PropellantMixForm
+from catalog.views.base import GenericListView, GenericCreateView
+from catalog.models import PropellantMix
+from catalog.forms import PropellantMixForm
+from catalog.filters import PropellantMixFilter
 from django.core.urlresolvers import reverse_lazy
 from django.core.urlresolvers import reverse
 
 
 class PropellantMixListView(GenericListView):
     model = PropellantMix
+    f = PropellantMixFilter
     display_data = ('abbreviation', 'specific_impulse', 'hypergolic',
                     'optimum_ratio', 'combustion_temp')
 

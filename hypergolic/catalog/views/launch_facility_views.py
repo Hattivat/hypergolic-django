@@ -1,14 +1,16 @@
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
-from .base import GenericListView, GenericCreateView
-from ..models import LaunchFacility
-from ..forms import LaunchFacilityForm
+from catalog.views.base import GenericListView, GenericCreateView
+from catalog.models import LaunchFacility
+from catalog.forms import LaunchFacilityForm
+from catalog.filters import LaunchFacilityFilter
 from django.core.urlresolvers import reverse_lazy
 from django.core.urlresolvers import reverse
 
 
 class LaunchFacilityListView(GenericListView):
     model = LaunchFacility
+    f = LaunchFacilityFilter
     display_data = ('location', 'owning_country', 'latitude', 'longitude',
                     'elevation')
 

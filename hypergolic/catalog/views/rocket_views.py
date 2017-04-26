@@ -1,8 +1,9 @@
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
-from .base import GenericListView, GenericCreateView
-from ..models import Rocket
-from ..forms import RocketForm
+from catalog.views.base import GenericListView, GenericCreateView
+from catalog.models import Rocket
+from catalog.forms import RocketForm
+from catalog.filters import RocketFilter
 from django.core.urlresolvers import reverse_lazy
 from django.core.urlresolvers import reverse
 from django.http import Http404
@@ -10,7 +11,7 @@ from django.http import Http404
 
 class RocketListView(GenericListView):
     model = Rocket
-    template_name = "catalog/generic_list.html"
+    f = RocketFilter
     display_data = ('country', 'first_flight', 'num_stages',
                     'num_flights', 'failures')
 
@@ -27,11 +28,6 @@ class RocketDetailView(DetailView):
 class RocketCreateView(GenericCreateView):
     model = Rocket
     form_class = RocketForm
-    # fields = ['description', 'sources', 'name', 'country', 'variant_of',
-    # 'native_name', 'manufacturer', 'developed', 'first_flight', 'height',
-    # 'diameter', 'series', 'dry_weight', 'fueled_weight', 'guidance_system',
-    # 'fairing_height', 'fairing_width', 'num_flights', 'failures',
-    # 'illustration']
     template_name = "catalog/generic_create.html"
     success_url = reverse_lazy("rocket_list")
 
@@ -48,11 +44,6 @@ class RocketCreateView(GenericCreateView):
 class RocketUpdateView(UpdateView):
     model = Rocket
     form_class = RocketForm
-    # fields = ['description', 'sources', 'name', 'country', 'variant_of',
-    # 'native_name', 'manufacturer', 'developed', 'first_flight', 'height',
-    # 'diameter', 'series', 'dry_weight', 'fueled_weight', 'guidance_system',
-    # 'fairing_height', 'fairing_width', 'num_flights', 'failures',
-    # 'illustration']
     template_name = "catalog/generic_update.html"
     initial = {}
 

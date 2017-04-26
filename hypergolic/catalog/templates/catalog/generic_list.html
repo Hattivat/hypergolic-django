@@ -27,14 +27,14 @@
                 <tr>
                     <td><strong>Name</strong></td>
                     {% for column in display_data %}
-                        <td><strong>{{ instance|verbose_name:column|capfirst }}</strong></td>
+                    <td><strong>{{ instance|verbose_name:column|capfirst }}</strong></td>
                     {% endfor %}
                 </tr>
                 {% endif %}
                 <tr onclick="window.document.location='{{ instance.get_absolute_url }}';">
                     <td>{{ instance }}</td>
                     {% for column in display_data %}
-                        <td>{{ instance|dot:column }}</td>
+                    <td>{{ instance|dot:column }}</td>
                     {% endfor %}
             {% empty %}
                 <td>No {{ verbose_plural }} found.</td>
@@ -45,9 +45,12 @@
     {% if filter %}
     <aside class="form-group col-sm-2">
         <h4>Refine selection</h4>
-        <form name="filterform" type="get" action="." class="navbar-form">
+        <form name="filterform" type="get" action=".">
             {% for field in filter.form %}
+            <div class="form-group">
+                <label>{{ field.label }}</label>
                 {{ field|attr:"class:form-control"|attr:"onchange:filterform.submit();" }}
+            </div>
             {% endfor %}
         </form>
     </aside>
