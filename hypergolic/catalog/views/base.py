@@ -11,15 +11,19 @@ class GenericListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(GenericListView, self).get_context_data(**kwargs)
+        # model and display_data are provided by child view classes
         context['verbose'] = self.model._meta.verbose_name
         context['verbose_plural'] = self.model._meta.verbose_name_plural
         context['display_data'] = self.display_data
+        # a hacky solution to have the link work even for still empty tables
         inspector_gadget = underscore(self.model.__name__)
         context['create_link'] = reverse('{}_create'.format(inspector_gadget))
+        # if a child view class passes a filter, uses it
         try:
             filt = self.f(self.request.GET, queryset=self.model.objects.all())
             context['filter'] = filt
             context['object_list'] = filt.qs
+        # otherwise tells the template not to display the associated section
         except AttributeError:
             context['filter'] = False
         return context
