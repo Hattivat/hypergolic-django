@@ -478,10 +478,20 @@ class Stage(Complex):
                                                blank=True, null=True)
     aux_gimbal_pitch_max = models.DecimalField(max_digits=4, decimal_places=1,
                                                blank=True, null=True)
+    aux_oxidizer_volume = models.PositiveIntegerField(blank=True, null=True,
+                                                      help_text="In litres")
+    aux_fuel_volume = models.PositiveIntegerField(blank=True, null=True,
+                                                  help_text="In litres")
+    aux_oxidizer_weight = models.BigIntegerField(blank=True, null=True,
+                                                 help_text="In kilograms")
+    aux_fuel_weight = models.BigIntegerField(blank=True, null=True, help_text="In \
+                                         kilograms")
     tank_type = models.ForeignKey(TankConstruction, on_delete=models.SET_NULL,
                                   blank=True, null=True)
     tank_material = models.ForeignKey(TankMaterial, on_delete=models.SET_NULL,
                                       blank=True, null=True)
+    pressurant = models.ForeignKey(Compound, on_delete=models.SET_NULL,
+                                   blank=True, null=True)
     fins = models.PositiveSmallIntegerField(default=0)
     burn_time = models.PositiveIntegerField(blank=True, null=True,
                                             help_text="In seconds")
@@ -645,10 +655,20 @@ class Rocket(Complex):
     fueled_weight = models.BigIntegerField(help_text="in grams")
     guidance_system = models.ForeignKey(GuidanceSystem, blank=True, null=True,
                                         on_delete=models.SET_NULL)
+    battery_capacity = models.PositiveIntegerField(blank=True, null=True,
+                                                   help_text="in watt-hours")
     fairing_height = models.PositiveIntegerField(blank=True, null=True,
                                                  help_text="in milimetres")
     fairing_width = models.PositiveIntegerField(blank=True, null=True,
                                                 help_text="in milimetres")
+    fairing_weight = models.BigIntegerField(blank=True, null=True, help_text="\
+                                            in grams")
+    payload_to_leo = models.BigIntegerField(blank=True, null=True, help_text="\
+                                            in grams")
+    payload_to_gto = models.BigIntegerField(blank=True, null=True, help_text="\
+                                            in grams")
+    payload_to_tli = models.BigIntegerField(blank=True, null=True, help_text="\
+                                            in grams")
     num_flights = models.PositiveSmallIntegerField(default=0,
                                                    verbose_name="number of \
                                                    flights")

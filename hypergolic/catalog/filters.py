@@ -6,8 +6,6 @@ from .models import Manufacturer, Compound, PropellantMix, Engine, Stage,\
 
 
 class ManufacturerFilter(django_filters.FilterSet):
-    country = django_filters.ChoiceFilter(choices=COUNTRIES)
-    active = django_filters.BooleanFilter()
 
     class Meta:
         model = Manufacturer
