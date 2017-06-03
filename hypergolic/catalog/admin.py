@@ -129,7 +129,10 @@ class StageAdmin(admin.ModelAdmin):
         ('Propellant tanks', {
             'fields': ('tank_type', 'tank_material',
                        ('fuel_volume', 'oxidizer_volume'),
-                       ('fuel_weight', 'oxidizer_weight'))
+                       ('fuel_weight', 'oxidizer_weight'),
+                       ('aux_fuel_volume', 'aux_oxidizer_volume'),
+                       ('aux_fuel_weight', 'aux_oxidizer_weight'),
+                       'pressurant')
         }),
         ('Propulsion', {
             'fields': (('main_engine', 'num_main_engines'),
@@ -155,7 +158,7 @@ class StageAdmin(admin.ModelAdmin):
 class RocketAdmin(admin.ModelAdmin):
     filter_horizontal = ('stages',)
     list_display = ('name', 'country', 'num_stages', 'first_flight',
-                    'num_flights', 'failures')
+                    'num_flights', 'failures', 'payload_to_leo')
     list_filter = ('country', 'series')
     list_select_related = True
     fieldsets = (
@@ -166,9 +169,12 @@ class RocketAdmin(admin.ModelAdmin):
         ('Metrics', {
             'fields': ('height', 'diameter', ('dry_weight', 'fueled_weight'))
         }),
-        ('composition', {
+        ('Composition', {
             'fields': ('stages', ('fairing_height', 'fairing_width'),
-                       'guidance_system')
+                       'fairing_weight', 'guidance_system', 'battery_capacity')
+        }),
+        ('Payload', {
+            'fields': ('payload_to_leo', 'payload_to_gto', 'payload_to_tli')
         }),
         ('History', {
             'fields': (('developed', 'first_flight'), ('num_flights',
@@ -207,7 +213,10 @@ class SpacecraftAdmin(admin.ModelAdmin):
         ('Propellant tanks', {
             'fields': ('tank_type', 'tank_material',
                        ('fuel_volume', 'oxidizer_volume'),
-                       ('fuel_weight', 'oxidizer_weight'))
+                       ('fuel_weight', 'oxidizer_weight'),
+                       ('aux_fuel_volume', 'aux_oxidizer_volume'),
+                       ('aux_fuel_weight', 'aux_oxidizer_weight'),
+                       'pressurant')
         }),
         ('Propulsion', {
             'fields': (('main_engine', 'num_main_engines'),
@@ -254,7 +263,10 @@ class CrewedSpacecraftAdmin(admin.ModelAdmin):
         ('Propellant tanks', {
             'fields': ('tank_type', 'tank_material',
                        ('fuel_volume', 'oxidizer_volume'),
-                       ('fuel_weight', 'oxidizer_weight'))
+                       ('fuel_weight', 'oxidizer_weight'),
+                       ('aux_fuel_volume', 'aux_oxidizer_volume'),
+                       ('aux_fuel_weight', 'aux_oxidizer_weight'),
+                       'pressurant')
         }),
         ('Propulsion', {
             'fields': (('main_engine', 'num_main_engines'),

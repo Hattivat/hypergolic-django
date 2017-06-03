@@ -213,16 +213,18 @@ class StageForm(BasicForm):
     class Meta(BasicForm.Meta):
         model = Stage
         fields = ['name', 'native_name', 'variant_of', 'stage_role', 'country',
-                  'manufacturer', 'height', 'diameter',  'dry_weight',
+                  'manufacturer', 'height', 'diameter', 'dry_weight',
                   'fueled_weight', 'tank_type', 'tank_material', 'fuel_volume',
                   'oxidizer_volume', 'fuel_weight', 'oxidizer_weight',
-                  'main_engine', 'num_main_engines', 'aux_engine',
-                  'num_aux_engines', 'burn_time', 'main_gimbal_yaw_min',
-                  'main_gimbal_yaw_max', 'main_gimbal_pitch_min',
-                  'main_gimbal_pitch_max', 'aux_gimbal_yaw_min',
-                  'aux_gimbal_yaw_max', 'aux_gimbal_pitch_min',
-                  'aux_gimbal_pitch_max', 'fins', 'developed', 'first_flight',
-                  'illustration', 'description', 'sources']
+                  'main_engine', 'burn_time', 'num_main_engines', 'aux_engine',
+                  'num_aux_engines', 'aux_fuel_volume', 'aux_oxidizer_volume',
+                  'aux_fuel_weight', 'aux_oxidizer_weight', 'pressurant',
+                  'main_gimbal_yaw_min', 'main_gimbal_yaw_max',
+                  'main_gimbal_pitch_min', 'main_gimbal_pitch_max',
+                  'aux_gimbal_yaw_min', 'aux_gimbal_yaw_max',
+                  'aux_gimbal_pitch_min', 'aux_gimbal_pitch_max', 'fins',
+                  'developed', 'first_flight', 'illustration', 'description',
+                  'sources']
         widgets = None
         localized_fields = None
         labels = {}
@@ -314,12 +316,13 @@ class RocketForm(BasicForm):
 
     class Meta(BasicForm.Meta):
         model = Rocket
-        fields = ['name',  'native_name', 'country', 'variant_of',
+        fields = ['name', 'native_name', 'country', 'variant_of',
                   'manufacturer', 'series', 'height', 'diameter', 'dry_weight',
                   'fueled_weight', 'stages', 'fairing_height', 'fairing_width',
-                  'guidance_system', 'developed', 'first_flight',
-                  'num_flights', 'failures', 'description', 'illustration',
-                  'sources']
+                  'fairing_weight', 'guidance_system', 'battery_capacity',
+                  'payload_to_leo', 'payload_to_gto', 'payload_to_tli',
+                  'developed', 'first_flight', 'num_flights', 'failures',
+                  'description', 'illustration', 'sources']
         widgets = None
         localized_fields = None
 
@@ -350,6 +353,8 @@ class SpacecraftForm(BasicForm):
                   'tank_material', 'fuel_volume', 'oxidizer_volume',
                   'fuel_weight', 'oxidizer_weight', 'main_engine',
                   'num_main_engines', 'aux_engine', 'num_aux_engines',
+                  'aux_fuel_volume', 'aux_oxidizer_volume',
+                  'aux_fuel_weight', 'aux_oxidizer_weight', 'pressurant',
                   'heatshield', 'landing_solution', 'developed',
                   'first_flight', 'num_flights', 'failures',
                   'illustration', 'description', 'sources']
@@ -384,6 +389,8 @@ class CrewedSpacecraftForm(BasicForm):
                   'tank_material', 'fuel_volume', 'oxidizer_volume',
                   'fuel_weight', 'oxidizer_weight', 'main_engine',
                   'num_main_engines', 'aux_engine', 'num_aux_engines',
+                  'aux_fuel_volume', 'aux_oxidizer_volume',
+                  'aux_fuel_weight', 'aux_oxidizer_weight', 'pressurant',
                   'heatshield', 'landing_solution', 'developed',
                   'first_flight', 'num_flights', 'failures',
                   'illustration', 'description', 'sources']

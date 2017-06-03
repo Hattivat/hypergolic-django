@@ -751,10 +751,20 @@ class Spacecraft(Complex):
     num_aux_engines = models.PositiveSmallIntegerField(blank=True, default=0,
                                                        verbose_name='number \
                                                        of auxilliary engines')
+    aux_oxidizer_volume = models.PositiveIntegerField(blank=True, null=True,
+                                                      help_text="In litres")
+    aux_fuel_volume = models.PositiveIntegerField(blank=True, null=True,
+                                                  help_text="In litres")
+    aux_oxidizer_weight = models.BigIntegerField(blank=True, null=True,
+                                                 help_text="In kilograms")
+    aux_fuel_weight = models.BigIntegerField(blank=True, null=True, help_text="In \
+                                         kilograms")
     tank_type = models.ForeignKey(TankConstruction, on_delete=models.SET_NULL,
                                   blank=True, null=True)
     tank_material = models.ForeignKey(TankMaterial, on_delete=models.SET_NULL,
                                       blank=True, null=True)
+    pressurant = models.ForeignKey(Compound, on_delete=models.SET_NULL,
+                                   blank=True, null=True)
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
                                 related_name='spacecraft_created')
     modifier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,

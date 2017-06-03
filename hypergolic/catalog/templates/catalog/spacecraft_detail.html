@@ -44,10 +44,17 @@
     <dl class="dl-horizontal">
         <dt>Tank type:</dt><dd><a href='{{ object.tank_type.get_absolute_url }}'>{{ object.tank_type }}</a></dd>
         <dt>Tank material:</dt><dd><a href='{{ object.tank_material.get_absolute_url }}'>{{ object.tank_material }}</a></dd>
+        <dt>Pressurant:</dt><dd><a href='{{ object.pressurant.get_absolute_url }}'>{{ object.pressurant }}</a></dd>
         <dt>Fuel volume:</dt><dd>{{ object.fuel_volume }}</dd>
         <dt>Oxidizer volume:</dt><dd>{{ object.oxidizer_volume }}</dd>
         <dt>Fuel weight:</dt><dd>{{ object.fuel_weight }}</dd>
         <dt>Oxidizer weight:</dt><dd>{{ object.oxidizer_weight }}</dd>
+        {% if object.aux_fuel_volume or object.aux_fuel_weight %}
+        <dt>Auxiliary fuel volume:</dt><dd>{{ object.aux_fuel_volume }}</dd>
+        <dt>Auxiliary oxidizer volume:</dt><dd>{{ object.aux_oxidizer_volume }}</dd>
+        <dt>Auxiliary fuel weight:</dt><dd>{{ object.aux_fuel_weight }}</dd>
+        <dt>Auxiliary oxidizer weight:</dt><dd>{{ object.aux_oxidizer_weight }}</dd>
+        {% endif %}
     </dl>
     <h4>Propulsion</h4>
     <dl class="dl-horizontal">
