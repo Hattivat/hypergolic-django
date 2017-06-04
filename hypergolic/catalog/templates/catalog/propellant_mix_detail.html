@@ -10,8 +10,7 @@
         <dt>Oxidizers:</dt><dd>{% for oxidizer in oxidizers.all %}<a href='{{ oxidizer.get_absolute_url }}'>{{ oxidizer }}</a>{% endfor %}</dd>
         {% endif %}
         <dt>Hypergolic:</dt><dd>{% if object.hypergolic %}Yes{% else %}No{% endif %}</dd>
-        <dt>Specific impulse (in vacuum):</dt><dd>{{ object.specific_impulse }}</dd>
-        <dt>Specific impulse (at sea level):</dt><dd>{{ object.specific_impulse_sl }}</dd>
+        <dt>Specific impulse (theoretical):</dt><dd>{{ object.specific_impulse }}</dd>
         <dt>Characteristic velocity:</dt><dd>{{ object.characteristic_velocity }}</dd>
         <dt>Optimum ratio:</dt><dd>{{ object.optimum_ratio }}</dd>
         <dt>Combustion temperature:</dt><dd>{{ object.combustion_temp }}</dd>

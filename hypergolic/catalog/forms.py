@@ -150,9 +150,8 @@ class PropellantMixForm(BasicForm):
     class Meta(BasicForm.Meta):
         model = PropellantMix
         fields = ['propellants', 'abbreviation', 'hypergolic',
-                  'specific_impulse', 'specific_impulse_sl',
-                  'characteristic_velocity', 'optimum_ratio',
-                  'combustion_temp', 'description', 'sources']
+                  'specific_impulse', 'characteristic_velocity',
+                  'optimum_ratio', 'combustion_temp', 'description', 'sources']
 
 
 class EngineForm(BasicForm):

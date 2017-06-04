@@ -195,10 +195,10 @@ class Compound(Basic):
     density = models.FloatField(blank=True, null=True, help_text="In g/ml")
     melting_point = models.DecimalField(max_digits=6, decimal_places=2,
                                         blank=True, null=True, help_text="In \
-                                        degrees Celsius")
+                                        degrees Kelvin")
     boiling_point = models.DecimalField(max_digits=6, decimal_places=2,
                                         blank=True, null=True, help_text="In \
-                                        degrees Celcius")
+                                        degrees Kelvin")
     appearance = models.CharField(max_length=250, blank=True, help_text="Use \
                                   adjectives, such as 'transparent', or \
                                   'reddish brown'.")
@@ -243,10 +243,6 @@ class PropellantMix(models.Model):
     specific_impulse = models.PositiveIntegerField(help_text="In m/s",
                                                    verbose_name="Specific \
                                                    impulse in vacuum")
-    specific_impulse_sl = models.PositiveIntegerField(blank=True, null=True,
-                                                      help_text="In m/s",
-                                                      verbose_name="Specific \
-                                                      impulse at sea level")
     characteristic_velocity = models.PositiveIntegerField(blank=True,
                                                           null=True,
                                                           help_text="In m/s")
