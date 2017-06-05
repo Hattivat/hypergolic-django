@@ -16,10 +16,10 @@
     </dl>
     <h4>Metrics</h4>
     <dl class="dl-horizontal">
-        <dt>Height:</dt><dd>{{ object.height }}</dd>
-        <dt>Diameter:</dt><dd>{{ object.diameter }}</dd>
-        <dt>Dry weight:</dt><dd>{{ object.dry_weight }}</dd>
-        <dt>Fueled weight:</dt><dd>{{ object.fueled_weight }}</dd>
+        <dt>Height:</dt><dd>{{ object.height }} m</dd>
+        <dt>Diameter:</dt><dd>{{ object.diameter }} m</dd>
+        <dt>Dry weight:</dt><dd>{{ object.dry_weight }} kg</dd>
+        <dt>Fueled weight:</dt><dd>{{ object.fueled_weight }} kg</dd>
         {% block volume %}
         {% endblock }
     </dl>
@@ -28,8 +28,8 @@
         <dt>Instruments:</dt><dd>{% for instrument in object.instruments %}<a href='{{ instrument.get_absolute_url }}'>{{ instrument }}</a>{% endfor %}</dd>
         <dt>Guidance system:</dt><dd><a href='{{ object.guidance_system.get_absolute_url }}'>{{ object.guidance_system }}</a></dd>
         <dt>Antenna type:</dt><dd><a href='{{ object.antenna_type.get_absolute_url }}'>{{ object.antenna_type }}</a></dd>
-        <dt>Antenna gain:</dt><dd>{{ object.antenna_gain }}</dd>
-        <dt>Transmitter power:</dt><dd>{{ object.transmitter_power }}</dd>
+        <dt>Antenna gain:</dt><dd>{{ object.antenna_gain }} dBi</dd>
+        <dt>Transmitter power:</dt><dd>{{ object.transmitter_power }} W</dd>
         <dt>Attitude control system:</dt><dd><a href='{{ object.attitude_control_system.get_absolute_url }}'>{{ object.attitude_control_system }}</a></dd>
         {% block lifesupport %}
         {% endblock %}
@@ -37,23 +37,23 @@
     <h4>Electricity</h4>
     <dl class="dl-horizontal">
         <dt>Electricity source:</dt><dd><a href='{{ object.electricity_source.get_absolute_url }}'>{{ object.electricity_source }}</a></dd>
-        <dt>Power generation:</dt><dd>{{ object.power_generation }}</dd>
-        <dt>Battery capacity:</dt><dd>{{ object.battery_capacity }}</dd>
+        <dt>Power generation:</dt><dd>{{ object.power_generation }} W</dd>
+        <dt>Battery capacity:</dt><dd>{{ object.battery_capacity }} Wh</dd>
     </dl>
     <h4>Propellant tanks</h4>
     <dl class="dl-horizontal">
         <dt>Tank type:</dt><dd><a href='{{ object.tank_type.get_absolute_url }}'>{{ object.tank_type }}</a></dd>
         <dt>Tank material:</dt><dd><a href='{{ object.tank_material.get_absolute_url }}'>{{ object.tank_material }}</a></dd>
         <dt>Pressurant:</dt><dd><a href='{{ object.pressurant.get_absolute_url }}'>{{ object.pressurant }}</a></dd>
-        <dt>Fuel volume:</dt><dd>{{ object.fuel_volume }}</dd>
-        <dt>Oxidizer volume:</dt><dd>{{ object.oxidizer_volume }}</dd>
-        <dt>Fuel weight:</dt><dd>{{ object.fuel_weight }}</dd>
-        <dt>Oxidizer weight:</dt><dd>{{ object.oxidizer_weight }}</dd>
+        <dt>Fuel volume:</dt><dd>{{ object.fuel_volume }} l</dd>
+        <dt>Oxidizer volume:</dt><dd>{{ object.oxidizer_volume }} l</dd>
+        <dt>Fuel weight:</dt><dd>{{ object.fuel_weight }} kg</dd>
+        <dt>Oxidizer weight:</dt><dd>{{ object.oxidizer_weight }} kg</dd>
         {% if object.aux_fuel_volume or object.aux_fuel_weight %}
-        <dt>Auxiliary fuel volume:</dt><dd>{{ object.aux_fuel_volume }}</dd>
-        <dt>Auxiliary oxidizer volume:</dt><dd>{{ object.aux_oxidizer_volume }}</dd>
-        <dt>Auxiliary fuel weight:</dt><dd>{{ object.aux_fuel_weight }}</dd>
-        <dt>Auxiliary oxidizer weight:</dt><dd>{{ object.aux_oxidizer_weight }}</dd>
+        <dt>Auxiliary fuel volume:</dt><dd>{{ object.aux_fuel_volume }} l</dd>
+        <dt>Auxiliary oxidizer volume:</dt><dd>{{ object.aux_oxidizer_volume }} l</dd>
+        <dt>Auxiliary fuel weight:</dt><dd>{{ object.aux_fuel_weight }} kg</dd>
+        <dt>Auxiliary oxidizer weight:</dt><dd>{{ object.aux_oxidizer_weight }} kg</dd>
         {% endif %}
     </dl>
     <h4>Propulsion</h4>
@@ -66,7 +66,7 @@
         {% if object.num_aux_engines > 1 %}
         <dt>Number of auxiliary engines:</dt><dd>{{ object.num_aux_engines }}</dd>
         {% endif %}
-        <dt>Burn time:</dt><dd>{{ object.burn_time }}</dd>
+        <dt>Burn time:</dt><dd>{{ object.burn_time }} s</dd>
     </dl>
     {% if object.heatshield or object.landing_solution %}
     <h4>Landing</h4>

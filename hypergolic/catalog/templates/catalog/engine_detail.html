@@ -17,20 +17,20 @@
     </dl>
     <h4>Performance:</h4>
     <dl class="dl-horizontal">
-        <dt>Specific impulse in vacuum:</dt><dd>{{ object.specific_impulse_vac }}</dd>
-        <dt>Specific impulse at sea level:</dt><dd>{{ object.specific_impulse_sl }}</dd>
-        <dt>Thrust in vacuum:</dt><dd>{{ object.thrust_vac }}</dd>
-        <dt>Thrust at sea level:</dt><dd>{{ object.thrust_sl }}</dd>
+        <dt>Specific impulse in vacuum:</dt><dd>{{ object.specific_impulse_vac }} sec</dd>
+        <dt>Specific impulse at sea level:</dt><dd>{{ object.specific_impulse_sl }} sec</dd>
+        <dt>Thrust in vacuum:</dt><dd>{{ object.thrust_vac }} kN</dd>
+        <dt>Thrust at sea level:</dt><dd>{{ object.thrust_sl }} kN</dd>
         <dt>Coefficient of thrust in vacuum:</dt><dd>{{ object.coefficient_of_thrust_vac }}</dd>
         <dt>Coefficient of thrust at sea level:</dt><dd>{{ object.coefficient_of_thrust_sl }}</dd>
-        <dt>Thrust-to-weight ration:</dt><dd>{{ object.twr }}</dd>
-        <dt>Rated burn time:</dt><dd>{{ object.rated_burn_time }}</dd>
+        <dt>Thrust-to-weight ratio:</dt><dd>{{ object.twr }}</dd>
+        <dt>Rated burn time:</dt><dd>{{ object.rated_burn_time }} sec</dd>
     </dl>
     <h4>Metrics:</h4>
     <dl class="dl-horizontal">
-        <dt>Height:</dt><dd>{{ object.height }}</dd>
-        <dt>Diameter:</dt><dd>{{ object.diameter }}</dd>
-        <dt>Dry weight:</dt><dd>{{ object.dry_weight }}</dd>
+        <dt>Height:</dt><dd>{{ object.height }} m</dd>
+        <dt>Diameter:</dt><dd>{{ object.diameter }} m</dd>
+        <dt>Dry weight:</dt><dd>{{ object.dry_weight }} kg</dd>
     </dl>
     <h4>Ignition!:</h4>
     <dl class="dl-horizontal">
@@ -42,7 +42,7 @@
     <dl class="dl-horizontal">
         <dt>Propellants:</dt><dd><a href='{{ object.propellants.get_absolute_url }}'>{{ object.propellants }}</a></dd>
         <dt>Mixture ratio:</dt><dd>{{ object.mixture_ratio }}</dd>
-        <dt>Chamber pressure:</dt><dd>{{ object.chamber_pressure }}</dd>
+        <dt>Chamber pressure:</dt><dd>{{ object.chamber_pressure }} kPa</dd>
         <dt>Combustion chambers:</dt><dd>{{ object.combustion_chambers }}</dd>
     </dl>
     <h4>Nozzle:</h4>
@@ -58,7 +58,7 @@
         {% if object.restart_capability %}
         <dt>Number of restarts:</dt><dd>{{ object.num_restarts }}</dd>
         {% endif %}
-        <dt>Throttle range:</dt><dd>{{ object.throttle_range_min }} - {{ object.throttle_range_max }}</dd>
+        <dt>Throttle range:</dt><dd>{{ object.throttle_range_min }} - {{ object.throttle_range_max }} %</dd>
     </dl>
     <h3>Used on</h3>
     {% if object.stage_set.all %}

@@ -192,13 +192,14 @@ class Compound(Basic):
     variety_of = models.ForeignKey('self', on_delete=models.SET_NULL,
                                    blank=True, null=True,
                                    related_name="version")
-    density = models.FloatField(blank=True, null=True, help_text="In g/ml")
+    density = models.DecimalField(max_digits=6, decimal_places=4, blank=True,
+                                  null=True, help_text="In g/ml")
     melting_point = models.DecimalField(max_digits=6, decimal_places=2,
                                         blank=True, null=True, help_text="In \
-                                        degrees Kelvin")
+                                        Kelvins")
     boiling_point = models.DecimalField(max_digits=6, decimal_places=2,
                                         blank=True, null=True, help_text="In \
-                                        degrees Kelvin")
+                                        Kelvins")
     appearance = models.CharField(max_length=250, blank=True, help_text="Use \
                                   adjectives, such as 'transparent', or \
                                   'reddish brown'.")
@@ -240,9 +241,10 @@ class PropellantMix(models.Model):
                                      compounds ignites spontaneusly (without \
                                      an external spark or flame) on contact. \
                                      If unsure, leave it at 'False'.")
-    specific_impulse = models.PositiveIntegerField(help_text="In m/s",
-                                                   verbose_name="Specific \
-                                                   impulse in vacuum")
+    specific_impulse = models.DecimalField(max_digits=10, decimal_places=1,
+                                           help_text="In seconds",
+                                           verbose_name="Theoretical specific \
+                                           impulse in vacuum")
     characteristic_velocity = models.PositiveIntegerField(blank=True,
                                                           null=True,
                                                           help_text="In m/s")
@@ -252,8 +254,7 @@ class PropellantMix(models.Model):
     combustion_temp = models.DecimalField(max_digits=6, decimal_places=1,
                                           blank=True, null=True,
                                           verbose_name="combustion \
-                                          temperature", help_text="In degrees \
-                                          Kelvin")
+                                          temperature", help_text="In Kelvins")
     description = models.TextField(blank=True, help_text="Please use your own \
                                    words and do not plagiarise content from \
                                    elsewhere.")
@@ -310,13 +311,13 @@ class Complex(Basic):
                                                  null=True)
     first_flight = models.PositiveSmallIntegerField(choices=YEARS, blank=True,
                                                     null=True)
-    height = models.PositiveIntegerField(blank=True, null=True, help_text="In \
-                                         milimetres (1/1000th of a metre)")
-    diameter = models.PositiveIntegerField(blank=True, null=True, help_text="\
-                                           In milimetres (1/1000th of a \
-                                           metre)")
-    dry_weight = models.PositiveIntegerField(blank=True, null=True,
-                                             help_text="In grams")
+    height = models.DecimalField(max_digits=8, decimal_places=4, blank=True,
+                                 null=True, help_text="In metres.")
+    diameter = models.DecimalField(max_digits=8, decimal_places=4, blank=True,
+                                   null=True, help_text="In metres.")
+    dry_mass = models.DecimalField(max_digits=12, decimal_places=4,
+                                   blank=True, null=True,
+                                   help_text="In kilograms.")
 
     class Meta:
         abstract = True
@@ -338,14 +339,23 @@ class Engine(Complex):
                               blank=True, null=True, help_text="The power \
                               cycle employed in this engine, e.g. 'staged \
                               combustion'.")
-    specific_impulse_vac = models.PositiveIntegerField(help_text="In m/s")
-    specific_impulse_sl = models.PositiveIntegerField(help_text="In m/s")
-    thrust_sl = models.PositiveIntegerField(help_text="In Newtons")
-    thrust_vac = models.PositiveIntegerField(help_text="In Newtons")
+    specific_impulse_vac = models.DecimalField(max_digits=10, decimal_places=1,
+                                               help_text="In seconds",
+                                               verbose_name="Specific \
+                                               impulse in vacuum.")
+    specific_impulse_sl = models.DecimalField(max_digits=10, decimal_places=1,
+                                              help_text="In seconds",
+                                              verbose_name="Specific \
+                                              impulse at sea level.")
+    thrust_sl = models.DecimalField(max_digits=10, decimal_places=4,
+                                    help_text="In kilonewtons")
+    thrust_vac = models.DecimalField(max_digits=10, decimal_places=4,
+                                     help_text="In kilonewtons")
     twr = models.DecimalField(max_digits=6, decimal_places=2, blank=True,
-                              verbose_name="Thrust-to-Weight Ratio")
-    chamber_pressure = models.PositiveIntegerField(blank=True, null=True,
-                                                   help_text="In Pascals")
+                              verbose_name="Thrust-to-mass Ratio")
+    chamber_pressure = models.DecimalField(max_digits=10, decimal_places=4,
+                                           blank=True, null=True,
+                                           help_text="In kilopascals")
     combustion_chambers = models.PositiveSmallIntegerField(default=1,
                                                            help_text="The \
                                                            number of \
@@ -435,17 +445,18 @@ class Stage(Complex):
 
     stage_role = models.ForeignKey(StageRole, on_delete=models.PROTECT,
                                    null=True)
-    dry_weight = models.BigIntegerField(blank=True, null=True, help_text="In \
-                                        grams")
-    fueled_weight = models.BigIntegerField(help_text="In grams")
+    fueled_mass = models.DecimalField(max_digits=12, decimal_places=4,
+                                      help_text="In kilograms.")
     oxidizer_volume = models.PositiveIntegerField(blank=True, null=True,
                                                   help_text="In litres")
     fuel_volume = models.PositiveIntegerField(blank=True, null=True,
                                               help_text="In litres")
-    oxidizer_weight = models.BigIntegerField(blank=True, null=True,
-                                             help_text="In kilograms")
-    fuel_weight = models.BigIntegerField(blank=True, null=True, help_text="In \
-                                         kilograms")
+    oxidizer_mass = models.DecimalField(max_digits=12, decimal_places=4,
+                                        blank=True, null=True,
+                                        help_text="In kilograms.")
+    fuel_mass = models.DecimalField(max_digits=12, decimal_places=4,
+                                    blank=True, null=True,
+                                    help_text="In kilograms.")
     main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
                                     related_name='stage_main')
     num_main_engines = models.PositiveSmallIntegerField(default=1,
@@ -478,10 +489,12 @@ class Stage(Complex):
                                                       help_text="In litres")
     aux_fuel_volume = models.PositiveIntegerField(blank=True, null=True,
                                                   help_text="In litres")
-    aux_oxidizer_weight = models.BigIntegerField(blank=True, null=True,
-                                                 help_text="In kilograms")
-    aux_fuel_weight = models.BigIntegerField(blank=True, null=True, help_text="In \
-                                         kilograms")
+    aux_oxidizer_mass = models.DecimalField(max_digits=12, decimal_places=4,
+                                            blank=True, null=True,
+                                            help_text="In kilograms.")
+    aux_fuel_mass = models.DecimalField(max_digits=12, decimal_places=4,
+                                        blank=True, null=True,
+                                        help_text="In kilograms.")
     tank_type = models.ForeignKey(TankConstruction, on_delete=models.SET_NULL,
                                   blank=True, null=True)
     tank_material = models.ForeignKey(TankMaterial, on_delete=models.SET_NULL,
@@ -646,25 +659,31 @@ class Rocket(Complex):
                                rocket is part of a series, such as 'Ariane', \
                                or 'Saturn', you can specify it here.")
     stages = models.ManyToManyField(Stage)
-    dry_weight = models.BigIntegerField(blank=True, null=True, help_text="\
-                                        in grams")
-    fueled_weight = models.BigIntegerField(help_text="in grams")
+    fueled_mass = models.DecimalField(max_digits=12, decimal_places=4,
+                                      blank=True, null=True,
+                                      help_text="In kilograms.")
     guidance_system = models.ForeignKey(GuidanceSystem, blank=True, null=True,
                                         on_delete=models.SET_NULL)
     battery_capacity = models.PositiveIntegerField(blank=True, null=True,
                                                    help_text="in watt-hours")
-    fairing_height = models.PositiveIntegerField(blank=True, null=True,
-                                                 help_text="in milimetres")
-    fairing_width = models.PositiveIntegerField(blank=True, null=True,
-                                                help_text="in milimetres")
-    fairing_weight = models.BigIntegerField(blank=True, null=True, help_text="\
-                                            in grams")
-    payload_to_leo = models.BigIntegerField(blank=True, null=True, help_text="\
-                                            in grams")
-    payload_to_gto = models.BigIntegerField(blank=True, null=True, help_text="\
-                                            in grams")
-    payload_to_tli = models.BigIntegerField(blank=True, null=True, help_text="\
-                                            in grams")
+    fairing_height = models.DecimalField(max_digits=8, decimal_places=4,
+                                         blank=True, null=True,
+                                         help_text="in metres")
+    fairing_width = models.DecimalField(max_digits=8, decimal_places=4,
+                                        blank=True, null=True,
+                                        help_text="in metres")
+    fairing_mass = models.DecimalField(max_digits=11, decimal_places=3,
+                                       blank=True, null=True, help_text="\
+                                       in kilograms")
+    payload_to_leo = models.DecimalField(max_digits=12, decimal_places=3,
+                                         blank=True, null=True, help_text="\
+                                         in kilograms")
+    payload_to_gto = models.DecimalField(max_digits=12, decimal_places=3,
+                                         blank=True, null=True, help_text="\
+                                         in kilograms")
+    payload_to_tli = models.DecimalField(max_digits=12, decimal_places=3,
+                                         blank=True, null=True, help_text="\
+                                         in kilograms")
     num_flights = models.PositiveSmallIntegerField(default=0,
                                                    verbose_name="number of \
                                                    flights")
@@ -725,16 +744,18 @@ class Spacecraft(Complex):
                                                 spacecraft (not the rocket \
                                                 lifting it) has failed on a \
                                                 mission")
-    fueled_weight = models.PositiveIntegerField(help_text="in grams")
-    # volumes in litres, weights in grams
+    fueled_mass = models.DecimalField(max_digits=12, decimal_places=4,
+                                      help_text="In kilograms.")
     oxidizer_volume = models.PositiveIntegerField(blank=True, null=True,
                                                   help_text="in litres")
     fuel_volume = models.PositiveIntegerField(blank=True, null=True,
                                               help_text="in litres")
-    oxidizer_weight = models.PositiveIntegerField(blank=True, null=True,
-                                                  help_text="in grams")
-    fuel_weight = models.PositiveIntegerField(blank=True, null=True,
-                                              help_text="in grams")
+    oxidizer_mass = models.DecimalField(max_digits=12, decimal_places=3,
+                                        blank=True, null=True, help_text="\
+                                        in kilograms")
+    fuel_mass = models.DecimalField(max_digits=12, decimal_places=3,
+                                    blank=True, null=True, help_text="\
+                                    in kilograms")
     main_engine = models.ForeignKey(Engine, on_delete=models.PROTECT,
                                     related_name='spacecraft_main')
     num_main_engines = models.PositiveSmallIntegerField(default=1,
@@ -751,10 +772,12 @@ class Spacecraft(Complex):
                                                       help_text="In litres")
     aux_fuel_volume = models.PositiveIntegerField(blank=True, null=True,
                                                   help_text="In litres")
-    aux_oxidizer_weight = models.BigIntegerField(blank=True, null=True,
-                                                 help_text="In kilograms")
-    aux_fuel_weight = models.BigIntegerField(blank=True, null=True, help_text="In \
-                                         kilograms")
+    aux_oxidizer_mass = models.DecimalField(max_digits=12, decimal_places=3,
+                                            blank=True, null=True, help_text="\
+                                            in kilograms")
+    aux_fuel_mass = models.DecimalField(max_digits=12, decimal_places=3,
+                                        blank=True, null=True, help_text="\
+                                        in kilograms")
     tank_type = models.ForeignKey(TankConstruction, on_delete=models.SET_NULL,
                                   blank=True, null=True)
     tank_material = models.ForeignKey(TankMaterial, on_delete=models.SET_NULL,
@@ -779,10 +802,10 @@ class CrewedSpacecraft(Spacecraft):
                                                      help_text="For how many \
                                                      days could the life \
                                                      support supplies last.")
-    pressurized_volume = models.PositiveIntegerField(blank=True, null=True,
-                                                     help_text="pressurized \
-                                                     (safe for crew) space \
-                                                     in litres")
+    pressurized_volume = models.DecimalField(max_digits=8, decimal_places=2,
+                                             blank=True, null=True,
+                                             help_text="pressurized (safe for \
+                                             crew) space in cubic metres")
 
 
 class LaunchFacility(Basic):

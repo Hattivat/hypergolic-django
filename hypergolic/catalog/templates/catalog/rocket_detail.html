@@ -17,22 +17,22 @@
     </dl>
     <h4>Metrics</h4>
     <dl class="dl-horizontal">
-        <dt>Height:</dt><dd>{{ object.height }}</dd>
-        <dt>Diameter:</dt><dd>{{ object.diameter }}</dd>
-        <dt>Dry weight:</dt><dd>{{ object.dry_weight }}</dd>
-        <dt>Fueled weight:</dt><dd>{{ object.fueled_weight }}</dd>
-        <dt>Payload to LEO:</dt><dd>{{ object.payload_to_leo }}</dd>
-        <dt>Payload to GTO:</dt><dd>{{ object.payload_to_gto }}</dd>
-        <dt>Payload to TLI:</dt><dd>{{ object.payload_to_tli }}</dd>
+        <dt>Height:</dt><dd>{{ object.height }} m</dd>
+        <dt>Diameter:</dt><dd>{{ object.diameter }} m</dd>
+        <dt>Dry weight:</dt><dd>{{ object.dry_weight }} kg</dd>
+        <dt>Fueled weight:</dt><dd>{{ object.fueled_weight }} kg</dd>
+        <dt>Payload to LEO:</dt><dd>{{ object.payload_to_leo }} kg</dd>
+        <dt>Payload to GTO:</dt><dd>{{ object.payload_to_gto }} kg</dd>
+        <dt>Payload to TLI:</dt><dd>{{ object.payload_to_tli }} kg</dd>
     </dl>
     <h4>Composition</h4>
     <dl class="dl-horizontal">
         <dt>Stages:</dt><dd>{% for stage in object.stages.all %}<a href='{{ stage.get_absolute_url }}'>{{ stage }}</a>{% endfor %}</dd>
         <dt>Guidance system:</dt><dd><a href='{{ object.guidance_system.get_absolute_url }}'>{{ object.guidance_system }}</a></dd>
-        <dt>Battery capacity:</dt><dd>{{ object.battery_capacity }}</dd>
-        <dt>Fairing height:</dt><dd>{{ object.fairing_height }}</dd>
-        <dt>Fairing width:</dt><dd>{{ object.fairing_width }}</dd>
-        <dt>Fairing weight:</dt><dd>{{ object.fairing_weight }}</dd>
+        <dt>Battery capacity:</dt><dd>{{ object.battery_capacity }} Wh</dd>
+        <dt>Fairing height:</dt><dd>{{ object.fairing_height }} m</dd>
+        <dt>Fairing width:</dt><dd>{{ object.fairing_width }} m</dd>
+        <dt>Fairing weight:</dt><dd>{{ object.fairing_weight }} kg</dd>
     </dl>
     <h4>History</h4>
     <dl class="dl-horizontal">

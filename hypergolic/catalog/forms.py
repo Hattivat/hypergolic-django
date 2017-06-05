@@ -162,7 +162,7 @@ class EngineForm(BasicForm):
                   'manufacturer', 'variant_of', 'specific_impulse_vac',
                   'specific_impulse_sl', 'thrust_vac', 'thrust_sl', 'twr',
                   'coefficient_of_thrust_vac', 'coefficient_of_thrust_sl',
-                  'rated_burn_time', 'height', 'diameter', 'dry_weight',
+                  'rated_burn_time', 'height', 'diameter', 'dry_mass',
                   'cycle', 'injector_type', 'ignition_method', 'propellants',
                   'mixture_ratio', 'chamber_pressure', 'combustion_chambers',
                   'nozzle_ratio', 'nozzle_shape', 'nozzle_material',
@@ -212,12 +212,12 @@ class StageForm(BasicForm):
     class Meta(BasicForm.Meta):
         model = Stage
         fields = ['name', 'native_name', 'variant_of', 'stage_role', 'country',
-                  'manufacturer', 'height', 'diameter', 'dry_weight',
-                  'fueled_weight', 'tank_type', 'tank_material', 'fuel_volume',
-                  'oxidizer_volume', 'fuel_weight', 'oxidizer_weight',
+                  'manufacturer', 'height', 'diameter', 'dry_mass',
+                  'fueled_mass', 'tank_type', 'tank_material', 'fuel_volume',
+                  'oxidizer_volume', 'fuel_mass', 'oxidizer_mass',
                   'main_engine', 'burn_time', 'num_main_engines', 'aux_engine',
                   'num_aux_engines', 'aux_fuel_volume', 'aux_oxidizer_volume',
-                  'aux_fuel_weight', 'aux_oxidizer_weight', 'pressurant',
+                  'aux_fuel_mass', 'aux_oxidizer_mass', 'pressurant',
                   'main_gimbal_yaw_min', 'main_gimbal_yaw_max',
                   'main_gimbal_pitch_min', 'main_gimbal_pitch_max',
                   'aux_gimbal_yaw_min', 'aux_gimbal_yaw_max',
@@ -316,9 +316,9 @@ class RocketForm(BasicForm):
     class Meta(BasicForm.Meta):
         model = Rocket
         fields = ['name', 'native_name', 'country', 'variant_of',
-                  'manufacturer', 'series', 'height', 'diameter', 'dry_weight',
-                  'fueled_weight', 'stages', 'fairing_height', 'fairing_width',
-                  'fairing_weight', 'guidance_system', 'battery_capacity',
+                  'manufacturer', 'series', 'height', 'diameter', 'dry_mass',
+                  'fueled_mass', 'stages', 'fairing_height', 'fairing_width',
+                  'fairing_mass', 'guidance_system', 'battery_capacity',
                   'payload_to_leo', 'payload_to_gto', 'payload_to_tli',
                   'developed', 'first_flight', 'num_flights', 'failures',
                   'description', 'illustration', 'sources']
@@ -344,16 +344,16 @@ class SpacecraftForm(BasicForm):
     class Meta(BasicForm.Meta):
         model = Spacecraft
         fields = ['name', 'native_name', 'country', 'variant_of',
-                  'manufacturer', 'height', 'diameter', 'dry_weight',
-                  'fueled_weight', 'instruments', 'guidance_system',
+                  'manufacturer', 'height', 'diameter', 'dry_mass',
+                  'fueled_mass', 'instruments', 'guidance_system',
                   'antenna_type', 'antenna_gain', 'transmitter_power',
                   'attitude_control_system', 'battery_capacity',
                   'electricity_source', 'power_generation', 'tank_type',
                   'tank_material', 'fuel_volume', 'oxidizer_volume',
-                  'fuel_weight', 'oxidizer_weight', 'main_engine',
+                  'fuel_mass', 'oxidizer_mass', 'main_engine',
                   'num_main_engines', 'aux_engine', 'num_aux_engines',
                   'aux_fuel_volume', 'aux_oxidizer_volume',
-                  'aux_fuel_weight', 'aux_oxidizer_weight', 'pressurant',
+                  'aux_fuel_mass', 'aux_oxidizer_mass', 'pressurant',
                   'heatshield', 'landing_solution', 'developed',
                   'first_flight', 'num_flights', 'failures',
                   'illustration', 'description', 'sources']
@@ -379,17 +379,17 @@ class CrewedSpacecraftForm(BasicForm):
     class Meta(BasicForm.Meta):
         model = CrewedSpacecraft
         fields = ['name', 'native_name', 'country', 'variant_of',
-                  'manufacturer', 'height', 'diameter', 'dry_weight',
-                  'fueled_weight', 'crew', 'pressurized_volume', 'instruments',
+                  'manufacturer', 'height', 'diameter', 'dry_mass',
+                  'fueled_mass', 'crew', 'pressurized_volume', 'instruments',
                   'guidance_system', 'antenna_type', 'antenna_gain',
                   'transmitter_power', 'attitude_control_system',
                   'life_support', 'supplies_days', 'battery_capacity',
                   'electricity_source', 'power_generation', 'tank_type',
                   'tank_material', 'fuel_volume', 'oxidizer_volume',
-                  'fuel_weight', 'oxidizer_weight', 'main_engine',
+                  'fuel_mass', 'oxidizer_mass', 'main_engine',
                   'num_main_engines', 'aux_engine', 'num_aux_engines',
                   'aux_fuel_volume', 'aux_oxidizer_volume',
-                  'aux_fuel_weight', 'aux_oxidizer_weight', 'pressurant',
+                  'aux_fuel_mass', 'aux_oxidizer_mass', 'pressurant',
                   'heatshield', 'landing_solution', 'developed',
                   'first_flight', 'num_flights', 'failures',
                   'illustration', 'description', 'sources']
